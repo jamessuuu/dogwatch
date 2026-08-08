@@ -64,11 +64,18 @@ export type FindingStatus = z.infer<typeof FindingStatusSchema>;
 export const ActionKindSchema = z.enum(["issue.open", "issue.comment"]);
 export type ActionKind = z.infer<typeof ActionKindSchema>;
 
+/** `indeterminate` (M5, SPEC §9): the GitHub-issue-create effect threw
+ * sluice's `E_INDETERMINATE` (`onIndeterminate:'fail'`) — dogwatch does not
+ * know whether the side effect landed. Published verbatim, never silently
+ * upgraded to `executed` or downgraded to `refused`; the NEXT run's
+ * reconciliation (searching for the hidden `<!-- dogwatch:effect:<key> -->`
+ * marker) is what eventually resolves it via a fresh action entry. */
 export const ActionStatusSchema = z.enum([
   "proposed",
   "gated_pending",
   "executed",
   "refused",
+  "indeterminate",
 ]);
 export type ActionStatus = z.infer<typeof ActionStatusSchema>;
 
@@ -80,6 +87,11 @@ export const GateStatusSchema = z.enum([
   "cancelled",
 ]);
 export type GateStatus = z.infer<typeof GateStatusSchema>;
+
+/** M5 SPEC §5 step 4: the three channels a gate decision can arrive through,
+ * all writing through `sluice.gates.decide` and all recorded here. */
+export const DecisionChannelSchema = z.enum(["token", "workflow_dispatch", "cli"]);
+export type DecisionChannel = z.infer<typeof DecisionChannelSchema>;
 
 /** SPEC §9's failure-contract table, closed into an enum for R7. */
 export const RefusalReasonCodeSchema = z.enum([
@@ -267,6 +279,11 @@ export const ActionSchema = z.strictObject({
   artifactUrl: z.url().optional(),
   draft: ActionDraftSchema.optional(),
   reasonCode: RefusalReasonCodeSchema.optional(),
+  /** M5 SPEC §9 reconciliation: present on a NEW action entry (published on
+   * the run that resolves it) that reconciles a prior run's `indeterminate`
+   * action — `<runId>:<actionId>` of the action being resolved. Absent on
+   * every ordinary action. */
+  reconciliationOf: z.string().optional(),
 });
 export type Action = z.infer<typeof ActionSchema>;
 
@@ -278,7 +295,7 @@ export const GateEntrySchema = z.strictObject({
   expiresAt: z.iso.datetime(),
   decidedAt: z.iso.datetime().optional(),
   decidedBy: z.string().optional(),
-  decisionChannel: z.string().optional(),
+  decisionChannel: DecisionChannelSchema.optional(),
   reason: z.string().optional(),
 });
 export type GateEntry = z.infer<typeof GateEntrySchema>;
@@ -356,6 +373,14 @@ export const ChainSchema = z.strictObject({
   prevRunId: z.string().nullable(),
   prevRecordHash: z.string().nullable(),
   recordHash: z.string().min(1),
+  /** M4 SPEC §9 store-unavailable contract: `true` iff this run's audit
+   * trail is anchored in the durable Postgres store (`audit.store ===
+   * "postgres"`) — `false` when degraded to `MemoryStore`. Optional so the
+   * two pre-M4 committed records (which predate this field and were always
+   * unanchored) keep parsing unchanged rather than being retroactively
+   * rewritten (Decision 2: nothing published is ever rewritten); every M4+
+   * record always sets it explicitly. */
+  anchored: z.boolean().optional(),
 });
 export type Chain = z.infer<typeof ChainSchema>;
 

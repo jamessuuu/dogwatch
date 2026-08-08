@@ -16,21 +16,30 @@
     ".": "./src/index.ts"
   },
   "sideEffects": false,
-  "scripts": {
-    "typecheck": "tsc -p tsconfig.json --noEmit",
-    "build": "tsc -p tsconfig.build.json",
-    "dogwatch": "tsx src/cli/index.ts"
-  },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.116.0",
     "@jamessuuu/sluice": "link:../../../sluice/packages/sluice",
+    "@jamessuuu/sluice-store-postgres": "link:../../../sluice/packages/sluice-store-postgres",
     "commander": "^14.0.0",
+    "drizzle-orm": "^0.45.2",
+    "pg": "^8.13.1",
     "undici": "^7.0.0",
     "zod": "^4.0.0"
   },
   "devDependencies": {
+    "@electric-sql/pglite": "^0.3.4",
     "@types/node": "^22.10.0",
+    "@types/pg": "^8.11.10",
+    "drizzle-kit": "^0.31.5",
     "tsx": "^4.19.2",
     "typescript": "^5.7.3"
+  },
+  "scripts": {
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "build": "tsc -p tsconfig.build.json",
+    "dogwatch": "tsx src/cli/index.ts",
+    "db:generate": "drizzle-kit generate",
+    "db:migrate": "node --import tsx scripts/migrate.ts",
+    "db:seed": "node --import tsx scripts/seed.ts"
   }
 }

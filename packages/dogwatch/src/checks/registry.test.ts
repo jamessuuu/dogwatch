@@ -3,13 +3,13 @@ import { CHECK_REGISTRY, implementedFamilies } from "./registry.js";
 import { RULES_BY_ID } from "./index.js";
 
 describe("CHECK_REGISTRY", () => {
-  it("marks reach/header/brand/link/weight as implemented", () => {
-    expect(implementedFamilies().sort()).toEqual(["brand", "header", "link", "reach", "weight"]);
+  it("marks reach/header/brand/link/weight/watch as implemented (M4 wires watch.chain_gap)", () => {
+    expect(implementedFamilies().sort()).toEqual(["brand", "header", "link", "reach", "watch", "weight"]);
   });
 
-  it("marks artifact/repo/pkg/watch as not implemented, each with a milestone and reason", () => {
+  it("marks artifact/repo/pkg as not implemented, each with a milestone and reason", () => {
     const stubs = CHECK_REGISTRY.filter((f) => !f.implemented);
-    expect(stubs.map((f) => f.family).sort()).toEqual(["artifact", "pkg", "repo", "watch"]);
+    expect(stubs.map((f) => f.family).sort()).toEqual(["artifact", "pkg", "repo"]);
     for (const entry of stubs) {
       expect(entry.landingMilestone, `${entry.family} needs a landingMilestone`).toBeTruthy();
       expect(entry.reason, `${entry.family} needs a reason`).toBeTruthy();

@@ -108,6 +108,22 @@ test.describe("Verify button", () => {
     const result = page.getByTestId("verify-result");
     await expect(result).toContainText("E_MANUFACTURED_FINDING");
   });
+
+  // M4 (SPEC §12): "the Verify button must now use sluice's pure
+  // verifyEvents for real tamper-evidence. Prove it: a tampered fixture
+  // must fail in CI AND in the browser e2e." r12 already proves the
+  // record-hash chain; this fixture (a corrupted audit event hash — see
+  // fixtures/violations/r11-chain-broken.json) proves the SAME button
+  // independently re-verifies the sluice audit hash chain itself, computed
+  // live in the browser from the JSON already on the page, zero server.
+  test("turns red on a fixture with a broken audit hash chain (R11)", async ({ page }) => {
+    await page.goto("/fixtures/r11-chain-broken");
+    await page.getByRole("button", { name: "Verify this record" }).click();
+    const result = page.getByTestId("verify-result");
+    await expect(result).toBeVisible();
+    await expect(result).toContainText("Verification failed.");
+    await expect(result).toContainText("E_CHAIN_BROKEN");
+  });
 });
 
 test.describe("/checks — the catalog", () => {

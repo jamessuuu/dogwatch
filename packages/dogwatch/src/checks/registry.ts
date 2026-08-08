@@ -16,6 +16,7 @@ import { BRAND_BACKLINK_MISSING, BRAND_FAVICON_MISSING } from "./brand.js";
 import { LINK_BROKEN, LINK_OFFSITE_REDIRECT, LINK_UNVERIFIABLE } from "./link.js";
 import { REACH_REDIRECT_CHAIN_CHANGED, REACH_STATUS_NOT_200 } from "./reach.js";
 import { WEIGHT_BUDGET_EXCEEDED } from "./weight.js";
+import { WATCH_CHAIN_GAP } from "./watch.js";
 
 export interface RuleCatalogEntry {
   ruleId: string;
@@ -115,15 +116,14 @@ export const CHECK_REGISTRY: readonly FamilyCatalogEntry[] = [
   },
   {
     family: "watch",
-    implemented: false,
-    landingMilestone: "M4",
-    reason:
-      "dogwatch-on-itself needs the cross-run audit chain (Neon + sluice-store-postgres), which is out of scope before sluice 1.0.0-rc.1 (SPEC's sequencing note)",
-    rules: [
-      { ruleId: "watch.run_missed", asserts: "the schedule did not slip a night" },
-      { ruleId: "watch.chain_gap", asserts: "the audit sequence is contiguous across runs" },
-      { ruleId: "watch.late", asserts: "the run started within its scheduling slack" },
-    ],
+    implemented: true,
+    // `watch.run_missed`/`watch.late` are documented in SPEC §2 but not
+    // requested by the M4 milestone (Decision 3's `kind:"gap"` record
+    // already covers a slipped schedule at the record level) — left
+    // undeclared here rather than listed with no backing rule function,
+    // consistent with every other family's "only list what a real rule
+    // resolves to" convention (checks/registry.test.ts enforces this).
+    rules: [{ ruleId: WATCH_CHAIN_GAP, asserts: "the audit sequence is contiguous across runs" }],
   },
 ];
 

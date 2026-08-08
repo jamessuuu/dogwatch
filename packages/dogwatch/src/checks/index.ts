@@ -22,6 +22,7 @@ import {
   REACH_STATUS_NOT_200,
 } from "./reach.js";
 import { evaluateWeightBudget, WEIGHT_BUDGET_EXCEEDED } from "./weight.js";
+import { evaluateWatchChainGap, WATCH_CHAIN_GAP } from "./watch.js";
 import type { CheckEvidence } from "../record/schema.js";
 import type { RuleOutcome } from "./types.js";
 
@@ -33,6 +34,7 @@ export * from "./header.js";
 export * from "./brand.js";
 export * from "./link.js";
 export * from "./weight.js";
+export * from "./watch.js";
 
 export type RuleFn = (evidence: CheckEvidence, ctx: RuleContext) => RuleOutcome;
 
@@ -47,4 +49,5 @@ export const RULES_BY_ID: Readonly<Record<string, RuleFn>> = {
   [LINK_OFFSITE_REDIRECT]: evaluateLinkOffsiteRedirect,
   [LINK_UNVERIFIABLE]: evaluateLinkUnverifiable,
   [WEIGHT_BUDGET_EXCEEDED]: evaluateWeightBudget,
+  [WATCH_CHAIN_GAP]: evaluateWatchChainGap,
 };

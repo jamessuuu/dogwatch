@@ -60,9 +60,10 @@
     "verified": true
   },
   "chain": {
+    "anchored": false,
     "prevRecordHash": null,
     "prevRunId": null,
-    "recordHash": "16b0682e84348bfafaa025ba9cea23fa74e744ade33f6405e860791c3117ab83"
+    "recordHash": "05c47e9527e2b696f33254a4cffe4c1a586c224e4cd7edafbe728509409024cb"
   },
   "checkPackVersion": "1",
   "checks": [

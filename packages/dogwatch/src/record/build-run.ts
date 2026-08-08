@@ -6,19 +6,22 @@
  * both call this same function — a live probe or a replay probe is the only
  * difference (SPEC §11).
  */
-import { createSluice, MemoryStore, systemClock, type AuditEvent, type Clock } from "@jamessuuu/sluice";
-import { RULES_BY_ID } from "../checks/index.js";
+import { createSluice, MemoryStore, systemClock, type AuditEvent, type Clock, type SluiceStore } from "@jamessuuu/sluice";
+import { RULES_BY_ID, WATCH_CHAIN_GAP, type ChainGapBaseline } from "../checks/index.js";
 import { InMemoryBudgetStore, runAdvisoryPipeline, type BudgetCaps, type BudgetStore, type LlmClient } from "../llm/index.js";
 import { buildAbsenceOfEvidence } from "./absence.js";
 import { buildSiteChecks } from "./build-site.js";
 import { computeRecordHash } from "./hash.js";
 import { checkId, findingFingerprint, findingId, newRunId } from "./ids.js";
 import { resolveHysteresis } from "./hysteresis.js";
+import { reproduceCurl } from "./reproduce.js";
 import type { PricingManifest } from "./pricing-schema.js";
 import { wrapProbeWithSluice } from "./sluice-probe.js";
 import type {
   AuditEventRecord,
+  AuditStoreKind,
   Check,
+  DegradedEntry,
   Finding,
   Metric,
   RunKind,
@@ -74,6 +77,20 @@ export interface BuildRunOptions {
   budgetCaps?: BudgetCaps | undefined;
   llmModel?: string | undefined;
   llmTimeoutMs?: number | undefined;
+  /** M4 (SPEC §3/§9): the durable store to run effects against. Defaults to
+   * a fresh `MemoryStore` — every existing caller (golden replay tests,
+   * `--dry-run`, a contributor with no Neon configured) is byte-identical
+   * to pre-M4 behavior when this is omitted. Production wiring
+   * (`cli/watch.ts`) supplies the store `createDogwatchStore` returns. */
+  store?: SluiceStore | undefined;
+  /** Must match what produced `store` — determines whether this run's audit
+   * trail is treated as cross-run-anchored (SPEC §3 Decision 2/§9). Defaults
+   * to "memory". */
+  storeKind?: AuditStoreKind | undefined;
+  /** Present iff a database WAS configured but unreachable (SPEC §9's "Neon
+   * suspended / over quota" row) — published into `degraded[]`. Absent for
+   * the ordinary no-DATABASE_URL default, which is not itself a failure. */
+  storeDegradeReason?: "store_unavailable" | undefined;
 }
 
 function toAuditEventRecord(e: AuditEvent): AuditEventRecord {
@@ -96,7 +113,8 @@ function toAuditEventRecord(e: AuditEvent): AuditEventRecord {
 export async function buildRun(options: BuildRunOptions): Promise<RunRecord> {
   const namespace = options.namespace ?? "dogwatch";
   const timeoutMs = options.timeoutMs ?? DEFAULT_TIMEOUT_MS;
-  const store = new MemoryStore();
+  const store = options.store ?? new MemoryStore();
+  const storeKind: AuditStoreKind = options.storeKind ?? "memory";
   const startedAtMs = options.now();
   const runId = newRunId(startedAtMs, options.random);
   const startedAt = new Date(startedAtMs).toISOString();
@@ -143,6 +161,79 @@ export async function buildRun(options: BuildRunOptions): Promise<RunRecord> {
     });
     allChecks.push(...checks);
     allMetrics.push(...metrics);
+  }
+
+  // ── audit: this run's own slice of what the store recorded (SPEC §3/§9,
+  // M4) ────────────────────────────────────────────────────────────────────
+  // Computed here (before findings) so `watch.chain_gap` — a check like any
+  // other — can be pushed into `allChecks` and flow through the SAME
+  // findings-derivation loop below, rather than needing a second path.
+  //
+  // For a fresh MemoryStore (storeKind "memory", the M0-M3 default) the
+  // cursor is always 0: a brand-new store's own events start at seq 1
+  // regardless of what a previous, unrelated run's record said. For a
+  // shared, persistent Postgres store (storeKind "postgres"), anchoring the
+  // query at `prevRecord.audit.toSeq` is what makes this run's audit.events
+  // contain ONLY its own new activity rather than the store's entire
+  // cross-run history back to genesis (SPEC §3 Decision 2's cross-run
+  // chain — the whole point of M4).
+  const startCursor = storeKind === "postgres" ? (options.prevRecord?.audit.toSeq ?? 0) : 0;
+  const rawEvents = await sluice.audit.since({ namespace, seq: startCursor }, 100_000);
+  const events = rawEvents.map(toAuditEventRecord);
+  const fromSeq = events[0]?.seq ?? 0;
+  const toSeq = events.at(-1)?.seq ?? 0;
+  const head = events.at(-1)?.hash ?? null;
+  // sluice's own `audit.verify()` (M9 hash-chain, real cryptographic
+  // verification of every event's prevHash/hash linkage across the STORE'S
+  // ENTIRE namespace history, not just this run's slice) — not a
+  // seq-contiguity approximation (SPEC §1 non-goal 4 / §7 tamper-evidence:
+  // "sluice's primitive, not a copy of it").
+  const verifyResult = await sluice.audit.verify(namespace);
+  // Only meaningful once the trail is durably anchored (SPEC §3 Decision 1):
+  // a fresh MemoryStore has no cross-run history to be continuous WITH.
+  const prevHead: string | null = storeKind === "postgres" ? (options.prevRecord?.audit.head ?? null) : null;
+
+  // watch.chain_gap (SPEC §12 M4): only checkable once there is a previous
+  // anchored run to be continuous with. See checks/watch.ts's header comment
+  // for why this compares HASHES (events[0].prevHash vs. what git published
+  // as prevRecord.audit.head), not seq numbers — a seq comparison anchored
+  // at the same cursor used to run the query above would be tautological.
+  if (storeKind === "postgres" && options.prevRecord !== null) {
+    const expectedPrevHead = options.prevRecord.audit.head;
+    const actualPrevHead = events[0]?.prevHash ?? null;
+    const chainGapBaseline: ChainGapBaseline = {
+      expectedFromSeq: options.prevRecord.audit.toSeq + 1,
+      actualFromSeq: fromSeq === 0 ? options.prevRecord.audit.toSeq + 1 : fromSeq,
+      expectedPrevHead,
+      actualPrevHead: events.length === 0 ? expectedPrevHead : actualPrevHead,
+    };
+    const chainGapId = checkId("watch", "dogwatch", WATCH_CHAIN_GAP);
+    const chainGapRequest = {
+      method: "GET",
+      url: "https://github.com/jamessuuu/dogwatch",
+      headersSent: [],
+      timeoutMs,
+    };
+    const ruleFn = RULES_BY_ID[WATCH_CHAIN_GAP];
+    if (ruleFn === undefined) {
+      throw new Error(`no rule function registered for ruleId ${WATCH_CHAIN_GAP}`);
+    }
+    const outcome = ruleFn(
+      { redirects: [], headers: {}, json: { chainGap: chainGapBaseline } },
+      { targetId: "dogwatch", checkId: chainGapId, request: { method: "GET", url: chainGapRequest.url }, observedAt }
+    );
+    allChecks.push({
+      id: chainGapId,
+      family: "watch",
+      targetId: "dogwatch",
+      ruleId: outcome.ruleId,
+      title: outcome.title,
+      request: chainGapRequest,
+      observedAt,
+      verdict: outcome.verdict,
+      evidence: outcome.evidence,
+      reproduce: reproduceCurl(chainGapRequest),
+    });
   }
 
   // ── findings: only from finding-verdict checks, via hysteresis ──────────
@@ -194,18 +285,6 @@ export async function buildRun(options: BuildRunOptions): Promise<RunRecord> {
   const endedAtMs = options.now();
   const endedAt = new Date(endedAtMs).toISOString();
 
-  // ── audit: export everything this run's ephemeral MemoryStore recorded ──
-  // `sluice.audit.verify()` is sluice's OWN hash-chain verifier (M9,
-  // `verifyEvents` under the hood) — called here directly rather than
-  // re-deriving seq/hash contiguity by hand (SPEC §1 non-goal 4 / §7
-  // tamper-evidence: "sluice's primitive, not a copy of it").
-  const rawEvents = await sluice.audit.since({ namespace, seq: 0 }, 100_000);
-  const events = rawEvents.map(toAuditEventRecord);
-  const fromSeq = events[0]?.seq ?? 0;
-  const toSeq = events.at(-1)?.seq ?? 0;
-  const head = events.at(-1)?.hash ?? null;
-  const verifyResult = await sluice.audit.verify(namespace);
-
   // ── advisory LLM / cost (SPEC §8, M3) — a quiet night (findings.length
   // === 0) never even constructs a budget store or client: llm:{calls:0,
   // reason:"no_findings"} and microUsd 0 stay exact, as SPEC requires.
@@ -225,7 +304,14 @@ export async function buildRun(options: BuildRunOptions): Promise<RunRecord> {
   const findingsWithAdvisory = advisory.findings;
   const cost = advisory.cost;
   const llm = advisory.llm;
-  const degraded = advisory.degraded;
+  // SPEC §9: a configured-but-unreachable database is a real degradation,
+  // published alongside whatever the LLM pipeline already degraded (the two
+  // are independent dimensions — either, both, or neither can be true on a
+  // given run).
+  const degraded: DegradedEntry[] =
+    options.storeDegradeReason === undefined
+      ? advisory.degraded
+      : [...advisory.degraded, { component: "store", reason: options.storeDegradeReason }];
 
   const prevRunId = options.prevRecord?.runId ?? null;
   const prevRecordHash = options.prevRecord === null ? null : computeRecordHash(options.prevRecord);
@@ -255,13 +341,10 @@ export async function buildRun(options: BuildRunOptions): Promise<RunRecord> {
     degraded,
     audit: {
       namespace,
-      store: "memory",
+      store: storeKind,
       fromSeq,
       toSeq,
-      // A fresh MemoryStore is created per run (M0-M2, per the sequencing
-      // note — Postgres anchors the cross-run chain at M4), so this run's
-      // chain genuinely starts at genesis: prevHead is null, not "unknown".
-      prevHead: null,
+      prevHead,
       head,
       // sluice's own `audit.verify()` (M9 hash-chain, real cryptographic
       // verification of every event's prevHash/hash linkage) — not a
@@ -269,7 +352,7 @@ export async function buildRun(options: BuildRunOptions): Promise<RunRecord> {
       verified: verifyResult.ok,
       events,
     },
-    chain: { prevRunId, prevRecordHash, recordHash: "" },
+    chain: { prevRunId, prevRecordHash, recordHash: "", anchored: storeKind === "postgres" },
     amendments: [],
   };
 

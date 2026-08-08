@@ -1,7 +1,9 @@
+import { MemoryStore } from "@jamessuuu/sluice";
 import { describe, expect, it } from "vitest";
 import { buildRun } from "./build-run.js";
 import { createReplayHttpProbe } from "../probe/replay.js";
 import { TEST_PRICING_MANIFEST } from "./test-helper.js";
+import type { RunRecord } from "./schema.js";
 import type { TargetsFile } from "./targets-schema.js";
 import type { HttpGetResult, HttpHeadResult } from "../probe/types.js";
 
@@ -227,6 +229,171 @@ describe("buildRun — link retry orchestration (link classification fix, 2026-0
     expect(linkCheck?.verdict).toBe("pass");
     expect(linkCheck?.ruleId).toBe("link.broken");
     expect(record.findings).toHaveLength(0);
+  });
+});
+
+describe("buildRun — M4 cross-run chain anchoring", () => {
+  async function buildAnchoredRun(o: {
+    store: MemoryStore;
+    prevRecord: RunRecord | null;
+    seed: number;
+  }): Promise<RunRecord> {
+    return buildRun({
+      targets: oneDeployedSite,
+      targetsHash: "test-targets-hash",
+      probe: createReplayHttpProbe({ get: { "https://agentjames.vercel.app": okResult() } }),
+      now: () => FIXED_NOW_MS,
+      random: seededRandom(o.seed),
+      commit: "0".repeat(40),
+      watchVersion: "0.0.0-test",
+      checkPackVersion: "1",
+      pricingManifest: "pricing.2026-08-08.json",
+      pricing: TEST_PRICING_MANIFEST,
+      kind: "manual",
+      scheduledFor: null,
+      trigger: { workflow: null, runUrl: null, actor: "test" },
+      prevRecord: o.prevRecord,
+      // A shared MemoryStore across two buildRun calls is the exact shape a
+      // shared, persistent Postgres store has across two nights: the SAME
+      // sluice_cursor row (here, MemoryStore's own namespace state)
+      // accumulates seq/hash across both calls. storeKind:"postgres" is what
+      // tells buildRun to treat that persistence as real (anchor the query
+      // cursor at prevRecord.audit.toSeq instead of always 0).
+      store: o.store,
+      storeKind: "postgres",
+    });
+  }
+
+  it("a fresh MemoryStore run defaults to unanchored, memory-store, no chain_gap check even with a prevRecord", async () => {
+    const record = await buildTestRun({ "https://agentjames.vercel.app": okResult() });
+    expect(record.audit.store).toBe("memory");
+    expect(record.chain.anchored).toBe(false);
+    expect(record.audit.prevHead).toBeNull();
+    expect(record.checks.some((c) => c.ruleId === "watch.chain_gap")).toBe(false);
+  });
+
+  it("run 1 (no prevRecord) publishes store:postgres, anchored:true, and no chain_gap check (nothing to be discontinuous with)", async () => {
+    const store = new MemoryStore();
+    const run1 = await buildAnchoredRun({ store, prevRecord: null, seed: 10 });
+    expect(run1.audit.store).toBe("postgres");
+    expect(run1.chain.anchored).toBe(true);
+    expect(run1.audit.prevHead).toBeNull();
+    expect(run1.audit.fromSeq).toBe(1);
+    expect(run1.checks.some((c) => c.ruleId === "watch.chain_gap")).toBe(false);
+  });
+
+  it("run 2 against the SAME store continues the chain: prevHead matches run 1's head, fromSeq continues, chain_gap check passes clean", async () => {
+    const store = new MemoryStore();
+    const run1 = await buildAnchoredRun({ store, prevRecord: null, seed: 10 });
+    const run2 = await buildAnchoredRun({ store, prevRecord: run1, seed: 11 });
+
+    expect(run2.audit.prevHead).toBe(run1.audit.head);
+    expect(run2.audit.fromSeq).toBe(run1.audit.toSeq + 1);
+    expect(run2.findings.some((f) => f.ruleId === "watch.chain_gap")).toBe(false);
+    const chainGapCheck = run2.checks.find((c) => c.ruleId === "watch.chain_gap");
+    expect(chainGapCheck?.verdict).toBe("pass");
+  });
+
+  it("a diverged prevRecord.audit.head (store regression/tamper) publishes a high-severity watch.chain_gap finding", async () => {
+    const store = new MemoryStore();
+    const run1 = await buildAnchoredRun({ store, prevRecord: null, seed: 10 });
+    // Simulate git having published a DIFFERENT head than what this store's
+    // cursor actually holds (a reset/restored/corrupted Postgres audit
+    // trail, or a stray write dogwatch does not know about) — everything
+    // else about run1 (toSeq, runId) stays internally consistent so this
+    // isolates exactly the head-hash divergence the rule is meant to catch.
+    const tamperedPrevRecord: RunRecord = {
+      ...run1,
+      audit: { ...run1.audit, head: "0".repeat(64) },
+    };
+    const run2 = await buildAnchoredRun({ store, prevRecord: tamperedPrevRecord, seed: 11 });
+
+    const finding = run2.findings.find((f) => f.ruleId === "watch.chain_gap");
+    expect(finding).toBeDefined();
+    expect(finding?.severity).toBe("high");
+    expect(finding?.status).toBe("confirmed"); // high severity confirms on first sight
+    const chainGapCheck = run2.checks.find((c) => c.ruleId === "watch.chain_gap");
+    expect(chainGapCheck?.verdict).toBe("finding");
+  });
+});
+
+describe("buildRun — M4 store-unavailable degrade", () => {
+  it("publishes degraded:[{component:'store', reason:'store_unavailable'}] only when storeDegradeReason is set", async () => {
+    const withoutDegrade = await buildTestRun({ "https://agentjames.vercel.app": okResult() });
+    expect(withoutDegrade.degraded.some((d) => d.component === "store")).toBe(false);
+
+    const record = await buildRun({
+      targets: oneDeployedSite,
+      targetsHash: "test-targets-hash",
+      probe: createReplayHttpProbe({ get: { "https://agentjames.vercel.app": okResult() } }),
+      now: () => FIXED_NOW_MS,
+      random: seededRandom(1),
+      commit: "0".repeat(40),
+      watchVersion: "0.0.0-test",
+      checkPackVersion: "1",
+      pricingManifest: "pricing.2026-08-08.json",
+      pricing: TEST_PRICING_MANIFEST,
+      kind: "manual",
+      scheduledFor: null,
+      trigger: { workflow: null, runUrl: null, actor: "test" },
+      prevRecord: null,
+      storeKind: "memory",
+      storeDegradeReason: "store_unavailable",
+    });
+    expect(record.degraded).toContainEqual({ component: "store", reason: "store_unavailable" });
+    expect(record.audit.store).toBe("memory");
+    expect(record.chain.anchored).toBe(false);
+  });
+});
+
+describe("buildRun — link bug fix, 2026-08-09: non-http(s) schemes + check id uniqueness", () => {
+  it("a mailto: link is skipped (not_applicable), never HTTP-probed, and every check id in the run is unique", async () => {
+    const brokenA = "https://broken-a.example.com/";
+    const brokenB = "https://broken-b.example.com/";
+    const mailto = "mailto:hello@example.com";
+    const record = await buildRun({
+      targets: linkSite,
+      targetsHash: "test-targets-hash",
+      probe: createReplayHttpProbe({
+        get: {
+          "https://agentjames.vercel.app": okResult({
+            bodyText: `<!doctype html><html><body><a href="${brokenA}">a</a><a href="${brokenB}">b</a><a href="${mailto}">mail us</a></body></html>`,
+            bytes: 160,
+          }),
+        },
+        // Neither brokenA nor brokenB has a recorded HEAD transcript entry
+        // — createReplayHttpProbe throws network_error for both, exercising
+        // the exact two-different-links-fail-in-one-run collision the bug
+        // fix targets. mailto: must never reach probe.head() at all (no
+        // transcript entry is provided for it either — if the fix
+        // regressed, this test would throw instead of asserting).
+        head: {},
+      }),
+      now: () => FIXED_NOW_MS,
+      random: seededRandom(5),
+      commit: "0".repeat(40),
+      watchVersion: "0.0.0-test",
+      checkPackVersion: "1",
+      pricingManifest: "pricing.2026-08-08.json",
+      pricing: TEST_PRICING_MANIFEST,
+      kind: "manual",
+      scheduledFor: null,
+      trigger: { workflow: null, runUrl: null, actor: "test" },
+      prevRecord: null,
+    });
+
+    const ids = record.checks.map((c) => c.id);
+    expect(new Set(ids).size).toBe(ids.length); // the actual bug: duplicate ids
+
+    const mailtoCheck = record.checks.find((c) => c.id === `link:agentjames:link.broken:${mailto}`);
+    expect(mailtoCheck?.verdict).toBe("skipped");
+    expect(mailtoCheck?.skipReason).toBe("not_applicable");
+
+    const checkA = record.checks.find((c) => c.id === `link:agentjames:link.broken:${brokenA}`);
+    const checkB = record.checks.find((c) => c.id === `link:agentjames:link.broken:${brokenB}`);
+    expect(checkA?.verdict).toBe("error");
+    expect(checkB?.verdict).toBe("error");
+    expect(checkA?.id).not.toBe(checkB?.id);
   });
 });
 

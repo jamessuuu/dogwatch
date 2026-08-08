@@ -329,6 +329,27 @@ export async function buildSiteChecks(site: TargetSite, ctx: BuildSiteContext): 
       for (const link of crawl.externalLinks) {
         const id = checkId("link", site.id, LINK_BROKEN, link.url);
         const linkRequest = requestOf(link.url, "HEAD", ctx.timeoutMs);
+        // Bug fix, 2026-08-09: a `mailto:`/`tel:`/other non-http(s) href
+        // discovered by the crawler (`new URL(href).origin` returns the
+        // opaque string "null" for these schemes, so `crawlSite` classifies
+        // them as "external" same as any real off-site link) used to reach
+        // `ctx.probe.head()` here, which then threw a transport error HEAD
+        // cannot make sense of against a non-HTTP scheme. HTTP semantics
+        // simply do not apply to these URLs — never attempt the request at
+        // all; skip with a machine reason (R6) instead of manufacturing an
+        // `error` verdict from a request that was never meaningful.
+        let scheme: string | null;
+        try {
+          scheme = new URL(link.url).protocol;
+        } catch {
+          scheme = null;
+        }
+        if (scheme !== "http:" && scheme !== "https:") {
+          checks.push(
+            skippedCheck(id, "link", site.id, LINK_BROKEN, `link ${link.url} resolves`, linkRequest, ctx.observedAt, "not_applicable")
+          );
+          continue;
+        }
         try {
           const headResult = await ctx.probe.head(link.url, { timeoutMs: ctx.timeoutMs });
           // A bot-block-shaped HEAD status (403/406/429/999 — LinkedIn's own
@@ -362,7 +383,14 @@ export async function buildSiteChecks(site: TargetSite, ctx: BuildSiteContext): 
           checks.push(fromOutcome(id, "link", site.id, linkRequest, ctx.observedAt, outcome));
         } catch (cause) {
           const linkFailure = classifyProbeFailure(cause);
-          pushFailureCheck(checks, linkFailure, "link", site.id, LINK_BROKEN, `link ${link.url} resolves`, linkRequest, ctx.observedAt);
+          // Bug fix, 2026-08-09: this call was missing `id` as the
+          // discriminated-id override, so every external link that failed
+          // to resolve in the same run collapsed onto the SAME
+          // (non-discriminated) checkId — a real collision risk whenever a
+          // site has more than one genuinely broken external link in one
+          // run. `id` (computed above, in scope) already carries `link.url`
+          // as its discriminator.
+          pushFailureCheck(checks, linkFailure, "link", site.id, LINK_BROKEN, `link ${link.url} resolves`, linkRequest, ctx.observedAt, id);
         }
       }
     }

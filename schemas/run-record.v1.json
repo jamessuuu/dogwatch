@@ -560,7 +560,8 @@
               "proposed",
               "gated_pending",
               "executed",
-              "refused"
+              "refused",
+              "indeterminate"
             ]
           },
           "gateId": {
@@ -616,6 +617,9 @@
               "circuit_open",
               "not_confirmed"
             ]
+          },
+          "reconciliationOf": {
+            "type": "string"
           }
         },
         "required": [
@@ -669,7 +673,12 @@
             "type": "string"
           },
           "decisionChannel": {
-            "type": "string"
+            "type": "string",
+            "enum": [
+              "token",
+              "workflow_dispatch",
+              "cli"
+            ]
           },
           "reason": {
             "type": "string"
@@ -1024,6 +1033,9 @@
         "recordHash": {
           "type": "string",
           "minLength": 1
+        },
+        "anchored": {
+          "type": "boolean"
         }
       },
       "required": [
@@ -1173,7 +1185,8 @@
                     "proposed",
                     "gated_pending",
                     "executed",
-                    "refused"
+                    "refused",
+                    "indeterminate"
                   ]
                 },
                 "gateId": {
@@ -1229,6 +1242,9 @@
                     "circuit_open",
                     "not_confirmed"
                   ]
+                },
+                "reconciliationOf": {
+                  "type": "string"
                 }
               },
               "required": [

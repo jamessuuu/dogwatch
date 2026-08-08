@@ -8,6 +8,27 @@ on:
 jobs:
   ci:
     runs-on: ubuntu-latest
+    # M4 (SPEC §12): "wire a postgres:17 service container in CI running the
+    # same tests" as the pglite suite (packages/dogwatch/src/store/*.test.ts)
+    # — this is the real enforcement; store.real.test.ts is gated on
+    # DATABASE_URL and stays skipped everywhere this service isn't present.
+    # Mirrors sluice/.github/workflows/ci.yml's own postgres service exactly.
+    services:
+      postgres:
+        image: postgres:17
+        env:
+          POSTGRES_USER: dogwatch
+          POSTGRES_PASSWORD: dogwatch
+          POSTGRES_DB: dogwatch_test
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 10
+    env:
+      DATABASE_URL: postgres://dogwatch:dogwatch@localhost:5432/dogwatch_test
     steps:
       # dogwatch depends on the unpublished @jamessuuu/sluice via a
       # filesystem `link:` (SPEC's sequencing note: M0-M3 build against
@@ -46,6 +67,8 @@ jobs:
       - name: install Playwright's chromium (apps/web's e2e:smoke)
         working-directory: apps/web
         run: npx playwright install --with-deps chromium
+      - name: migrate postgres store (CI service — sluice-store-postgres's own migrations + dogwatch_budget)
+        run: pnpm --filter dogwatch run db:migrate
 
       # The five stages (PROGRAM.md D6). Order is the argument:
       # typecheck -> lint -> unit -> e2e:smoke -> eval.
@@ -54,6 +77,9 @@ jobs:
       - name: lint
         run: pnpm lint
       - name: unit
+        # DATABASE_URL (set above) activates store.real.test.ts's real-
+        # Postgres suite alongside the always-on pglite suite
+        # (store.test.ts) — both run as ordinary `unit`-project tests.
         run: pnpm test
       - name: e2e-smoke
         # SPEC §11.6: Playwright against `next build && next start` (M6 —

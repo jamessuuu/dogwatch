@@ -1,5 +1,6 @@
 import type { Command } from "commander";
 import { createAnthropicLlmClient } from "../llm/client.js";
+import { createBudgetStore, DEFAULT_BUDGET_CAPS } from "../llm/budget.js";
 import { createUndiciHttpProbe } from "../probe/http.js";
 import { buildIndex } from "../record/index-file.js";
 import { currentGitCommit } from "../record/git.js";
@@ -11,6 +12,8 @@ import { FamilySchema } from "../record/schema.js";
 import { loadTargets } from "../record/targets-io.js";
 import { writeJsonFileAtomic } from "../record/write.js";
 import { buildRun } from "../record/build-run.js";
+import { createDogwatchStore } from "../store/index.js";
+import { createPgPoolSqlExecutor } from "../store/sql-executor.js";
 import { defaultPricingManifestPath, defaultRunsDir, defaultTargetsPath, repoRoot } from "./paths.js";
 import { restrictToFamily } from "./family-filter.js";
 import { buildTrigger } from "./trigger.js";
@@ -77,6 +80,18 @@ export async function runWatch(opts: WatchCliOptions): Promise<number> {
 
   const prevRecord = latestRunRecord(runsDir);
 
+  // M4 (SPEC §3/§9): DATABASE_URL alone decides whether this run attempts
+  // Postgres at all. `createDogwatchStore` never throws — an unreachable
+  // Neon degrades to MemoryStore (fail closed, never fail silent) rather
+  // than crashing the whole nightly run. Every local/dev/CI invocation with
+  // nothing set behaves exactly as it did pre-M4 (in-memory, unanchored).
+  const databaseUrl = process.env.DATABASE_URL;
+  const dogwatchStore = await createDogwatchStore({ databaseUrl });
+  const budgetStore =
+    dogwatchStore.kind === "postgres" && dogwatchStore.pool !== undefined && databaseUrl !== undefined
+      ? createBudgetStore({ databaseUrl, sqlExecutor: createPgPoolSqlExecutor(dogwatchStore.pool) })
+      : undefined;
+
   let record;
   try {
     record = await buildRun({
@@ -91,14 +106,21 @@ export async function runWatch(opts: WatchCliOptions): Promise<number> {
       pricingManifest: "pricing.2026-08-08.json",
       pricing,
       llmClient,
+      budgetStore,
+      budgetCaps: DEFAULT_BUDGET_CAPS,
       kind: "manual",
       scheduledFor: null,
       trigger: buildTrigger(),
       prevRecord,
+      store: dogwatchStore.store,
+      storeKind: dogwatchStore.kind,
+      ...(dogwatchStore.degradeReason === undefined ? {} : { storeDegradeReason: dogwatchStore.degradeReason }),
     });
   } catch (cause) {
     console.error(`internal error building the run: ${cause instanceof Error ? cause.stack ?? cause.message : String(cause)}`);
     return EXIT.INTERNAL;
+  } finally {
+    await dogwatchStore.close();
   }
 
   if (opts.dryRun === true) {
