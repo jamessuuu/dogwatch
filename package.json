@@ -1,0 +1,36 @@
+{
+  "name": "dogwatch-monorepo",
+  "private": true,
+  "type": "module",
+  "version": "0.0.0",
+  "packageManager": "pnpm@9.15.4",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "typecheck": "tsc -p tsconfig.json --noEmit && pnpm -r --parallel typecheck",
+    "lint": "eslint .",
+    "test": "vitest run --project unit",
+    "e2e:smoke": "pnpm --filter @dogwatch/web run e2e:smoke",
+    "eval": "vitest run --project eval --passWithNoTests",
+    "build": "pnpm -r build",
+    "schema:gen": "tsx scripts/gen-schema.mjs",
+    "schema:check": "tsx scripts/gen-schema.mjs --check",
+    "render": "tsx packages/dogwatch/src/cli/index.ts render",
+    "render:check": "tsx packages/dogwatch/src/cli/index.ts render --check",
+    "verify": "tsx packages/dogwatch/src/cli/index.ts verify",
+    "dogwatch": "tsx packages/dogwatch/src/cli/index.ts",
+    "brand": "node scripts/brand.mjs --project=dogwatch --out=apps/web/public/brand",
+    "brand:check": "node scripts/brand-check.mjs"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.20.0",
+    "@types/node": "^22.10.0",
+    "eslint": "^9.20.0",
+    "tsx": "^4.19.2",
+    "typescript": "^5.7.3",
+    "typescript-eslint": "^8.24.0",
+    "vitest": "^4.1.10",
+    "zod": "^4.0.0"
+  }
+}

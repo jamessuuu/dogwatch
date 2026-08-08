@@ -1,0 +1,12 @@
+{
+  "name": "@dogwatch/web",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Deferred to M6 (SPEC §12). Deploys are James-gated; this is a workspace entry only so the pnpm workspace shape is stable from M0.",
+  "type": "module",
+  "scripts": {
+    "typecheck": "echo \"apps/web lands at M6 (SPEC §12) — nothing to typecheck yet\"",
+    "build": "echo \"apps/web lands at M6 (SPEC §12) — nothing to build yet\"",
+    "e2e:smoke": "echo \"e2e:smoke lands at M6 when apps/web exists (Playwright against next build && next start). Stage intentionally green.\""
+  }
+}

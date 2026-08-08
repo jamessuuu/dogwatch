@@ -1,0 +1,1312 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "properties": {
+    "formatVersion": {
+      "type": "number",
+      "const": 1
+    },
+    "runId": {
+      "type": "string",
+      "minLength": 1
+    },
+    "kind": {
+      "type": "string",
+      "enum": [
+        "scheduled",
+        "manual",
+        "gap"
+      ]
+    },
+    "watchVersion": {
+      "type": "string",
+      "minLength": 1
+    },
+    "checkPackVersion": {
+      "type": "string",
+      "minLength": 1
+    },
+    "commit": {
+      "type": "string",
+      "minLength": 1
+    },
+    "targetsHash": {
+      "type": "string",
+      "minLength": 1
+    },
+    "pricingManifest": {
+      "type": "string",
+      "minLength": 1
+    },
+    "scheduledFor": {
+      "anyOf": [
+        {
+          "type": "string",
+          "format": "date-time",
+          "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d(?::[0-5]\\d(?:\\.\\d+)?)?(?:Z))$"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "startedAt": {
+      "type": "string",
+      "format": "date-time",
+      "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d(?::[0-5]\\d(?:\\.\\d+)?)?(?:Z))$"
+    },
+    "endedAt": {
+      "type": "string",
+      "format": "date-time",
+      "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d(?::[0-5]\\d(?:\\.\\d+)?)?(?:Z))$"
+    },
+    "trigger": {
+      "type": "object",
+      "properties": {
+        "workflow": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "runUrl": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "actor": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "workflow",
+        "runUrl",
+        "actor"
+      ],
+      "additionalProperties": false
+    },
+    "checks": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "family": {
+            "type": "string",
+            "enum": [
+              "reach",
+              "header",
+              "brand",
+              "link",
+              "weight",
+              "artifact",
+              "repo",
+              "pkg",
+              "watch"
+            ]
+          },
+          "targetId": {
+            "type": "string",
+            "minLength": 1
+          },
+          "ruleId": {
+            "type": "string",
+            "minLength": 1
+          },
+          "title": {
+            "type": "string",
+            "minLength": 1
+          },
+          "request": {
+            "type": "object",
+            "properties": {
+              "method": {
+                "type": "string"
+              },
+              "url": {
+                "type": "string"
+              },
+              "headersSent": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "timeoutMs": {
+                "type": "integer",
+                "exclusiveMinimum": 0,
+                "maximum": 9007199254740991
+              }
+            },
+            "required": [
+              "method",
+              "url",
+              "headersSent",
+              "timeoutMs"
+            ],
+            "additionalProperties": false
+          },
+          "observedAt": {
+            "type": "string",
+            "format": "date-time",
+            "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d(?::[0-5]\\d(?:\\.\\d+)?)?(?:Z))$"
+          },
+          "verdict": {
+            "type": "string",
+            "enum": [
+              "pass",
+              "finding",
+              "error",
+              "skipped",
+              "pending"
+            ]
+          },
+          "skipReason": {
+            "type": "string",
+            "enum": [
+              "not_published",
+              "not_applicable",
+              "no_baseline",
+              "circuit_open",
+              "rate_limited"
+            ]
+          },
+          "errorCode": {
+            "type": "string",
+            "enum": [
+              "timeout",
+              "network_error",
+              "http_error",
+              "parse_error",
+              "forbidden",
+              "unreachable"
+            ]
+          },
+          "evidence": {
+            "type": "object",
+            "properties": {
+              "status": {
+                "type": "integer",
+                "minimum": -9007199254740991,
+                "maximum": 9007199254740991
+              },
+              "finalUrl": {
+                "type": "string"
+              },
+              "redirects": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "minimum": -9007199254740991,
+                      "maximum": 9007199254740991
+                    },
+                    "url": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "status",
+                    "url"
+                  ],
+                  "additionalProperties": false
+                }
+              },
+              "headers": {
+                "type": "object",
+                "propertyNames": {
+                  "type": "string"
+                },
+                "additionalProperties": {
+                  "type": "string"
+                }
+              },
+              "bodySha256": {
+                "type": "string"
+              },
+              "bytes": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 9007199254740991
+              },
+              "ms": {
+                "type": "number",
+                "minimum": 0
+              },
+              "tlsNotAfter": {
+                "type": "string"
+              },
+              "json": {},
+              "truncated": {
+                "type": "boolean"
+              }
+            },
+            "required": [
+              "redirects",
+              "headers"
+            ],
+            "additionalProperties": false
+          },
+          "reproduce": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "required": [
+          "id",
+          "family",
+          "targetId",
+          "ruleId",
+          "title",
+          "request",
+          "observedAt",
+          "verdict",
+          "evidence",
+          "reproduce"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "findings": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^F-"
+          },
+          "checkId": {
+            "type": "string",
+            "minLength": 1
+          },
+          "ruleId": {
+            "type": "string",
+            "minLength": 1
+          },
+          "severity": {
+            "type": "string",
+            "enum": [
+              "low",
+              "medium",
+              "high"
+            ]
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "unconfirmed",
+              "confirmed"
+            ]
+          },
+          "statement": {
+            "type": "string",
+            "minLength": 1
+          },
+          "sources": {
+            "minItems": 1,
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "url": {
+                  "type": "string",
+                  "format": "uri"
+                },
+                "method": {
+                  "type": "string"
+                },
+                "status": {
+                  "type": "integer",
+                  "minimum": -9007199254740991,
+                  "maximum": 9007199254740991
+                },
+                "retrievedAt": {
+                  "type": "string",
+                  "format": "date-time",
+                  "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d(?::[0-5]\\d(?:\\.\\d+)?)?(?:Z))$"
+                },
+                "evidencePath": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              },
+              "required": [
+                "url",
+                "method",
+                "status",
+                "retrievedAt",
+                "evidencePath"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "firstSeenRunId": {
+            "type": "string",
+            "minLength": 1
+          },
+          "fingerprint": {
+            "type": "string",
+            "minLength": 1
+          },
+          "advisory": {
+            "type": "object",
+            "properties": {
+              "severity": {
+                "type": "string",
+                "enum": [
+                  "low",
+                  "medium",
+                  "high"
+                ]
+              },
+              "note": {
+                "type": "string",
+                "maxLength": 600
+              },
+              "model": {
+                "type": "string"
+              },
+              "agreesWithRule": {
+                "type": "boolean"
+              }
+            },
+            "required": [
+              "severity",
+              "note",
+              "model",
+              "agreesWithRule"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "required": [
+          "id",
+          "checkId",
+          "ruleId",
+          "severity",
+          "status",
+          "statement",
+          "sources",
+          "firstSeenRunId",
+          "fingerprint"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "absenceOfEvidence": {
+      "type": "object",
+      "properties": {
+        "statement": {
+          "type": "string",
+          "minLength": 1
+        },
+        "checksClean": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "byFamily": {
+          "type": "object",
+          "propertyNames": {
+            "type": "string"
+          },
+          "additionalProperties": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 9007199254740991
+          }
+        },
+        "notChecked": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "checkId": {
+                "type": "string",
+                "minLength": 1
+              },
+              "reasonCode": {
+                "anyOf": [
+                  {
+                    "type": "string",
+                    "enum": [
+                      "not_published",
+                      "not_applicable",
+                      "no_baseline",
+                      "circuit_open",
+                      "rate_limited"
+                    ]
+                  },
+                  {
+                    "type": "string",
+                    "enum": [
+                      "timeout",
+                      "network_error",
+                      "http_error",
+                      "parse_error",
+                      "forbidden",
+                      "unreachable"
+                    ]
+                  }
+                ]
+              }
+            },
+            "required": [
+              "checkId",
+              "reasonCode"
+            ],
+            "additionalProperties": false
+          }
+        }
+      },
+      "required": [
+        "statement",
+        "checksClean",
+        "byFamily",
+        "notChecked"
+      ],
+      "additionalProperties": false
+    },
+    "metrics": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "targetId": {
+            "type": "string",
+            "minLength": 1
+          },
+          "name": {
+            "type": "string",
+            "minLength": 1
+          },
+          "value": {
+            "type": "number"
+          },
+          "unit": {
+            "type": "string",
+            "minLength": 1
+          },
+          "delta": {
+            "type": "number"
+          },
+          "note": {
+            "type": "string",
+            "const": "recorded, not judged"
+          }
+        },
+        "required": [
+          "id",
+          "targetId",
+          "name",
+          "value",
+          "unit",
+          "note"
+        ],
+        "additionalProperties": {}
+      }
+    },
+    "actions": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "kind": {
+            "type": "string",
+            "enum": [
+              "issue.open",
+              "issue.comment"
+            ]
+          },
+          "target": {
+            "type": "string",
+            "minLength": 1
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "proposed",
+              "gated_pending",
+              "executed",
+              "refused"
+            ]
+          },
+          "gateId": {
+            "type": "string"
+          },
+          "effectKey": {
+            "type": "string"
+          },
+          "effectOutcome": {
+            "type": "string"
+          },
+          "artifactUrl": {
+            "type": "string",
+            "format": "uri"
+          },
+          "draft": {
+            "type": "object",
+            "properties": {
+              "title": {
+                "type": "string",
+                "minLength": 1
+              },
+              "body": {
+                "type": "string",
+                "minLength": 1
+              },
+              "author": {
+                "type": "string",
+                "const": "claude-haiku-4-5"
+              },
+              "approvedBy": {
+                "type": "string"
+              },
+              "approvedAt": {
+                "type": "string",
+                "format": "date-time",
+                "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d(?::[0-5]\\d(?:\\.\\d+)?)?(?:Z))$"
+              }
+            },
+            "required": [
+              "title",
+              "body",
+              "author"
+            ],
+            "additionalProperties": false
+          },
+          "reasonCode": {
+            "type": "string",
+            "enum": [
+              "store_unavailable",
+              "duplicate_suppressed",
+              "gate_timed_out",
+              "circuit_open",
+              "not_confirmed"
+            ]
+          }
+        },
+        "required": [
+          "id",
+          "kind",
+          "target",
+          "status"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "gates": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "key": {
+            "type": "string",
+            "minLength": 1
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "pending",
+              "approved",
+              "rejected",
+              "timed_out",
+              "cancelled"
+            ]
+          },
+          "openedAt": {
+            "type": "string",
+            "format": "date-time",
+            "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d(?::[0-5]\\d(?:\\.\\d+)?)?(?:Z))$"
+          },
+          "expiresAt": {
+            "type": "string",
+            "format": "date-time",
+            "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d(?::[0-5]\\d(?:\\.\\d+)?)?(?:Z))$"
+          },
+          "decidedAt": {
+            "type": "string",
+            "format": "date-time",
+            "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d(?::[0-5]\\d(?:\\.\\d+)?)?(?:Z))$"
+          },
+          "decidedBy": {
+            "type": "string"
+          },
+          "decisionChannel": {
+            "type": "string"
+          },
+          "reason": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "key",
+          "status",
+          "openedAt",
+          "expiresAt"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "refusals": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "subject": {
+            "type": "string",
+            "minLength": 1
+          },
+          "reasonCode": {
+            "type": "string",
+            "enum": [
+              "store_unavailable",
+              "duplicate_suppressed",
+              "gate_timed_out",
+              "circuit_open",
+              "not_confirmed"
+            ]
+          },
+          "detail": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "required": [
+          "subject",
+          "reasonCode",
+          "detail"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "cost": {
+      "type": "object",
+      "properties": {
+        "currency": {
+          "type": "string",
+          "const": "USD"
+        },
+        "microUsd": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "certainty": {
+          "type": "string",
+          "enum": [
+            "reported",
+            "unknown"
+          ]
+        },
+        "breakdown": {
+          "type": "object",
+          "propertyNames": {
+            "type": "string"
+          },
+          "additionalProperties": {
+            "type": "number"
+          }
+        },
+        "method": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "currency",
+        "microUsd",
+        "certainty",
+        "breakdown",
+        "method"
+      ],
+      "additionalProperties": false
+    },
+    "llm": {
+      "type": "object",
+      "properties": {
+        "calls": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "model": {
+          "type": "string"
+        },
+        "inputTokens": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "outputTokens": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "microUsd": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "rejected": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "reason": {
+          "type": "string",
+          "enum": [
+            "no_findings",
+            "not_implemented",
+            "daily_cap",
+            "api_error",
+            "schema_reject",
+            "indeterminate"
+          ]
+        }
+      },
+      "required": [
+        "calls",
+        "inputTokens",
+        "outputTokens",
+        "microUsd"
+      ],
+      "additionalProperties": false
+    },
+    "degraded": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "component": {
+            "type": "string",
+            "enum": [
+              "llm",
+              "store",
+              "probe"
+            ]
+          },
+          "reason": {
+            "type": "string",
+            "enum": [
+              "daily_cap",
+              "api_error",
+              "schema_reject",
+              "indeterminate",
+              "store_unavailable"
+            ]
+          }
+        },
+        "required": [
+          "component",
+          "reason"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "audit": {
+      "type": "object",
+      "properties": {
+        "namespace": {
+          "type": "string",
+          "minLength": 1
+        },
+        "store": {
+          "type": "string",
+          "enum": [
+            "postgres",
+            "memory"
+          ]
+        },
+        "fromSeq": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "toSeq": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "prevHead": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "head": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "verified": {
+          "type": "boolean"
+        },
+        "events": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "namespace": {
+                "type": "string"
+              },
+              "seq": {
+                "type": "integer",
+                "minimum": -9007199254740991,
+                "maximum": 9007199254740991
+              },
+              "ts": {
+                "type": "integer",
+                "minimum": -9007199254740991,
+                "maximum": 9007199254740991
+              },
+              "subjectType": {
+                "type": "string",
+                "enum": [
+                  "effect",
+                  "gate",
+                  "circuit",
+                  "custom"
+                ]
+              },
+              "subjectKey": {
+                "type": "string"
+              },
+              "type": {
+                "type": "string"
+              },
+              "attempt": {
+                "anyOf": [
+                  {
+                    "type": "integer",
+                    "minimum": -9007199254740991,
+                    "maximum": 9007199254740991
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "actor": {
+                "type": "string"
+              },
+              "data": {
+                "type": "object",
+                "propertyNames": {
+                  "type": "string"
+                },
+                "additionalProperties": {}
+              },
+              "prevHash": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "hash": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              }
+            },
+            "required": [
+              "id",
+              "namespace",
+              "seq",
+              "ts",
+              "subjectType",
+              "subjectKey",
+              "type",
+              "attempt",
+              "actor",
+              "data",
+              "prevHash",
+              "hash"
+            ],
+            "additionalProperties": false
+          }
+        }
+      },
+      "required": [
+        "namespace",
+        "store",
+        "fromSeq",
+        "toSeq",
+        "prevHead",
+        "head",
+        "verified",
+        "events"
+      ],
+      "additionalProperties": false
+    },
+    "chain": {
+      "type": "object",
+      "properties": {
+        "prevRunId": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "prevRecordHash": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "recordHash": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "prevRunId",
+        "prevRecordHash",
+        "recordHash"
+      ],
+      "additionalProperties": false
+    },
+    "amendments": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "at": {
+            "type": "string",
+            "format": "date-time",
+            "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d(?::[0-5]\\d(?:\\.\\d+)?)?(?:Z))$"
+          },
+          "by": {
+            "type": "string",
+            "minLength": 1
+          },
+          "kind": {
+            "type": "string",
+            "minLength": 1
+          },
+          "events": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "string"
+                },
+                "namespace": {
+                  "type": "string"
+                },
+                "seq": {
+                  "type": "integer",
+                  "minimum": -9007199254740991,
+                  "maximum": 9007199254740991
+                },
+                "ts": {
+                  "type": "integer",
+                  "minimum": -9007199254740991,
+                  "maximum": 9007199254740991
+                },
+                "subjectType": {
+                  "type": "string",
+                  "enum": [
+                    "effect",
+                    "gate",
+                    "circuit",
+                    "custom"
+                  ]
+                },
+                "subjectKey": {
+                  "type": "string"
+                },
+                "type": {
+                  "type": "string"
+                },
+                "attempt": {
+                  "anyOf": [
+                    {
+                      "type": "integer",
+                      "minimum": -9007199254740991,
+                      "maximum": 9007199254740991
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                },
+                "actor": {
+                  "type": "string"
+                },
+                "data": {
+                  "type": "object",
+                  "propertyNames": {
+                    "type": "string"
+                  },
+                  "additionalProperties": {}
+                },
+                "prevHash": {
+                  "anyOf": [
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                },
+                "hash": {
+                  "anyOf": [
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                }
+              },
+              "required": [
+                "id",
+                "namespace",
+                "seq",
+                "ts",
+                "subjectType",
+                "subjectKey",
+                "type",
+                "attempt",
+                "actor",
+                "data",
+                "prevHash",
+                "hash"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "actions": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "kind": {
+                  "type": "string",
+                  "enum": [
+                    "issue.open",
+                    "issue.comment"
+                  ]
+                },
+                "target": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "status": {
+                  "type": "string",
+                  "enum": [
+                    "proposed",
+                    "gated_pending",
+                    "executed",
+                    "refused"
+                  ]
+                },
+                "gateId": {
+                  "type": "string"
+                },
+                "effectKey": {
+                  "type": "string"
+                },
+                "effectOutcome": {
+                  "type": "string"
+                },
+                "artifactUrl": {
+                  "type": "string",
+                  "format": "uri"
+                },
+                "draft": {
+                  "type": "object",
+                  "properties": {
+                    "title": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "body": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "author": {
+                      "type": "string",
+                      "const": "claude-haiku-4-5"
+                    },
+                    "approvedBy": {
+                      "type": "string"
+                    },
+                    "approvedAt": {
+                      "type": "string",
+                      "format": "date-time",
+                      "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d(?::[0-5]\\d(?:\\.\\d+)?)?(?:Z))$"
+                    }
+                  },
+                  "required": [
+                    "title",
+                    "body",
+                    "author"
+                  ],
+                  "additionalProperties": false
+                },
+                "reasonCode": {
+                  "type": "string",
+                  "enum": [
+                    "store_unavailable",
+                    "duplicate_suppressed",
+                    "gate_timed_out",
+                    "circuit_open",
+                    "not_confirmed"
+                  ]
+                }
+              },
+              "required": [
+                "id",
+                "kind",
+                "target",
+                "status"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "refusals": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "subject": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "reasonCode": {
+                  "type": "string",
+                  "enum": [
+                    "store_unavailable",
+                    "duplicate_suppressed",
+                    "gate_timed_out",
+                    "circuit_open",
+                    "not_confirmed"
+                  ]
+                },
+                "detail": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              },
+              "required": [
+                "subject",
+                "reasonCode",
+                "detail"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "amendmentHash": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "required": [
+          "at",
+          "by",
+          "kind",
+          "events",
+          "actions",
+          "refusals",
+          "amendmentHash"
+        ],
+        "additionalProperties": false
+      }
+    }
+  },
+  "required": [
+    "formatVersion",
+    "runId",
+    "kind",
+    "watchVersion",
+    "checkPackVersion",
+    "commit",
+    "targetsHash",
+    "pricingManifest",
+    "scheduledFor",
+    "startedAt",
+    "endedAt",
+    "trigger",
+    "checks",
+    "findings",
+    "absenceOfEvidence",
+    "metrics",
+    "actions",
+    "gates",
+    "refusals",
+    "cost",
+    "llm",
+    "degraded",
+    "audit",
+    "chain",
+    "amendments"
+  ],
+  "additionalProperties": false
+}

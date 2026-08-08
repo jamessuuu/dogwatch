@@ -1,0 +1,97 @@
+{
+  "formatVersion": 1,
+  "sites": [
+    {
+      "id": "tiltmeter",
+      "name": "tiltmeter",
+      "url": "https://tiltmeter.vercel.app",
+      "repo": "jamessuuu/tiltmeter",
+      "deployed": false,
+      "families": ["reach", "header", "brand", "link", "weight"],
+      "expectedHeaders": [],
+      "weightBudgetBytes": 300000,
+      "note": "Not yet deployed (SPEC §12 M0-M2). Every family for this site is skipped reasonCode:not_published by config, before any HTTP request is made — never by probing and interpreting a response. Verified live 2026-08-08: this shared *.vercel.app subdomain already resolves to an unrelated third-party project, so a response-driven skip would risk publishing a claim about someone else's software (SPEC §1 non-goal 1)."
+    },
+    {
+      "id": "chaff",
+      "name": "chaff",
+      "url": "https://chaff.vercel.app",
+      "repo": "jamessuuu/chaff",
+      "deployed": false,
+      "families": ["reach", "header", "brand", "link", "weight"],
+      "expectedHeaders": [],
+      "weightBudgetBytes": 300000,
+      "note": "Not yet deployed. See tiltmeter note — same verified-live third-party-squat situation on this subdomain."
+    },
+    {
+      "id": "sluice",
+      "name": "sluice",
+      "url": "https://sluice.vercel.app",
+      "repo": "jamessuuu/sluice",
+      "deployed": false,
+      "families": ["reach", "header", "brand", "link", "weight"],
+      "expectedHeaders": [],
+      "weightBudgetBytes": 300000,
+      "note": "Not yet deployed. See tiltmeter note — same verified-live third-party-squat situation on this subdomain."
+    },
+    {
+      "id": "snapgauge",
+      "name": "snapgauge",
+      "url": "https://snapgauge.vercel.app",
+      "repo": "jamessuuu/snapgauge",
+      "deployed": false,
+      "families": ["reach", "header", "brand", "link", "weight"],
+      "expectedHeaders": [],
+      "weightBudgetBytes": 300000,
+      "note": "Not yet deployed. See tiltmeter note — same verified-live third-party-squat situation on this subdomain."
+    },
+    {
+      "id": "dogwatch",
+      "name": "dogwatch",
+      "url": "https://dogwatch.vercel.app",
+      "repo": "jamessuuu/dogwatch",
+      "deployed": false,
+      "families": ["reach", "header", "brand", "link", "weight"],
+      "expectedHeaders": [],
+      "weightBudgetBytes": 300000,
+      "note": "Not yet deployed (self-watch: dogwatch watches its own future site once apps/web ships at M6). See tiltmeter note — same verified-live third-party-squat situation on this subdomain."
+    },
+    {
+      "id": "agentjames",
+      "name": "Agent James",
+      "url": "https://agentjames.vercel.app",
+      "repo": "jamessuuu/agentjames",
+      "deployed": true,
+      "families": ["reach", "header", "link", "weight"],
+      "expectedHeaders": ["strict-transport-security"],
+      "weightBudgetBytes": 300000,
+      "note": "Live. The brand family is intentionally omitted here: the backlink+footer-attribution rule (SPEC §2) asserts that sibling tool sites link back to the portfolio hub, not that the hub links to itself."
+    }
+  ],
+  "repos": [
+    { "id": "tiltmeter", "repo": "jamessuuu/tiltmeter" },
+    { "id": "chaff", "repo": "jamessuuu/chaff" },
+    { "id": "sluice", "repo": "jamessuuu/sluice" },
+    { "id": "snapgauge", "repo": "jamessuuu/snapgauge" },
+    { "id": "dogwatch", "repo": "jamessuuu/dogwatch" },
+    { "id": "agentjames", "repo": "jamessuuu/agentjames" }
+  ],
+  "packages": [
+    { "id": "sluice", "name": "@jamessuuu/sluice", "repo": "jamessuuu/sluice" },
+    { "id": "snapgauge", "name": "snapgauge", "repo": "jamessuuu/snapgauge" },
+    { "id": "chaff", "name": "chaff", "repo": "jamessuuu/chaff" }
+  ],
+  "artifacts": [],
+  "actionPolicy": {
+    "issueRepos": [
+      "jamessuuu/dogwatch",
+      "jamessuuu/tiltmeter",
+      "jamessuuu/chaff",
+      "jamessuuu/sluice",
+      "jamessuuu/snapgauge",
+      "jamessuuu/agentjames"
+    ],
+    "confirmations": 2,
+    "gateTimeoutHours": 48
+  }
+}

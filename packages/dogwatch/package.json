@@ -1,0 +1,35 @@
+{
+  "name": "dogwatch",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Night watch over the six public surfaces of the Agent James showcase program. Not published — an operated instance (SPEC.md §4).",
+  "license": "MIT",
+  "author": "James Lorenz Santos",
+  "type": "module",
+  "engines": {
+    "node": ">=22"
+  },
+  "bin": {
+    "dogwatch": "./bin/dogwatch.mjs"
+  },
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "sideEffects": false,
+  "scripts": {
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "build": "tsc -p tsconfig.build.json",
+    "dogwatch": "tsx src/cli/index.ts"
+  },
+  "dependencies": {
+    "@jamessuuu/sluice": "link:../../../sluice/packages/sluice",
+    "commander": "^14.0.0",
+    "undici": "^7.0.0",
+    "zod": "^4.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.0",
+    "tsx": "^4.19.2",
+    "typescript": "^5.7.3"
+  }
+}

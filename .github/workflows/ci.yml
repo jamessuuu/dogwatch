@@ -1,0 +1,71 @@
+name: ci
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  ci:
+    runs-on: ubuntu-latest
+    steps:
+      # dogwatch depends on the unpublished @jamessuuu/sluice via a
+      # filesystem `link:` (SPEC's sequencing note: M0-M3 build against
+      # sluice pre-1.0.0-rc.1, no npm version exists yet). CI checks the
+      # sibling repo out next to this one — `packages/dogwatch/package.json`
+      # resolves `link:../../../sluice/packages/sluice` relative to this
+      # checkout, so `sluice` must land as this checkout's OWN sibling
+      # directory (`path: ../sluice`, relative to github.workspace) for the
+      # link to be the exact same relative path a local clone uses. At
+      # publish time this becomes a pinned npm version and this step is
+      # deleted (README "Status" section).
+      - uses: actions/checkout@v4
+        with:
+          repository: jamessuuu/sluice
+          path: ../sluice
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+
+      # The five stages (PROGRAM.md D6). Order is the argument:
+      # typecheck -> lint -> unit -> e2e:smoke -> eval.
+      - name: typecheck
+        run: pnpm typecheck
+      - name: lint
+        run: pnpm lint
+      - name: unit
+        run: pnpm test
+      - name: e2e-smoke
+        # Real Playwright smoke lands at M6 (apps/web ships then). Kept as
+        # an explicit no-op stage, not omitted, so the pipeline shape is
+        # stable from the first commit (mirrors sluice's own M0-M6 gap).
+        run: pnpm e2e:smoke
+      - name: eval
+        # fixtures/violations/ (one planted record per rubric rule, exact
+        # code required) + replay goldens (frozen clock + seeded ids,
+        # byte-identical reproduction) — SPEC §11.2/§11.3.
+        run: pnpm eval
+
+      # Drift gates (SPEC §11.5): a generated artifact that no longer
+      # matches its source is exactly the kind of silent rot this project
+      # exists to catch in OTHER repos — it cannot tolerate the same rot in
+      # its own.
+      - name: schema drift (schemas/run-record.v1.json vs the Zod source of truth)
+        run: pnpm schema:check
+      - name: render drift (runs/index.json + state/pending-gates.json vs runs/**)
+        run: pnpm render:check
+      - name: brand drift (apps/web/public/brand vs scripts/brand.mjs)
+        run: pnpm brand:check
+
+      # SPEC §11.1: every committed record, on every push — findings
+      # re-derived from stored evidence must match byte-for-byte, and the
+      # cross-run chain.recordHash / audit hash chain must verify. This is
+      # what makes every commit to runs/** self-checking, not just at
+      # publish time.
+      - name: verify every committed run record
+        run: pnpm verify --all --rerun-rules

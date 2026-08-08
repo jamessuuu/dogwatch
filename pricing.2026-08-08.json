@@ -1,0 +1,17 @@
+{
+  "formatVersion": 1,
+  "effectiveDate": "2026-08-08",
+  "note": "Not consumed by any M0-M2 code path. No LLM call and no metered API call exists yet (SPEC M3 adds the advisory model, M4 adds Neon) — every published cost.microUsd through M2 is 0 with certainty:\"reported\" because $0 is the true, known cost, not an estimate. This manifest exists now so cost.method can already point at a real, versioned, git-diffable source instead of a hardcoded literal, per SPEC §8 (\"every price comes from pricing.<date>.json, never a constant\").",
+  "llm": {
+    "provider": "anthropic",
+    "model": "claude-haiku-4-5",
+    "inputPerMTokUsd": 1.0,
+    "outputPerMTokUsd": 5.0
+  },
+  "infra": {
+    "githubActionsPerMinuteUsd": 0,
+    "githubActionsNote": "public repo, unmetered (SPEC §5)",
+    "neonComputePerCuHourUsd": 0,
+    "neonComputeNote": "Free tier, 100 CU-hr/month (SPEC §5); not used before M4"
+  }
+}
