@@ -14,3 +14,11 @@ export function defaultTargetsPath(): string {
 export function defaultRunsDir(): string {
   return join(repoRoot(), "runs");
 }
+
+/** SPEC §8: "every price comes from pricing.<date>.json" — the currently
+ * effective manifest. A new dated file supersedes this constant, same as
+ * the literal `"pricing.2026-08-08.json"` label already stamped into every
+ * record's `pricingManifest` field (`cli/watch.ts`). */
+export function defaultPricingManifestPath(): string {
+  return join(repoRoot(), "pricing.2026-08-08.json");
+}

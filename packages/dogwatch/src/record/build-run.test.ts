@@ -1,6 +1,7 @@
 import { describe, expect, it } from "vitest";
 import { buildRun } from "./build-run.js";
 import { createReplayHttpProbe } from "../probe/replay.js";
+import { TEST_PRICING_MANIFEST } from "./test-helper.js";
 import type { TargetsFile } from "./targets-schema.js";
 import type { HttpGetResult, HttpHeadResult } from "../probe/types.js";
 
@@ -60,6 +61,7 @@ async function buildTestRun(transcriptGet: Record<string, HttpGetResult>) {
     watchVersion: "0.0.0-test",
     checkPackVersion: "1",
     pricingManifest: "pricing.2026-08-08.json",
+    pricing: TEST_PRICING_MANIFEST,
     kind: "manual",
     scheduledFor: null,
     trigger: { workflow: null, runUrl: null, actor: "test" },
@@ -122,10 +124,15 @@ describe("buildRun — findings run (503)", () => {
     expect(finding?.sources[0]?.url).toBe("https://agentjames.vercel.app");
   });
 
-  it("still publishes llm:{calls:0} — findings alone never trigger a model call before M3", async () => {
+  it("degrades honestly (no ANTHROPIC_API_KEY configured in this test) instead of pretending a call happened", async () => {
+    // M3 (SPEC §8): buildTestRun never passes an llmClient, mirroring every
+    // local/dev/CI-without-secret invocation of `dogwatch watch` — the
+    // advisory pipeline must degrade, never crash and never fabricate a call.
     const record = await buildTestRun({ "https://agentjames.vercel.app": okResult({ status: 503 }) });
     expect(record.llm.calls).toBe(0);
-    expect(record.llm.reason).toBe("not_implemented");
+    expect(record.llm.reason).toBe("api_error");
+    expect(record.degraded).toEqual([{ component: "llm", reason: "api_error" }]);
+    expect(record.cost.microUsd).toBe(0);
   });
 });
 
@@ -174,6 +181,7 @@ describe("buildRun — link retry orchestration (link classification fix, 2026-0
       watchVersion: "0.0.0-test",
       checkPackVersion: "1",
       pricingManifest: "pricing.2026-08-08.json",
+      pricing: TEST_PRICING_MANIFEST,
       kind: "manual",
       scheduledFor: null,
       trigger: { workflow: null, runUrl: null, actor: "test" },
@@ -208,6 +216,7 @@ describe("buildRun — link retry orchestration (link classification fix, 2026-0
       watchVersion: "0.0.0-test",
       checkPackVersion: "1",
       pricingManifest: "pricing.2026-08-08.json",
+      pricing: TEST_PRICING_MANIFEST,
       kind: "manual",
       scheduledFor: null,
       trigger: { workflow: null, runUrl: null, actor: "test" },
@@ -239,6 +248,7 @@ describe("buildRun — undeployed sites never touch the network", () => {
       watchVersion: "0.0.0-test",
       checkPackVersion: "1",
       pricingManifest: "pricing.2026-08-08.json",
+      pricing: TEST_PRICING_MANIFEST,
       kind: "manual",
       scheduledFor: null,
       trigger: { workflow: null, runUrl: null, actor: "test" },

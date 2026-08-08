@@ -53,7 +53,7 @@
   "chain": {
     "prevRecordHash": null,
     "prevRunId": null,
-    "recordHash": "bcf00ea32c4f98c5fcc50b678af9d4d6772ebf1ecc511b21b01b2379d3db6c3e"
+    "recordHash": "a5c71568b1fd6b9c16e1076156e2e2413ae944dce7b60e388d002d4e72aeca55"
   },
   "checkPackVersion": "1",
   "checks": [
@@ -122,7 +122,12 @@
     "method": "pricing.2026-08-08.json",
     "microUsd": 0
   },
-  "degraded": [],
+  "degraded": [
+    {
+      "component": "llm",
+      "reason": "api_error"
+    }
+  ],
   "endedAt": "2026-08-08T15:00:00.000Z",
   "findings": [
     {
@@ -130,6 +135,7 @@
         "agreesWithRule": true,
         "model": "claude-haiku-4-5",
         "note": "advisory text",
+        "proposedAction": "none",
         "severity": "high"
       },
       "checkId": "reach:agentjames:reach.status_not_200",
@@ -159,7 +165,7 @@
     "inputTokens": 0,
     "microUsd": 0,
     "outputTokens": 0,
-    "reason": "not_implemented"
+    "reason": "api_error"
   },
   "metrics": [
     {

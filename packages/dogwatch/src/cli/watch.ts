@@ -1,15 +1,17 @@
 import type { Command } from "commander";
+import { createAnthropicLlmClient } from "../llm/client.js";
 import { createUndiciHttpProbe } from "../probe/http.js";
 import { buildIndex } from "../record/index-file.js";
 import { currentGitCommit } from "../record/git.js";
 import { canonicalStringify } from "../record/canonical.js";
+import { loadPricingManifest } from "../record/pricing-io.js";
 import { runIndexPath, runRecordPath } from "../record/paths.js";
 import { scanRunRecords, latestRunRecord } from "../record/scan.js";
 import { FamilySchema } from "../record/schema.js";
 import { loadTargets } from "../record/targets-io.js";
 import { writeJsonFileAtomic } from "../record/write.js";
 import { buildRun } from "../record/build-run.js";
-import { defaultRunsDir, defaultTargetsPath, repoRoot } from "./paths.js";
+import { defaultPricingManifestPath, defaultRunsDir, defaultTargetsPath, repoRoot } from "./paths.js";
 import { restrictToFamily } from "./family-filter.js";
 import { buildTrigger } from "./trigger.js";
 import { EXIT } from "./exit-codes.js";
@@ -56,6 +58,23 @@ export async function runWatch(opts: WatchCliOptions): Promise<number> {
     targets = restrictToFamily(targets, parsedFamily.data);
   }
 
+  let pricing: ReturnType<typeof loadPricingManifest>;
+  try {
+    pricing = loadPricingManifest(defaultPricingManifestPath());
+  } catch (cause) {
+    console.error(`usage error: ${cause instanceof Error ? cause.message : String(cause)}`);
+    return EXIT.USAGE;
+  }
+
+  // M3 advisory LLM (SPEC §8): only constructed when a real key is present.
+  // James has not approved spend — a `dogwatch watch` run with no
+  // ANTHROPIC_API_KEY set (every local/dev invocation, and CI unless the
+  // secret is explicitly wired) degrades the advisory pipeline honestly
+  // rather than ever constructing a real client. CRITICAL: no live API
+  // call anywhere in this build's tests or default behavior.
+  const apiKey = process.env.ANTHROPIC_API_KEY;
+  const llmClient = apiKey === undefined || apiKey.length === 0 ? undefined : createAnthropicLlmClient(apiKey);
+
   const prevRecord = latestRunRecord(runsDir);
 
   let record;
@@ -70,6 +89,8 @@ export async function runWatch(opts: WatchCliOptions): Promise<number> {
       watchVersion: DOGWATCH_VERSION,
       checkPackVersion: CHECK_PACK_VERSION,
       pricingManifest: "pricing.2026-08-08.json",
+      pricing,
+      llmClient,
       kind: "manual",
       scheduledFor: null,
       trigger: buildTrigger(),

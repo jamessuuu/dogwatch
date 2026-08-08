@@ -8,11 +8,13 @@
  */
 import { createSluice, MemoryStore, systemClock, type AuditEvent, type Clock } from "@jamessuuu/sluice";
 import { RULES_BY_ID } from "../checks/index.js";
+import { InMemoryBudgetStore, runAdvisoryPipeline, type BudgetCaps, type BudgetStore, type LlmClient } from "../llm/index.js";
 import { buildAbsenceOfEvidence } from "./absence.js";
 import { buildSiteChecks } from "./build-site.js";
 import { computeRecordHash } from "./hash.js";
 import { checkId, findingFingerprint, findingId, newRunId } from "./ids.js";
 import { resolveHysteresis } from "./hysteresis.js";
+import type { PricingManifest } from "./pricing-schema.js";
 import { wrapProbeWithSluice } from "./sluice-probe.js";
 import type {
   AuditEventRecord,
@@ -52,12 +54,26 @@ export interface BuildRunOptions {
   watchVersion: string;
   checkPackVersion: string;
   pricingManifest: string;
+  /** The parsed numbers behind `pricingManifest`'s filename (SPEC §8: "every
+   * price comes from pricing.<date>.json, never a constant") — required
+   * even on a quiet run, since the field is needed to label `cost.method`. */
+  pricing: PricingManifest;
   kind: RunKind;
   scheduledFor: string | null;
   trigger: Trigger;
   prevRecord: RunRecord | null;
   namespace?: string;
   timeoutMs?: number;
+  /** M3 advisory LLM (SPEC §8). Undefined ⇒ no credentials configured — the
+   * advisory pipeline degrades honestly rather than skipping silently. */
+  llmClient?: LlmClient | undefined;
+  /** Defaults to a fresh `InMemoryBudgetStore` per call — correct for a CLI
+   * invocation that runs once and exits (SPEC's own M0-M3 sequencing note:
+   * Neon-backed persistence lands at M4). */
+  budgetStore?: BudgetStore | undefined;
+  budgetCaps?: BudgetCaps | undefined;
+  llmModel?: string | undefined;
+  llmTimeoutMs?: number | undefined;
 }
 
 function toAuditEventRecord(e: AuditEvent): AuditEventRecord {
@@ -190,18 +206,26 @@ export async function buildRun(options: BuildRunOptions): Promise<RunRecord> {
   const head = events.at(-1)?.hash ?? null;
   const verifyResult = await sluice.audit.verify(namespace);
 
-  // ── cost / llm: $0 through M2 (no LLM feature, no metered infra yet) ────
-  const cost = {
-    currency: "USD" as const,
-    microUsd: 0,
-    certainty: "reported" as const,
-    breakdown: {},
-    method: options.pricingManifest,
-  };
-  const llm =
-    findings.length === 0
-      ? { calls: 0, inputTokens: 0, outputTokens: 0, microUsd: 0, reason: "no_findings" as const }
-      : { calls: 0, inputTokens: 0, outputTokens: 0, microUsd: 0, reason: "not_implemented" as const };
+  // ── advisory LLM / cost (SPEC §8, M3) — a quiet night (findings.length
+  // === 0) never even constructs a budget store or client: llm:{calls:0,
+  // reason:"no_findings"} and microUsd 0 stay exact, as SPEC requires.
+  const advisory = await runAdvisoryPipeline({
+    runId,
+    findings,
+    checks: allChecks,
+    pricing: options.pricing,
+    pricingManifestLabel: options.pricingManifest,
+    now: options.now,
+    llmClient: options.llmClient,
+    budgetStore: options.budgetStore ?? new InMemoryBudgetStore(),
+    budgetCaps: options.budgetCaps,
+    model: options.llmModel,
+    timeoutMs: options.llmTimeoutMs,
+  });
+  const findingsWithAdvisory = advisory.findings;
+  const cost = advisory.cost;
+  const llm = advisory.llm;
+  const degraded = advisory.degraded;
 
   const prevRunId = options.prevRecord?.runId ?? null;
   const prevRecordHash = options.prevRecord === null ? null : computeRecordHash(options.prevRecord);
@@ -220,7 +244,7 @@ export async function buildRun(options: BuildRunOptions): Promise<RunRecord> {
     endedAt,
     trigger: options.trigger,
     checks: allChecks,
-    findings,
+    findings: findingsWithAdvisory,
     absenceOfEvidence,
     metrics: allMetrics,
     actions: [],
@@ -228,7 +252,7 @@ export async function buildRun(options: BuildRunOptions): Promise<RunRecord> {
     refusals: [],
     cost,
     llm,
-    degraded: [],
+    degraded,
     audit: {
       namespace,
       store: "memory",

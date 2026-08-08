@@ -18,6 +18,7 @@ import { computeRecordHash } from "../packages/dogwatch/src/record/hash.js";
 import { buildRun } from "../packages/dogwatch/src/record/build-run.js";
 import { createReplayHttpProbe } from "../packages/dogwatch/src/probe/replay.js";
 import type { Check, RunRecord } from "../packages/dogwatch/src/record/schema.js";
+import { TEST_PRICING_MANIFEST } from "../packages/dogwatch/src/record/test-helper.js";
 import type { TargetsFile } from "../packages/dogwatch/src/record/targets-schema.js";
 
 const OUT_DIR = fileURLToPath(new URL("../fixtures/violations", import.meta.url));
@@ -72,6 +73,7 @@ async function baseRecord(): Promise<RunRecord> {
     watchVersion: "0.1.0-alpha.0",
     checkPackVersion: "1",
     pricingManifest: "pricing.2026-08-08.json",
+    pricing: TEST_PRICING_MANIFEST,
     kind: "manual",
     scheduledFor: null,
     trigger: { workflow: null, runUrl: null, actor: "fixture-generator" },
@@ -215,7 +217,13 @@ const MUTATIONS: { file: string; code: string; mutate: Mutator }[] = [
     mutate: (base) => {
       const findings = base.findings.map((f) => ({
         ...f,
-        advisory: { severity: "high" as const, note: "advisory text", model: "claude-haiku-4-5", agreesWithRule: true },
+        advisory: {
+          severity: "high" as const,
+          note: "advisory text",
+          model: "claude-haiku-4-5",
+          agreesWithRule: true,
+          proposedAction: "none" as const,
+        },
       }));
       // llm.calls stays 0 (honest: M0-M2 makes no model call) — an advisory
       // present without a call behind it is exactly R10's target.

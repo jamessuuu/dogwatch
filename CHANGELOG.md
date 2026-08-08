@@ -5,6 +5,51 @@ Format: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/). Versioning: se
 
 ## [Unreleased]
 
+### Added (M3)
+- Advisory LLM (SPEC §8): `triage` (Haiku 4.5, forced tool schema
+  `{advisorySeverity, note, referencedFindingIds, proposedAction}`,
+  `max_tokens:800`, Zod-validated — `src/llm/triage.ts`) runs only when
+  `findings.length > 0`; `proposedAction` is published but ignored, the
+  deterministic rule table still decides everything. `draft` (`src/llm/draft.ts`)
+  is fully wired — real types, real Zod schema, a real forced-tool call —
+  but unreachable before M5's gate machinery exists; `unreachable.test.ts`
+  greps the production source tree and fails the build if any caller ever
+  shows up outside `src/llm`. `client.ts` is the only file permitted to
+  import `@anthropic-ai/sdk`; every test uses `test-helper.ts`'s
+  `FakeLlmClient` — **no live API call anywhere in tests or in this build**,
+  and `cli/watch.ts` only constructs a real client when `ANTHROPIC_API_KEY`
+  is present (James has not approved spend).
+- `dogwatch_budget` counter behind a `BudgetStore` interface
+  (`src/llm/budget.ts`): `InMemoryBudgetStore` is the M0-M3 default,
+  honestly per-process (not per-day) until Neon lands at M4;
+  `PostgresBudgetStore` is fully written now against a minimal injectable
+  `SqlExecutor` (no new dependency for code nothing calls yet), activated by
+  `createBudgetStore({databaseUrl, sqlExecutor})` — a `databaseUrl` with no
+  executor throws rather than silently downgrading. Checked before every
+  call against SPEC's daily ceiling (20 calls / 100k input / 20k output /
+  $0.20).
+- Degrade path (`src/llm/pipeline.ts`): daily cap, API error (including "no
+  credentials configured"), schema-reject (Zod-invalid, or our own
+  referencedFindingIds/URL-allowlist grounding check — the "fabricated
+  link" catcher SPEC §8 names), or a caller-side timeout all degrade to the
+  deterministic summary standing alone, `degraded:[{component:"llm",
+  reason:...}]` published. One test per reason in `pipeline.test.ts`. A
+  schema-rejected response still charges and records real provider-reported
+  cost — the API call genuinely happened even though its content didn't
+  validate.
+- Cost accounting in integer micro-USD from provider-reported usage × the
+  pricing manifest (`src/llm/cost.ts`, never a constant) — `pricing-schema.ts`
+  + `pricing-io.ts` load and Zod-validate `pricing.<date>.json` the same way
+  `targets.json` already does. Quiet nights remain exactly
+  `llm:{calls:0, reason:"no_findings"}` and `microUsd 0`.
+- `AdvisorySchema` gained `proposedAction` (record/schema.ts) — the triage
+  tool's fourth output field, displayed for transparency, never consulted
+  by any decision. Schema/fixtures/goldens regenerated (`pnpm schema:gen`,
+  `gen-fixtures.mts`, `gen-goldens.mts`) — not hand-edited.
+- 52 new unit tests (budget, cost, triage grounding/degrade, draft
+  reachability, full pipeline degrade-path coverage). 181 unit + 24 eval
+  tests, all gates green.
+
 ### Fixed
 - **Link classification: bot-blocks were misreported as broken links.** The
   first published run reported `HEAD https://www.ebizolution.com/ → 403` and

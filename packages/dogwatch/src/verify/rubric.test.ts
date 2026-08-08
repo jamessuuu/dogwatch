@@ -1,7 +1,7 @@
 import { describe, expect, it } from "vitest";
 import { buildRun } from "../record/build-run.js";
 import { createReplayHttpProbe } from "../probe/replay.js";
-import { makeCheck, makeFinding, makeMinimalRecord } from "../record/test-helper.js";
+import { makeCheck, makeFinding, makeMinimalRecord, TEST_PRICING_MANIFEST } from "../record/test-helper.js";
 import type { RunRecord } from "../record/schema.js";
 import type { TargetsFile } from "../record/targets-schema.js";
 import { verifyRecord } from "./rubric.js";
@@ -60,6 +60,7 @@ async function healthyRecord(): Promise<RunRecord> {
     watchVersion: "0.0.0-test",
     checkPackVersion: "1",
     pricingManifest: "pricing.2026-08-08.json",
+    pricing: TEST_PRICING_MANIFEST,
     kind: "manual",
     scheduledFor: null,
     trigger: { workflow: null, runUrl: null, actor: "test" },
@@ -225,7 +226,7 @@ describe("R10", () => {
     const check = makeCheck({ id: "chk-1", verdict: "finding" });
     const finding = makeFinding({
       checkId: "chk-1",
-      advisory: { severity: "high", note: "looks bad", model: "claude-haiku-4-5", agreesWithRule: true },
+      advisory: { severity: "high", note: "looks bad", model: "claude-haiku-4-5", agreesWithRule: true, proposedAction: "none" },
     });
     const record = makeMinimalRecord({ checks: [check], findings: [finding], llm: { calls: 0, inputTokens: 0, outputTokens: 0, microUsd: 0, reason: "no_findings" } });
     expect(codesOf(record)).toContain("E_ADVISORY_UNGROUNDED");

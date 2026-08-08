@@ -18,6 +18,7 @@ import { canonicalStringify } from "../packages/dogwatch/src/record/canonical.js
 import { createReplayHttpProbe, type HttpTranscript } from "../packages/dogwatch/src/probe/replay.js";
 import { verifyRecord } from "../packages/dogwatch/src/verify/rubric.js";
 import { RunRecordSchema } from "../packages/dogwatch/src/record/schema.js";
+import { TEST_PRICING_MANIFEST } from "../packages/dogwatch/src/record/test-helper.js";
 import { FIXED_NOW_MS, GOLDEN_TARGETS, seededRandom } from "../scripts/gen-goldens.mjs";
 
 const TRANSCRIPTS_DIR = fileURLToPath(new URL("../fixtures/transcripts", import.meta.url));
@@ -47,6 +48,7 @@ describe("replay goldens — byte-identical reproduction", () => {
         watchVersion: "0.1.0-alpha.0",
         checkPackVersion: "1",
         pricingManifest: "pricing.2026-08-08.json",
+        pricing: TEST_PRICING_MANIFEST,
         kind: "scheduled",
         scheduledFor: "2026-08-08T15:00:00.000Z",
         trigger: {

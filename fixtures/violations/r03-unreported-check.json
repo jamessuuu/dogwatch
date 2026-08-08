@@ -53,7 +53,7 @@
   "chain": {
     "prevRecordHash": null,
     "prevRunId": null,
-    "recordHash": "1670c9d874d667a9987969da79f65ff83a8c49a0fbc52c161a9d01401816db12"
+    "recordHash": "34a00fff47b1eaf48d662bbad754aef235a5aa5c141c6e1bae595ee9fc059ebe"
   },
   "checkPackVersion": "1",
   "checks": [
@@ -122,7 +122,12 @@
     "method": "pricing.2026-08-08.json",
     "microUsd": 0
   },
-  "degraded": [],
+  "degraded": [
+    {
+      "component": "llm",
+      "reason": "api_error"
+    }
+  ],
   "endedAt": "2026-08-08T15:00:00.000Z",
   "findings": [],
   "formatVersion": 1,
@@ -133,7 +138,7 @@
     "inputTokens": 0,
     "microUsd": 0,
     "outputTokens": 0,
-    "reason": "not_implemented"
+    "reason": "api_error"
   },
   "metrics": [
     {

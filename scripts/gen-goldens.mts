@@ -17,6 +17,7 @@ import { fileURLToPath, pathToFileURL } from "node:url";
 import { canonicalStringify } from "../packages/dogwatch/src/record/canonical.js";
 import { buildRun } from "../packages/dogwatch/src/record/build-run.js";
 import { createReplayHttpProbe, type HttpTranscript } from "../packages/dogwatch/src/probe/replay.js";
+import { TEST_PRICING_MANIFEST } from "../packages/dogwatch/src/record/test-helper.js";
 import type { TargetsFile } from "../packages/dogwatch/src/record/targets-schema.js";
 
 export const FIXED_NOW_MS = Date.parse("2026-08-08T15:00:00.000Z");
@@ -119,6 +120,7 @@ async function main() {
       watchVersion: "0.1.0-alpha.0",
       checkPackVersion: "1",
       pricingManifest: "pricing.2026-08-08.json",
+      pricing: TEST_PRICING_MANIFEST,
       kind: "scheduled",
       scheduledFor: "2026-08-08T15:00:00.000Z",
       trigger: { workflow: "watch.yml", runUrl: "https://github.com/jamessuuu/dogwatch/actions/runs/1", actor: "github-actions[bot]" },

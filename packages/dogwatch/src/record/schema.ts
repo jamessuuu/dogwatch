@@ -182,11 +182,18 @@ export const FindingSourceSchema = z.strictObject({
   evidencePath: z.string().min(1),
 });
 
+export const AdvisoryProposedActionSchema = z.enum(["none", "open_issue", "watch"]);
+export type AdvisoryProposedAction = z.infer<typeof AdvisoryProposedActionSchema>;
+
 export const AdvisorySchema = z.strictObject({
   severity: SeveritySchema,
   note: z.string().max(600),
   model: z.string(),
   agreesWithRule: z.boolean(),
+  // SPEC §8: the triage tool's fourth output field. "Displayed and ignored"
+  // — the deterministic rule table (not this field) decides whether a gate
+  // opens (SPEC M5). Published here purely for transparency/audit.
+  proposedAction: AdvisoryProposedActionSchema,
 });
 
 export const FindingSchema = z.strictObject({

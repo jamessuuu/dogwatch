@@ -22,6 +22,7 @@
     "dogwatch": "tsx src/cli/index.ts"
   },
   "dependencies": {
+    "@anthropic-ai/sdk": "^0.116.0",
     "@jamessuuu/sluice": "link:../../../sluice/packages/sluice",
     "commander": "^14.0.0",
     "undici": "^7.0.0",

@@ -6,8 +6,31 @@
  * plain module other test files import from.
  */
 import type { Check, Finding, RunRecord } from "./schema.js";
+import type { PricingManifest } from "./pricing-schema.js";
 
 let counter = 0;
+
+/** Mirrors the real, committed `pricing.2026-08-08.json` (SPEC §8: "every
+ * price comes from pricing.<date>.json, never a constant") — tests pass
+ * this object directly rather than reading the file, so `buildRun` never
+ * touches the filesystem in a unit test. */
+export const TEST_PRICING_MANIFEST: PricingManifest = {
+  formatVersion: 1,
+  effectiveDate: "2026-08-08",
+  note: "test fixture mirroring the real pricing.2026-08-08.json",
+  llm: {
+    provider: "anthropic",
+    model: "claude-haiku-4-5",
+    inputPerMTokUsd: 1.0,
+    outputPerMTokUsd: 5.0,
+  },
+  infra: {
+    githubActionsPerMinuteUsd: 0,
+    githubActionsNote: "public repo, unmetered (SPEC §5)",
+    neonComputePerCuHourUsd: 0,
+    neonComputeNote: "Free tier, 100 CU-hr/month (SPEC §5); not used before M4",
+  },
+};
 
 /** A deterministic, schema-valid check with a `pass` verdict. */
 export function makeCheck(overrides?: Partial<Check>): Check {

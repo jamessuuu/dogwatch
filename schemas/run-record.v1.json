@@ -383,13 +383,22 @@
               },
               "agreesWithRule": {
                 "type": "boolean"
+              },
+              "proposedAction": {
+                "type": "string",
+                "enum": [
+                  "none",
+                  "open_issue",
+                  "watch"
+                ]
               }
             },
             "required": [
               "severity",
               "note",
               "model",
-              "agreesWithRule"
+              "agreesWithRule",
+              "proposedAction"
             ],
             "additionalProperties": false
           }
