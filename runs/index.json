@@ -1,0 +1,21 @@
+{
+  "formatVersion": 1,
+  "runs": [
+    {
+      "checksTotal": 12,
+      "costMicroUsd": 0,
+      "endedAt": "2026-08-08T17:22:32.344Z",
+      "errors": 0,
+      "findings": 0,
+      "gatesOpened": 0,
+      "kind": "manual",
+      "passes": 2,
+      "path": "runs/2026/2026-08-08-019fe265-d464-7436-8343-bcdbd58a17b2.json",
+      "quiet": true,
+      "recordHash": "38467131836ef0d751bf229177c74e08a20b7175c5b9c15e98660e924b34ae30",
+      "runId": "019fe265-d464-7436-8343-bcdbd58a17b2",
+      "skips": 10,
+      "startedAt": "2026-08-08T17:22:32.164Z"
+    }
+  ]
+}
