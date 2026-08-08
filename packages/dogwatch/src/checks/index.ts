@@ -7,7 +7,14 @@
 import type { RuleContext } from "./context.js";
 import { evaluateBrandBacklink, evaluateBrandFavicon, BRAND_BACKLINK_MISSING, BRAND_FAVICON_MISSING } from "./brand.js";
 import { evaluateHeaderDrift, evaluateHeaderPresence, HEADER_MISSING, HEADER_VALUE_CHANGED } from "./header.js";
-import { evaluateLinkBroken, evaluateLinkOffsiteRedirect, LINK_BROKEN, LINK_OFFSITE_REDIRECT } from "./link.js";
+import {
+  evaluateLinkBroken,
+  evaluateLinkOffsiteRedirect,
+  evaluateLinkUnverifiable,
+  LINK_BROKEN,
+  LINK_OFFSITE_REDIRECT,
+  LINK_UNVERIFIABLE,
+} from "./link.js";
 import {
   evaluateReachRedirectChain,
   evaluateReachStatus,
@@ -38,5 +45,6 @@ export const RULES_BY_ID: Readonly<Record<string, RuleFn>> = {
   [BRAND_FAVICON_MISSING]: evaluateBrandFavicon,
   [LINK_BROKEN]: evaluateLinkBroken,
   [LINK_OFFSITE_REDIRECT]: evaluateLinkOffsiteRedirect,
+  [LINK_UNVERIFIABLE]: evaluateLinkUnverifiable,
   [WEIGHT_BUDGET_EXCEEDED]: evaluateWeightBudget,
 };

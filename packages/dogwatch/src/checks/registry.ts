@@ -13,7 +13,7 @@
 import type { Family } from "../record/schema.js";
 import { HEADER_MISSING, HEADER_VALUE_CHANGED } from "./header.js";
 import { BRAND_BACKLINK_MISSING, BRAND_FAVICON_MISSING } from "./brand.js";
-import { LINK_BROKEN, LINK_OFFSITE_REDIRECT } from "./link.js";
+import { LINK_BROKEN, LINK_OFFSITE_REDIRECT, LINK_UNVERIFIABLE } from "./link.js";
 import { REACH_REDIRECT_CHAIN_CHANGED, REACH_STATUS_NOT_200 } from "./reach.js";
 import { WEIGHT_BUDGET_EXCEEDED } from "./weight.js";
 
@@ -63,8 +63,13 @@ export const CHECK_REGISTRY: readonly FamilyCatalogEntry[] = [
     family: "link",
     implemented: true,
     rules: [
-      { ruleId: LINK_BROKEN, asserts: "a crawled link resolves without a 4xx/5xx" },
+      { ruleId: LINK_BROKEN, asserts: "a crawled link resolves without a 4xx/5xx (or a GET retry confirms it genuinely 404/410s)" },
       { ruleId: LINK_OFFSITE_REDIRECT, asserts: "a same-origin link still resolves on its declared origin" },
+      {
+        ruleId: LINK_UNVERIFIABLE,
+        asserts:
+          "a HEAD request that looked bot-blocked (403/406/429/999) stays inconclusive after one GET retry — not asserted broken",
+      },
     ],
   },
   {

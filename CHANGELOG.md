@@ -5,6 +5,36 @@ Format: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/). Versioning: se
 
 ## [Unreleased]
 
+### Fixed
+- **Link classification: bot-blocks were misreported as broken links.** The
+  first published run reported `HEAD https://www.ebizolution.com/ → 403` and
+  `HEAD https://www.linkedin.com/in/... → 999` as `link.broken` — both true
+  statements about the request dogwatch made, but neither is evidence the
+  link is dead: 999 is LinkedIn's own non-standard "no bots" status, and a
+  bare 403/406/429 on a HEAD-only request is the shape of a WAF/anti-bot
+  rule, not a broken resource. Publishing that as `link.broken` every night
+  forever is the "scheduled noise" SPEC §2's honesty guards exist to
+  prevent, and it would make the honest-quiet-night property meaningless.
+  Added a distinct `link.unverifiable` rule (low severity, `src/checks/link.ts`):
+  a HEAD response with a bot-block shape (403/406/429/999) is now retried
+  once with GET (`src/record/build-site.ts`) before any classification is
+  made, and **both observations are recorded as evidence** so the finding
+  statement stays a literal statement about every request dogwatch made. A
+  GET retry that succeeds (<400) means the link is alive and the server
+  just mishandles HEAD — `pass`, not a finding. A GET retry that confirms
+  404/410 means the link is genuinely dead — stays `link.broken`. Anything
+  else (retry also blocked, retry errored, retry ambiguous) publishes
+  `link.unverifiable` instead of asserting broken. 8 new unit tests cover
+  the three classes (broken / unverifiable / head-unsupported-but-alive)
+  with exact expected rule ids, plus two `buildRun`-level integration tests
+  proving the retry orchestration actually fires. The flawed M2 run record
+  (`2026-08-08-…d9e2…json`) could not be hand-edited without breaking R12/R13
+  (SPEC §7), so it was regenerated: a fresh live run against the same
+  `targets.json` full pack, chained onto the M1 walking-skeleton record,
+  replaces it. Both ebizolution and LinkedIn now publish as
+  `link.unverifiable` (their WAFs block the GET retry too — a real,
+  low-severity, non-noisy statement) instead of `link.broken`.
+
 ### Added
 - M2: full honesty rubric validator `dogwatch verify` (R1–R15, exact error
   codes, SPEC §7 — R11 calls `@jamessuuu/sluice`'s own `verifyEvents`, not a

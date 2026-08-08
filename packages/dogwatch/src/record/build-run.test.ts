@@ -2,7 +2,7 @@ import { describe, expect, it } from "vitest";
 import { buildRun } from "./build-run.js";
 import { createReplayHttpProbe } from "../probe/replay.js";
 import type { TargetsFile } from "./targets-schema.js";
-import type { HttpGetResult } from "../probe/types.js";
+import type { HttpGetResult, HttpHeadResult } from "../probe/types.js";
 
 const FIXED_NOW_MS = Date.parse("2026-08-08T15:00:00.000Z");
 
@@ -126,6 +126,98 @@ describe("buildRun — findings run (503)", () => {
     const record = await buildTestRun({ "https://agentjames.vercel.app": okResult({ status: 503 }) });
     expect(record.llm.calls).toBe(0);
     expect(record.llm.reason).toBe("not_implemented");
+  });
+});
+
+const linkSite: TargetsFile = {
+  formatVersion: 1,
+  sites: [
+    {
+      id: "agentjames",
+      name: "Agent James",
+      url: "https://agentjames.vercel.app",
+      repo: "jamessuuu/agentjames",
+      deployed: true,
+      families: ["link"],
+      expectedHeaders: [],
+      weightBudgetBytes: 300_000,
+    },
+  ],
+  repos: [],
+  packages: [],
+  artifacts: [],
+  actionPolicy: { issueRepos: [], confirmations: 2, gateTimeoutHours: 48 },
+};
+
+function homepageWithLink(linkUrl: string): HttpGetResult {
+  return okResult({ bodyText: `<!doctype html><html><body><a href="${linkUrl}">link</a></body></html>`, bytes: 80 });
+}
+
+describe("buildRun — link retry orchestration (link classification fix, 2026-08-09)", () => {
+  it("HEAD 999 + GET retry also blocked (403) publishes link.unverifiable, never link.broken", async () => {
+    const linkUrl = "https://www.linkedin.com/in/james-lorenz-santos-720776251/";
+    const record = await buildRun({
+      targets: linkSite,
+      targetsHash: "test-targets-hash",
+      probe: createReplayHttpProbe({
+        get: {
+          "https://agentjames.vercel.app": homepageWithLink(linkUrl),
+          [linkUrl]: okResult({ status: 403, finalUrl: linkUrl, bodyText: "" }),
+        },
+        head: {
+          [linkUrl]: { status: 999, finalUrl: linkUrl, redirects: [], headers: {}, ms: 10 } satisfies HttpHeadResult,
+        },
+      }),
+      now: () => FIXED_NOW_MS,
+      random: seededRandom(3),
+      commit: "0".repeat(40),
+      watchVersion: "0.0.0-test",
+      checkPackVersion: "1",
+      pricingManifest: "pricing.2026-08-08.json",
+      kind: "manual",
+      scheduledFor: null,
+      trigger: { workflow: null, runUrl: null, actor: "test" },
+      prevRecord: null,
+    });
+
+    const linkCheck = record.checks.find((c) => c.id === `link:agentjames:link.broken:${linkUrl}`);
+    expect(linkCheck?.verdict).toBe("finding");
+    expect(linkCheck?.ruleId).toBe("link.unverifiable");
+    expect(record.findings).toHaveLength(1);
+    expect(record.findings[0]?.severity).toBe("low");
+    expect(record.findings[0]?.statement).toContain("→ 999; retried GET → 403");
+  });
+
+  it("HEAD 403 + GET retry 200 publishes a pass — a HEAD-unsupported server is not a broken link", async () => {
+    const linkUrl = "https://www.ebizolution.com/";
+    const record = await buildRun({
+      targets: linkSite,
+      targetsHash: "test-targets-hash",
+      probe: createReplayHttpProbe({
+        get: {
+          "https://agentjames.vercel.app": homepageWithLink(linkUrl),
+          [linkUrl]: okResult({ status: 200, finalUrl: linkUrl }),
+        },
+        head: {
+          [linkUrl]: { status: 403, finalUrl: linkUrl, redirects: [], headers: {}, ms: 10 } satisfies HttpHeadResult,
+        },
+      }),
+      now: () => FIXED_NOW_MS,
+      random: seededRandom(4),
+      commit: "0".repeat(40),
+      watchVersion: "0.0.0-test",
+      checkPackVersion: "1",
+      pricingManifest: "pricing.2026-08-08.json",
+      kind: "manual",
+      scheduledFor: null,
+      trigger: { workflow: null, runUrl: null, actor: "test" },
+      prevRecord: null,
+    });
+
+    const linkCheck = record.checks.find((c) => c.id === `link:agentjames:link.broken:${linkUrl}`);
+    expect(linkCheck?.verdict).toBe("pass");
+    expect(linkCheck?.ruleId).toBe("link.broken");
+    expect(record.findings).toHaveLength(0);
   });
 });
 

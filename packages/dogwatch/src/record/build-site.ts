@@ -18,11 +18,13 @@ import {
   evaluateWeightBudget,
   HEADER_MISSING,
   HEADER_VALUE_CHANGED,
+  isBotBlockHeadStatus,
   LINK_BROKEN,
   LINK_OFFSITE_REDIRECT,
   REACH_REDIRECT_CHAIN_CHANGED,
   REACH_STATUS_NOT_200,
   WEIGHT_BUDGET_EXCEEDED,
+  type LinkRetry,
   type RuleContext,
   type RuleOutcome,
 } from "../checks/index.js";
@@ -329,12 +331,32 @@ export async function buildSiteChecks(site: TargetSite, ctx: BuildSiteContext): 
         const linkRequest = requestOf(link.url, "HEAD", ctx.timeoutMs);
         try {
           const headResult = await ctx.probe.head(link.url, { timeoutMs: ctx.timeoutMs });
+          // A bot-block-shaped HEAD status (403/406/429/999 — LinkedIn's own
+          // "no bots" status and the common WAF shapes) is retried once with
+          // GET before dogwatch judges the link at all: a HEAD-only 403 that
+          // GETs 200 is a server that mishandles HEAD, not a broken link
+          // (link classification fix, 2026-08-09). Both observations are
+          // recorded so the finding statement — if any — remains a literal
+          // statement about every request dogwatch made for this link.
+          let retry: LinkRetry | undefined;
+          if (isBotBlockHeadStatus(headResult.status)) {
+            try {
+              const getResult = await ctx.probe.get(link.url, { timeoutMs: ctx.timeoutMs, maxBodyBytes: 1 });
+              retry = { method: "GET", status: getResult.status, finalUrl: getResult.finalUrl };
+            } catch {
+              // The retry itself failing to complete is still a real,
+              // recordable observation (§9: never fail silent) — an absent
+              // `status` is what makes evaluateLinkBroken classify this as
+              // link.unverifiable rather than guessing.
+              retry = { method: "GET" };
+            }
+          }
           const evidence: CheckEvidence = {
             status: headResult.status,
             finalUrl: headResult.finalUrl,
             redirects: headResult.redirects,
             headers: {},
-            json: { linkUrl: link.url, sourcePage: link.sourcePage },
+            json: { linkUrl: link.url, sourcePage: link.sourcePage, ...(retry === undefined ? {} : { retry }) },
           };
           const outcome = evaluateLinkBroken(evidence, { ...ruleCtx, checkId: id, request: { method: "HEAD", url: link.url } });
           checks.push(fromOutcome(id, "link", site.id, linkRequest, ctx.observedAt, outcome));

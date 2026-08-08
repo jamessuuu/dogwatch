@@ -20,18 +20,18 @@
     {
       "checksTotal": 73,
       "costMicroUsd": 0,
-      "endedAt": "2026-08-08T17:40:10.865Z",
+      "endedAt": "2026-08-08T18:08:12.374Z",
       "errors": 1,
       "findings": 2,
       "gatesOpened": 0,
       "kind": "manual",
       "passes": 39,
-      "path": "runs/2026/2026-08-08-019fe275-d9e2-7ed2-b633-d7c07c192d94.json",
+      "path": "runs/2026/2026-08-08-019fe28f-81a4-710f-9320-8d080ad9b80b.json",
       "quiet": false,
-      "recordHash": "145eb9c5cd67adf36d08321eeebb085724e1879a00ea5e593456a66cc4d6f869",
-      "runId": "019fe275-d9e2-7ed2-b633-d7c07c192d94",
+      "recordHash": "aee8b503cc8c7627377562b7b672a1a15df59f931e6192ff67b49250dc02ad7f",
+      "runId": "019fe28f-81a4-710f-9320-8d080ad9b80b",
       "skips": 31,
-      "startedAt": "2026-08-08T17:40:02.146Z"
+      "startedAt": "2026-08-08T18:08:03.492Z"
     }
   ]
 }
