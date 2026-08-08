@@ -355,6 +355,7 @@ accuracy.
 | Flapping check | 2-consecutive-run confirmation before action; night one publishes `status:"unconfirmed"` |
 | Record > 512 KB | evidence bodies truncated with `truncated:true`; a truncated check cannot produce a `high` finding |
 | dogwatch finds a fault in dogwatch | files in its own repo, ungated (L2). Documented, not an exception |
+| Runner killed AFTER `resume`'s `claim.ack()` but BEFORE `resume.yml`'s commit+push step ever runs (or that push is rejected and exhausts its retries) | **Documented residual window, not yet closed.** `effects/resume.ts` writes the amended record to disk and calls `claim.ack()` inside the SAME process, in that order — but `resume.yml`'s `git commit && git push` is a separate, later workflow step. sluice's exactly-once guarantee covers the EFFECT (the GitHub issue is never opened twice); it says nothing about whether the record documenting that decision ever reaches git. Once `ack()` succeeds, `claimDecided` will never return that gate again — there is no automatic second chance. `resume.yml`'s push retries with a rebase against exactly this race (a concurrent `watch.yml`/`resume.yml` push landing first), but a runner killed between the two steps, or a rebase that hits a genuine conflict rather than a race, still loses the amendment. `effects/scenarios.test.ts`'s crash-after-ack scenario pins this behavior; `docs/OPERATIONS.md` names the operational recovery |
 
 ## 10. The site (`apps/web`)
 

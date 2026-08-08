@@ -114,4 +114,30 @@ jobs:
           git add runs/ state/pending-gates.json
           git diff --cached --quiet && echo "nothing to commit" && exit 0
           git commit -m "chore(resume): gate decision(s) resolved"
-          git push
+          # Retry-with-rebase (SPEC S9's documented residual window): the
+          # PREVIOUS step already called sluice's claim.ack() for every gate
+          # resolved this run — exactly-once has already happened at the
+          # effect layer by the time we get here. This push is the only
+          # thing standing between that decision and it being permanently
+          # missing from the published record, if a concurrent watch.yml or
+          # resume.yml push landed first (non-fast-forward rejection) and
+          # this were never retried. Bounded retries with a rebase in
+          # between close exactly that race. A runner killed BETWEEN the
+          # resume step finishing and this step ever starting — or a
+          # rebase that hits a real conflict, not just a race — is the
+          # remaining gap this cannot close; see docs/OPERATIONS.md.
+          attempt=1
+          max_attempts=5
+          until git push; do
+            if [ "$attempt" -ge "$max_attempts" ]; then
+              echo "::error::push failed after $attempt attempts — an amendment recording a decided gate is committed LOCALLY but not pushed. See docs/OPERATIONS.md's crash-after-ack note." >&2
+              exit 1
+            fi
+            echo "push rejected (attempt $attempt/$max_attempts) — pulling + rebasing and retrying"
+            if ! git pull --rebase; then
+              git rebase --abort || true
+              echo "::error::git pull --rebase failed (a real conflict, not just a race) — amendment committed locally, not pushed. See docs/OPERATIONS.md's crash-after-ack note." >&2
+              exit 1
+            fi
+            attempt=$((attempt + 1))
+          done

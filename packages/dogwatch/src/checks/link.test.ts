@@ -33,7 +33,19 @@ describe("evaluateLinkBroken", () => {
     expect(outcome.findingSeverity).toBe("medium");
   });
 
-  it("finds when there is no status at all (transport failure surfaced as broken)", () => {
+  // NOT a real pipeline path: `record/build-site.ts` calls
+  // `ctx.probe.head()`/`.get()` inside a try/catch that turns every genuine
+  // HEAD/GET transport failure into an `error`/`skipped` verdict via
+  // `classifyProbeFailure`/`pushFailureCheck` — `evaluateLinkBroken` is only
+  // ever invoked afterward, with `evidence.status` set from a HEAD result
+  // that already resolved. `evidence.status` can likewise never be
+  // `undefined` on R13 rerun: rerun only replays stored `pass`/`finding`
+  // checks, and both verdicts require this same function to have already
+  // run with a real status. This test exercises `evaluateLinkBroken`'s own
+  // defensive fallback in isolation — total-function safety net (fail
+  // closed on missing evidence rather than silently passing), unreachable
+  // by construction from any caller in this codebase today.
+  it("defensive fallback: missing evidence.status classifies as broken, never a silent pass", () => {
     const evidence: CheckEvidence = {
       redirects: [],
       headers: {},

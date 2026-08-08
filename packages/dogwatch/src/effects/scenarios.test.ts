@@ -328,6 +328,59 @@ describe("SPEC §11.4 scenario suite (MemoryStore, FakeGithubTransport)", () => 
     expect(gateA?.status).toBe("pending");
   });
 
+  it(
+    "8. crash AFTER ack (documented residual window, SPEC S9): once ack() has fired, a lost publish " +
+      "is unrecoverable through resume() itself — the effect stays exactly-once, but the amendment can vanish",
+    async () => {
+      const h = harness();
+      const { result, recordPath } = await h.propose();
+      const gateId = result.gates[0]?.id;
+      if (gateId === undefined) throw new Error("scenario setup: no gate opened");
+      await decideGate({ sluice: h.sluice, gateId, decision: "approve", channel: "cli", actor: "james" });
+
+      // The record BEFORE any amendment — this is what "the git commit
+      // never landed" leaves behind if the amended file `resume`'s
+      // `saveRecord` wrote is thrown away before `resume.yml`'s SEPARATE
+      // commit+push step (or the equivalent local write) ever captures it
+      // (a runner killed between the two, or an exhausted push retry).
+      const preAmendmentRecord = h.records.get(recordPath);
+      if (preAmendmentRecord === undefined) throw new Error("scenario setup: no base record");
+
+      // A resume() call that completes normally: executes the effect
+      // (real, sluice-durable), writes the amendment, and acks the claim —
+      // exactly the sequence `effects/resume.ts` runs today.
+      const first = await runResume(h.resumeDeps);
+      expect(first.claimed).toBe(1);
+      expect(first.results[0]?.outcome).toBe("executed");
+      expect(h.transport.issuesOpened(TARGET_REPO)).toHaveLength(1);
+      expect(h.records.get(recordPath)?.amendments).toHaveLength(1);
+
+      // Simulate the crash: whatever `saveRecord` durably wrote to "disk"
+      // never reached git — the ONLY thing that survives is sluice's own
+      // audit ledger (already `ack()`ed) and the GitHub issue the effect
+      // already, really, created.
+      h.records.set(recordPath, preAmendmentRecord);
+      expect(h.records.get(recordPath)?.amendments).toHaveLength(0);
+
+      // A second poller run (the next resume.yml wake, or a manual
+      // `dogwatch resume`) is the ONLY automatic recovery path this system
+      // has — and it does nothing, because sluice already marked this gate
+      // fully claimed+acked. There is no second delivery.
+      const second = await runResume(h.resumeDeps);
+      expect(second.claimed).toBe(0);
+      expect(second.sweptTimeouts).toBe(0);
+
+      // The published record is PERMANENTLY missing the amendment — this
+      // is the documented gap (SPEC S9, docs/OPERATIONS.md "Crash-after-ack"),
+      // not a bug this test is asserting should be fixed here.
+      expect(h.records.get(recordPath)?.amendments).toHaveLength(0);
+
+      // What DOES hold, even through this failure mode: the effect itself
+      // was never re-attempted — no second, duplicate GitHub issue.
+      expect(h.transport.issuesOpened(TARGET_REPO)).toHaveLength(1);
+    }
+  );
+
   it("no auto-approve path exists anywhere: every gate this suite opens defaults onTimeout to 'reject' (SPEC S9)", async () => {
     const h = harness();
     const { result } = await h.propose();

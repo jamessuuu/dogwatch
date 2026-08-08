@@ -73,3 +73,49 @@ There is no code path anywhere in `src/effects` that sets a gate's
 `onTimeout` to `"approve"` — every gate `propose.ts` opens uses sluice's own
 default (`"reject"`, fail-closed). `src/effects/scenarios.test.ts` asserts
 this directly.
+
+## Crash-after-ack: a decided gate whose amendment never reached git
+
+**The gap.** `effects/resume.ts` writes the amended record to disk and calls
+`claim.ack()` in the same process, before `resume.yml`'s own `git commit &&
+git push` step ever runs. sluice's exactly-once guarantee is about the
+EFFECT (the GitHub issue is opened once, never twice) — it is not a promise
+that the record documenting the decision reaches git. Once `ack()` succeeds,
+`sluice.gates.claimDecided()` will never hand that gate back to any future
+poller. If the runner is killed between the `resume` step finishing and the
+commit step starting, or the commit step's push is rejected and exhausts its
+retries (`resume.yml`'s retry-with-rebase loop, SPEC §9), the decision is
+durably recorded in sluice's own audit ledger (the effect really happened,
+exactly once) but the amendment that would have published it is gone —
+permanently, since resuming again will not reclaim an already-acked gate.
+
+**How to notice.** `state/pending-gates.json` will show the gate as no
+longer pending (it isn't — sluice resolved it), but the record at
+`resumeContext.recordPath` will have no matching amendment (no
+`gate_resolved` entry referencing this gate's id). `dogwatch verify --all`
+does not flag this on its own — there is nothing tampered, just something
+missing that should exist. Diffing sluice's own audit export
+(`sluice.audit.export`) against the record's `amendments[]` for a gate id
+you know was decided is the concrete check.
+
+**How to recover.** There is no automated repair — by design, nothing
+re-executes an already-acked effect. The manual path: read the real outcome
+from sluice's audit ledger (the decision event, and the execute event if the
+gate was approved — both are there, `ack()` only stops re-delivery to
+`claimDecided`, it does not erase history) and hand-construct the missing
+amendment the same shape `appendAmendment` produces, then commit it exactly
+as `resume.yml` would have. This is intentionally NOT scripted: a
+hand-reconstructed amendment is exactly the kind of after-the-fact edit
+SPEC's hash-linking exists to make visible, so it should go through a human,
+once, not a second automated path with its own failure modes.
+
+**Why this is accepted rather than fully closed.** Closing it completely
+means moving the git commit+push inside `dogwatch resume`'s own process,
+before `ack()` — a real architecture change (git identity, network-push
+retry logic, and fragmenting the current one-commit-per-run shape into
+one-commit-per-claim) that trades a rare, detectable, human-recoverable gap
+for meaningfully more code doing something `src/effects` has never done
+before. Given the expected frequency (a gate resolves at most a few times a
+month, `resume.yml`'s concurrency group already serializes overlapping
+resume runs, and the retry-with-rebase loop closes the much more likely
+race), the residual window is a documented trade, not an oversight.
