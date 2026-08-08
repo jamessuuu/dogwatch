@@ -1,0 +1,17 @@
+{
+  "get": {
+    "https://agentjames.vercel.app": {
+      "bodySha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "bodyText": "<!doctype html><html><body>Agent James</body></html>",
+      "bodyTruncated": false,
+      "bytes": 54,
+      "finalUrl": "https://agentjames.vercel.app",
+      "headers": {
+        "strict-transport-security": "max-age=63072000; includeSubDomains; preload"
+      },
+      "ms": 120,
+      "redirects": [],
+      "status": 200
+    }
+  }
+}

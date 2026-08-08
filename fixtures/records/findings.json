@@ -1,0 +1,231 @@
+{
+  "absenceOfEvidence": {
+    "byFamily": {
+      "reach": 1
+    },
+    "checksClean": 1,
+    "notChecked": [
+      {
+        "checkId": "reach:tiltmeter:reach.status_not_200",
+        "reasonCode": "not_published"
+      },
+      {
+        "checkId": "reach:tiltmeter:reach.redirect_chain_changed",
+        "reasonCode": "not_published"
+      }
+    ],
+    "statement": "1 of 4 checks came back clean; 2 were skipped or errored (see notChecked)."
+  },
+  "actions": [],
+  "amendments": [],
+  "audit": {
+    "events": [
+      {
+        "actor": "dogwatch:019fe1e3-5580-7585-aab2-c0b085260c39",
+        "attempt": 1,
+        "data": {},
+        "hash": "9607874e9a7d4d4142824541c64a80542e12885c10fa6de575b6f0ad66309f58",
+        "id": "evt_dogwatch_1",
+        "namespace": "dogwatch",
+        "prevHash": null,
+        "seq": 1,
+        "subjectKey": "probe:019fe1e3-5580-7585-aab2-c0b085260c39:GET:https://agentjames.vercel.app",
+        "subjectType": "effect",
+        "ts": 1786201200000,
+        "type": "effect.claimed"
+      },
+      {
+        "actor": "dogwatch:019fe1e3-5580-7585-aab2-c0b085260c39",
+        "attempt": 1,
+        "data": {
+          "resultOmitted": false
+        },
+        "hash": "91551ed070c5e72ae2c83635358262642a5b01b225187d5ead8375479f1a57f8",
+        "id": "evt_dogwatch_2",
+        "namespace": "dogwatch",
+        "prevHash": "9607874e9a7d4d4142824541c64a80542e12885c10fa6de575b6f0ad66309f58",
+        "seq": 2,
+        "subjectKey": "probe:019fe1e3-5580-7585-aab2-c0b085260c39:GET:https://agentjames.vercel.app",
+        "subjectType": "effect",
+        "ts": 1786201200000,
+        "type": "effect.succeeded"
+      }
+    ],
+    "fromSeq": 1,
+    "head": "91551ed070c5e72ae2c83635358262642a5b01b225187d5ead8375479f1a57f8",
+    "namespace": "dogwatch",
+    "prevHead": null,
+    "store": "memory",
+    "toSeq": 2,
+    "verified": true
+  },
+  "chain": {
+    "prevRecordHash": null,
+    "prevRunId": null,
+    "recordHash": "b40aff54d6694e36620bbd89469f1ebf0c1f14d8663d05baf0f69d785b91b136"
+  },
+  "checkPackVersion": "1",
+  "checks": [
+    {
+      "evidence": {
+        "headers": {},
+        "redirects": []
+      },
+      "family": "reach",
+      "id": "reach:tiltmeter:reach.status_not_200",
+      "observedAt": "2026-08-08T15:00:00.000Z",
+      "reproduce": "curl -sS \"https://tiltmeter.vercel.app\"",
+      "request": {
+        "headersSent": [],
+        "method": "GET",
+        "timeoutMs": 10000,
+        "url": "https://tiltmeter.vercel.app"
+      },
+      "ruleId": "reach.status_not_200",
+      "skipReason": "not_published",
+      "targetId": "tiltmeter",
+      "title": "reach.status_not_200",
+      "verdict": "skipped"
+    },
+    {
+      "evidence": {
+        "headers": {},
+        "redirects": []
+      },
+      "family": "reach",
+      "id": "reach:tiltmeter:reach.redirect_chain_changed",
+      "observedAt": "2026-08-08T15:00:00.000Z",
+      "reproduce": "curl -sS \"https://tiltmeter.vercel.app\"",
+      "request": {
+        "headersSent": [],
+        "method": "GET",
+        "timeoutMs": 10000,
+        "url": "https://tiltmeter.vercel.app"
+      },
+      "ruleId": "reach.redirect_chain_changed",
+      "skipReason": "not_published",
+      "targetId": "tiltmeter",
+      "title": "reach.redirect_chain_changed",
+      "verdict": "skipped"
+    },
+    {
+      "evidence": {
+        "bodySha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "bytes": 0,
+        "finalUrl": "https://agentjames.vercel.app",
+        "headers": {},
+        "ms": 45,
+        "redirects": [],
+        "status": 503
+      },
+      "family": "reach",
+      "id": "reach:agentjames:reach.status_not_200",
+      "observedAt": "2026-08-08T15:00:00.000Z",
+      "reproduce": "curl -sS \"https://agentjames.vercel.app\"",
+      "request": {
+        "headersSent": [],
+        "method": "GET",
+        "timeoutMs": 10000,
+        "url": "https://agentjames.vercel.app"
+      },
+      "ruleId": "reach.status_not_200",
+      "targetId": "agentjames",
+      "title": "/ reachable",
+      "verdict": "finding"
+    },
+    {
+      "evidence": {
+        "bodySha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "bytes": 0,
+        "finalUrl": "https://agentjames.vercel.app",
+        "headers": {},
+        "json": {
+          "baseline": {
+            "finalUrl": null,
+            "redirects": null
+          }
+        },
+        "ms": 45,
+        "redirects": [],
+        "status": 503
+      },
+      "family": "reach",
+      "id": "reach:agentjames:reach.redirect_chain_changed",
+      "observedAt": "2026-08-08T15:00:00.000Z",
+      "reproduce": "curl -sS \"https://agentjames.vercel.app\"",
+      "request": {
+        "headersSent": [],
+        "method": "GET",
+        "timeoutMs": 10000,
+        "url": "https://agentjames.vercel.app"
+      },
+      "ruleId": "reach.redirect_chain_changed",
+      "targetId": "agentjames",
+      "title": "final URL + redirect chain unchanged",
+      "verdict": "pass"
+    }
+  ],
+  "commit": "9999999999999999999999999999999999999999",
+  "cost": {
+    "breakdown": {},
+    "certainty": "reported",
+    "currency": "USD",
+    "method": "pricing.2026-08-08.json",
+    "microUsd": 0
+  },
+  "degraded": [],
+  "endedAt": "2026-08-08T15:00:00.000Z",
+  "findings": [
+    {
+      "checkId": "reach:agentjames:reach.status_not_200",
+      "fingerprint": "b3f8c70801b91063981ff5647c72c7ecebe70dd0ab36fd37e50a1255d84e4471",
+      "firstSeenRunId": "019fe1e3-5580-7585-aab2-c0b085260c39",
+      "id": "F-d056d2a24e69",
+      "ruleId": "reach.status_not_200",
+      "severity": "high",
+      "sources": [
+        {
+          "evidencePath": "checks[?(@.id==\"reach:agentjames:reach.status_not_200\")].evidence",
+          "method": "GET",
+          "retrievedAt": "2026-08-08T15:00:00.000Z",
+          "status": 503,
+          "url": "https://agentjames.vercel.app"
+        }
+      ],
+      "statement": "GET https://agentjames.vercel.app → 503 at 2026-08-08T15:00:00.000Z",
+      "status": "confirmed"
+    }
+  ],
+  "formatVersion": 1,
+  "gates": [],
+  "kind": "scheduled",
+  "llm": {
+    "calls": 0,
+    "inputTokens": 0,
+    "microUsd": 0,
+    "outputTokens": 0,
+    "reason": "not_implemented"
+  },
+  "metrics": [
+    {
+      "id": "metric:agentjames:reach.ms",
+      "name": "response_time_ms",
+      "note": "recorded, not judged",
+      "targetId": "agentjames",
+      "unit": "ms",
+      "value": 45
+    }
+  ],
+  "pricingManifest": "pricing.2026-08-08.json",
+  "refusals": [],
+  "runId": "019fe1e3-5580-7585-aab2-c0b085260c39",
+  "scheduledFor": "2026-08-08T15:00:00.000Z",
+  "startedAt": "2026-08-08T15:00:00.000Z",
+  "targetsHash": "golden-targets-hash",
+  "trigger": {
+    "actor": "github-actions[bot]",
+    "runUrl": "https://github.com/jamessuuu/dogwatch/actions/runs/1",
+    "workflow": "watch.yml"
+  },
+  "watchVersion": "0.1.0-alpha.0"
+}

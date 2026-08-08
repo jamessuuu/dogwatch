@@ -1,0 +1,101 @@
+{
+  "absenceOfEvidence": {
+    "byFamily": {},
+    "checksClean": 0,
+    "notChecked": [],
+    "statement": "no checks ran this watch"
+  },
+  "actions": [],
+  "amendments": [],
+  "audit": {
+    "events": [
+      {
+        "actor": "dogwatch:019fe1e3-5580-7080-8080-808080808080",
+        "attempt": 1,
+        "data": {},
+        "hash": "dd04daa18c8e46755e1cfa002a1878a96e94ce0afd1b70f915cb6cc4a4c0b116",
+        "id": "evt_dogwatch_1",
+        "namespace": "dogwatch",
+        "prevHash": null,
+        "seq": 1,
+        "subjectKey": "probe:019fe1e3-5580-7080-8080-808080808080:GET:https://agentjames.vercel.app",
+        "subjectType": "effect",
+        "ts": 1786201200000,
+        "type": "effect.claimed"
+      },
+      {
+        "actor": "dogwatch:019fe1e3-5580-7080-8080-808080808080",
+        "attempt": 1,
+        "data": {
+          "resultOmitted": false
+        },
+        "hash": "aa4c7e5174c6978718385773a87f047b0c1a8faa94e3e6d33566946cabc81173",
+        "id": "evt_dogwatch_2",
+        "namespace": "dogwatch",
+        "prevHash": "dd04daa18c8e46755e1cfa002a1878a96e94ce0afd1b70f915cb6cc4a4c0b116",
+        "seq": 2,
+        "subjectKey": "probe:019fe1e3-5580-7080-8080-808080808080:GET:https://agentjames.vercel.app",
+        "subjectType": "effect",
+        "ts": 1786201200000,
+        "type": "effect.succeeded"
+      }
+    ],
+    "fromSeq": 1,
+    "head": "aa4c7e5174c6978718385773a87f047b0c1a8faa94e3e6d33566946cabc81173",
+    "namespace": "dogwatch",
+    "prevHead": null,
+    "store": "memory",
+    "toSeq": 2,
+    "verified": true
+  },
+  "chain": {
+    "prevRecordHash": null,
+    "prevRunId": null,
+    "recordHash": "1228492a33c36a7198e72b02146871dc1df33b54281008c8d59dd21cc871b153"
+  },
+  "checkPackVersion": "1",
+  "checks": [],
+  "commit": "ffffffffffffffffffffffffffffffffffffffff",
+  "cost": {
+    "breakdown": {},
+    "certainty": "reported",
+    "currency": "USD",
+    "method": "pricing.2026-08-08.json",
+    "microUsd": 0
+  },
+  "degraded": [],
+  "endedAt": "2026-08-08T15:00:00.000Z",
+  "findings": [],
+  "formatVersion": 1,
+  "gates": [],
+  "kind": "manual",
+  "llm": {
+    "calls": 0,
+    "inputTokens": 0,
+    "microUsd": 0,
+    "outputTokens": 0,
+    "reason": "not_implemented"
+  },
+  "metrics": [
+    {
+      "id": "metric:agentjames:reach.ms",
+      "name": "response_time_ms",
+      "note": "recorded, not judged",
+      "targetId": "agentjames",
+      "unit": "ms",
+      "value": 88
+    }
+  ],
+  "pricingManifest": "pricing.2026-08-08.json",
+  "refusals": [],
+  "runId": "019fe1e3-5580-7080-8080-808080808080",
+  "scheduledFor": null,
+  "startedAt": "2026-08-08T15:00:00.000Z",
+  "targetsHash": "fixture-targets-hash",
+  "trigger": {
+    "actor": "fixture-generator",
+    "runUrl": null,
+    "workflow": null
+  },
+  "watchVersion": "0.1.0-alpha.0"
+}

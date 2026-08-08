@@ -20,6 +20,7 @@ import type { RuleOutcome } from "./types.js";
 
 export * from "./context.js";
 export * from "./types.js";
+export * from "./registry.js";
 export * from "./reach.js";
 export * from "./header.js";
 export * from "./brand.js";
