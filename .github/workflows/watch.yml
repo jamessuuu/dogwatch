@@ -1,0 +1,95 @@
+name: watch
+
+# SPEC §5/§12 M1: the nightly autonomous run — probe the six targets, derive
+# findings, run the advisory LLM (capped, degrades honestly if unconfigured),
+# propose actions, open gates, publish the record + index +
+# state/pending-gates.json, commit, push (deploy). `workflow_dispatch` exists
+# for a manual re-run; `cli/trigger.ts`'s `resolveRunKind()` reads
+# `GITHUB_EVENT_NAME` so ONLY a real cron firing of the `schedule` trigger
+# below ever produces `kind:"scheduled"` — a manual re-run of this same
+# workflow (or a local `dogwatch watch` invocation) honestly publishes
+# `kind:"manual"`.
+#
+# STATUS: this file has never executed — nothing has been pushed to trigger
+# it yet (see README's Status block). Every published record to date was a
+# local `dogwatch watch` run.
+on:
+  schedule:
+    - cron: "0 15 * * *" # ~01:00 AEST
+  workflow_dispatch:
+
+# SPEC §9: "Concurrency group `dogwatch-watch`; two records are legal
+# (different runs), duplicate *effects* are not — intent-derived keys make
+# the second one a `replayed` no-op." Queue rather than cancel — a run that's
+# already probing should finish and publish, not be killed mid-record.
+concurrency:
+  group: dogwatch-watch
+  cancel-in-progress: false
+
+jobs:
+  watch:
+    # Repo-guarded: never runs on a fork (same convention as resume.yml —
+    # this workflow both spends model/API budget and writes to the repo).
+    if: github.repository == 'jamessuuu/dogwatch'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+
+      # sluice is consumed as an unpublished sibling checkout pre-1.0.0-rc.1
+      # (SPEC's own sequencing note — see ci.yml's matching comment). Must
+      # land as THIS checkout's own sibling directory so the `link:`
+      # dependency resolves the same way a local clone with both repos
+      # checked out side by side does.
+      - uses: actions/checkout@v4
+        with:
+          repository: jamessuuu/sluice
+          path: ../sluice
+
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+
+      - name: install sluice's own devDependencies
+        working-directory: ../sluice
+        run: pnpm install --frozen-lockfile
+
+      # SPEC §6 exit codes: 0 clean and 1 findings-at/above-the-gate are BOTH
+      # a successfully published record — an eventful night is the product
+      # working, not a workflow failure. 2 (probe/environment) / 3 (rubric
+      # violation) / 4 (usage/config) / 5 (internal) are real failures: stop
+      # here, publish nothing, let the job go red.
+      - name: probe the six targets, propose/gate findings, publish the record (SPEC S5 steps 1-3)
+        id: watch
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+          APPROVAL_SECRET: ${{ secrets.APPROVAL_SECRET }}
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          GITHUB_TOKEN: ${{ secrets.DOGWATCH_ISSUES_TOKEN }}
+          NOTIFY_WEBHOOK_URL: ${{ secrets.NOTIFY_WEBHOOK_URL }}
+        run: |
+          set +e
+          pnpm dogwatch watch
+          code=$?
+          set -e
+          if [ "$code" != "0" ] && [ "$code" != "1" ]; then
+            echo "dogwatch watch exited $code (not 0/clean or 1/findings) — a real failure, nothing to publish."
+            exit "$code"
+          fi
+          exit 0
+
+      - name: regenerate runs/index.json + state/pending-gates.json
+        run: pnpm render
+
+      - name: commit + push the published record
+        run: |
+          git config user.name "dogwatch[bot]"
+          git config user.email "dogwatch[bot]@users.noreply.github.com"
+          git add runs/ state/pending-gates.json
+          git diff --cached --quiet && echo "nothing to commit" && exit 0
+          git commit -m "chore(watch): nightly run published"
+          git push

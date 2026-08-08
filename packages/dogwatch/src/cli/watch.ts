@@ -18,7 +18,7 @@ import { proposeAndGateFindings } from "../effects/propose.js";
 import { gatePageBaseUrlFromEnv, githubTransportFromEnv, reconcilePreviousIndeterminates } from "./effects-config.js";
 import { defaultPricingManifestPath, defaultRunsDir, defaultTargetsPath, repoRoot } from "./paths.js";
 import { restrictToFamily } from "./family-filter.js";
-import { buildTrigger } from "./trigger.js";
+import { buildTrigger, resolveRunKind } from "./trigger.js";
 import { EXIT } from "./exit-codes.js";
 import { CHECK_PACK_VERSION, DOGWATCH_VERSION } from "./version.js";
 
@@ -122,7 +122,7 @@ export async function runWatch(opts: WatchCliOptions): Promise<number> {
       llmClient,
       budgetStore,
       budgetCaps: DEFAULT_BUDGET_CAPS,
-      kind: "manual",
+      kind: resolveRunKind(),
       scheduledFor: null,
       trigger: buildTrigger(),
       prevRecord,

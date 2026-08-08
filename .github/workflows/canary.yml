@@ -1,0 +1,81 @@
+name: canary
+
+# SPEC §5/§12 M7 + SPEC's own "sluice consumption" section ("Pinned exact;
+# `canary.yml` tracks `main`"): the consumer-contract canary. `ci.yml` runs
+# ONLY on a push/PR to dogwatch itself, so a breaking change landing on
+# sluice's `main` between dogwatch commits would otherwise go unnoticed
+# until the next unrelated dogwatch push happens to check it out again. This
+# workflow runs on its own weekly clock specifically to catch that gap.
+#
+# Today (pre-`1.0.0-rc.1`, `link:../../../sluice/...` filesystem dependency)
+# `ci.yml` ALREADY checks sluice's default branch out fresh on every run —
+# there is no pinned version yet to diverge from, so this workflow is
+# functionally close to ci.yml's own sluice step. It earns its keep once
+# sluice publishes and dogwatch's package.json moves to a pinned exact
+# version (SPEC's M4 dependency note): `ci.yml` will then install that
+# pinned version, and THIS workflow becomes the one place that still runs
+# dogwatch's test suite against whatever sluice's `main` looks like right
+# now — deliberately reproduced below via an explicit `ref: main` checkout so
+# the intent survives that future change unattended.
+#
+# STATUS: this file has never executed — nothing has been pushed to trigger
+# it yet (see README's Status block). "a break proposes an issue on sluice
+# through the normal gate" (SPEC §5's table) is the target design; no code
+# path exists yet that lets a CI job open a gate against a THIRD-PARTY repo
+# from a synthetic (non-finding-sourced) event — dogwatch's gate kernel only
+# ever proposes from a real finding on a real check (SPEC's own no-free-text
+# rule, R13). Until that's built, a canary break surfaces the honest way:
+# this job goes red and GitHub's own Actions-failure notification is the
+# signal, same as any other workflow failure.
+on:
+  schedule:
+    - cron: "0 3 * * 1" # weekly, Monday 03:00 UTC
+  workflow_dispatch:
+
+concurrency:
+  group: dogwatch-canary
+  cancel-in-progress: false
+
+jobs:
+  canary:
+    # Repo-guarded: never runs on a fork (same convention as watch.yml/resume.yml).
+    if: github.repository == 'jamessuuu/dogwatch'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+
+      # Explicit `ref: main` (unlike ci.yml's un-pinned checkout) — the
+      # point of this workflow is to track sluice's `main` on purpose, not
+      # by accident of not-yet-having-a-pin.
+      - uses: actions/checkout@v4
+        with:
+          repository: jamessuuu/sluice
+          ref: main
+          path: ../sluice
+
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - name: install sluice's own devDependencies
+        working-directory: ../sluice
+        run: pnpm install --frozen-lockfile
+
+      # The consumer-contract check: does dogwatch still build and pass
+      # against sluice's CURRENT main? typecheck catches an API-shape break
+      # (the most likely failure — sluice ships zero runtime dependencies
+      # and a small, frozen surface per SPEC's own "sluice consumption"
+      # list); unit exercises that surface for real (scenarios.test.ts,
+      # store tests); eval is the literal SPEC §5 ask (the replay-goldens +
+      # rubric suite, unaffected by sluice unless the audit-chain contract
+      # itself moved).
+      - name: typecheck
+        run: pnpm typecheck
+      - name: unit
+        run: pnpm test
+      - name: eval
+        run: pnpm eval
