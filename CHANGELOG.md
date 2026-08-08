@@ -5,6 +5,78 @@ Format: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/). Versioning: se
 
 ## [Unreleased]
 
+### Added (M6)
+- The site (`apps/web`, Next.js 16 App Router, React 19, TS strict +
+  `noUncheckedIndexedAccess`, Tailwind 4 config-in-CSS). Every page
+  prerendered from committed JSON at build time — `/`, `/runs`,
+  `/runs/<id>`, `/checks`, `/methodology` — **zero route handlers** (the
+  only one the product will ever have, `/api/gate/decide`, is M5).
+- `/` — what the watch is, the last run in one line (checks · findings ·
+  gates · cost), the dead-man banner, next expected run, links; renders
+  with JavaScript disabled (verified by e2e).
+- `/runs` — newest-first index; `quiet` is a first-class badge, not an
+  apology.
+- `/runs/<id>` — checks grouped by family (passes collapsed in a
+  `<details>`, each still carrying its `curl` line), findings with sources
+  and evidence paths, the absence-of-evidence block, actions/gates/refusals
+  (explicit "None this run" when empty, never hidden), cost to four
+  decimals, the audit events, raw-JSON (`<details>`) and GitHub-blob links,
+  and a **Verify** button.
+- The Verify button (`components/VerifyButton.tsx`, a client component)
+  runs entirely in the browser: it Zod-parses the record already on the
+  page, calls `verifyRecord(..., {rerunRules:true})` (re-deriving every
+  finding from stored evidence via the same rule functions the runner
+  used) and `verifyEvents` (sluice's own pure hash-chain verifier,
+  independently, so the UI can label "chain re-verified" on its own) —
+  zero server, the exact code CI already runs offline. Tested against a
+  real record (green) and against `fixtures/violations/*.json` (red, one
+  fixture per exact rubric code) via `/fixtures/<name>`, a page not linked
+  from navigation, built the same way as every real run page.
+- `/checks` — the catalog rendered straight from `CHECK_REGISTRY` (the
+  same registry the runner reads), including unimplemented families with
+  their landing milestone and reason — docs cannot drift because this page
+  is not a description of the code, it renders the code's own data.
+- `/methodology` — the R1–R15 rubric in prose, a link to
+  `schemas/run-record.v1.json`, the anti-manufacture rule (R13), the
+  advisory model's disagreement-rate publishing, the autonomy ladder, and
+  Limitations (operated instance, six-surfaces-only, not-an-uptime-claim,
+  metrics-never-findings) verbatim from SPEC §13.
+- The dead-man banner (`lib/dead-man.ts` + `components/DeadManBanner.tsx`):
+  pure, unit-tested at its exact >36h boundary (7 tests: just-under,
+  exactly-36h, one-minute-over). Computed client-side, after mount, from
+  the browser's own clock — never a value baked in at build time, which
+  would be stale by the time a visitor loads the page. `<noscript>` always
+  prints both raw timestamps.
+- Footer (chip mark + "Built by James Lorenz Santos" + the agentjames
+  backlink + the repo link, no hire-me CTA) and favicon/OG metadata
+  (`/brand/favicon.svg`, `/brand/og.svg` — both from M0's
+  `scripts/brand.mjs`, nothing new generated) on every page.
+- `packages/dogwatch/src/index.ts` — the package's public barrel export
+  (re-exports the isomorphic `record`/`verify`/`checks` modules plus
+  sluice's `verifyEvents`), consumed by the site as compiled build output
+  (`packages/dogwatch/dist`, via a relative import) rather than the bare
+  `"dogwatch"` package specifier — Next's bundler (Turbopack and webpack
+  alike, verified against 16.3.0) cannot transpile a NodeNext-resolution
+  TypeScript source package across a workspace boundary via `export *`
+  chains. `@jamessuuu/sluice` is aliased to its own build output the same
+  way (`next.config.ts`, webpack `resolve.alias`). `scripts/build-native-
+  deps.mjs` builds both — a small, portable Node wrapper (not a shell
+  one-liner) so it runs identically on Windows and CI — before the site
+  builds; `apps/web`'s own `build`/`dev` scripts call it first.
+- Playwright e2e (`apps/web/e2e/smoke.spec.ts`, 13 tests) replaces the CI
+  echo no-op: footer/favicon on every page, `/` with JS disabled, a run
+  page showing checks/findings/absence/cost, the Verify button green on a
+  real record and red on two different tampered fixtures, `/checks` and
+  `/methodology` content. `ci.yml`'s `e2e-smoke` stage now runs it for
+  real — sluice and dogwatch are built first (`build-native-deps.mjs`
+  inside `apps/web`'s own `build` script), and Playwright's chromium is
+  installed via `playwright install --with-deps`.
+- Deviation from SPEC §10's full M6 row: `/gates` and `/gate` are not
+  built — gates don't exist until M5 (every record's `gates: []`), so a
+  `/gates` page would have nothing real to render; deferred with `/gates`
+  rather than shipped as a permanently-empty page. `docs/OPERATIONS.md` is
+  also not written this milestone (not requested).
+
 ### Added (M3)
 - Advisory LLM (SPEC §8): `triage` (Haiku 4.5, forced tool schema
   `{advisorySeverity, note, referencedFindingIds, proposedAction}`,

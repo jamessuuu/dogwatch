@@ -1,0 +1,49 @@
+@import "tailwindcss";
+
+/*
+ * Tailwind 4 config lives here, not in a tailwind.config.js (SPEC §10).
+ * Palette is the BRAND-KIT lockup, unchanged from scripts/brand.mjs:
+ * PAPER / INK / AMBER, plus RULE for hairlines. Amber stays a sparse
+ * accent — the bell's clapper, never a UI primary (BRAND-KIT rule) — so it
+ * is reserved for the one thing worth a reader's attention: a finding, a
+ * cost figure, an active link state. No webfont (M0 brand rule): the
+ * distinguishing typographic move is structural, not a font choice — every
+ * piece of DATA (hashes, curl lines, run ids, timestamps, JSON) renders in
+ * the monospace stack; every piece of PROSE renders in the sans stack.
+ * That single rule is what makes this read as a ledger, not a dashboard.
+ */
+@theme {
+  --color-paper: #faf7f2;
+  --color-ink: #1a1712;
+  --color-amber: #b45309;
+  --color-rule: #e4ddd3;
+  --color-ink-muted: #6b6154;
+
+  --font-sans:
+    ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Helvetica,
+    Arial, sans-serif;
+  --font-mono:
+    ui-monospace, "Cascadia Code", "SF Mono", "Roboto Mono", Consolas,
+    "Liberation Mono", monospace;
+}
+
+html {
+  color-scheme: light;
+}
+
+body {
+  background-color: var(--color-paper);
+  color: var(--color-ink);
+}
+
+::selection {
+  background-color: var(--color-amber);
+  color: var(--color-paper);
+}
+
+/* A single hairline is the only decoration this site uses — no shadows,
+ * no rounded cards, no gradients (BRAND-KIT / taste: a ledger, not a SaaS
+ * dashboard). */
+.rule-line {
+  border-color: var(--color-rule);
+}

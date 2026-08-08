@@ -10,19 +10,28 @@ every finding citing recorded evidence — what it did, what it refused, and wha
 it cost to the micro-dollar. A quiet night publishes that it was quiet, with the
 checks it ran.**
 
-> **Status: M0–M2 landed.** Workspace, TS strict, ESLint 9, Vitest 4, the
-> `reach`/`header`/`brand`/`link`/`weight` check families, the full R1–R15 honesty
-> rubric with exact error codes, planted-violation fixtures, and byte-identical
-> replay goldens are built and gated on green CI. `runs/` holds 2 real published
-> records (below) — the first honest proof this pipeline runs, not yet the
-> 30-consecutive-night claim §13 of [docs/SPEC.md](docs/SPEC.md) reserves for M7.
-> Advisory LLM triage (M3), Neon + the cross-run Postgres audit chain (M4), and
-> the human-gate action machinery (M5) are designed in the spec and not yet built.
+> **Status: M0–M3 and M6 (site) landed.** Workspace, TS strict, ESLint 9,
+> Vitest 4, the `reach`/`header`/`brand`/`link`/`weight` check families, the
+> full R1–R15 honesty rubric with exact error codes, planted-violation
+> fixtures, byte-identical replay goldens, the advisory LLM (Haiku 4.5,
+> forced tool schema, Zod-validated, capped, always-degradable — no live
+> call has ever been made from this build), and the site (`apps/web`,
+> statically prerendered from committed JSON, a browser Verify button that
+> re-derives findings and re-checks the audit hash chain with zero server)
+> are built and gated on real Playwright e2e, not a stub. `runs/` holds real
+> published records (below) — the first honest proof this pipeline runs,
+> not yet the 30-consecutive-night claim §13 of [docs/SPEC.md](docs/SPEC.md)
+> reserves for M7. Neon + the cross-run Postgres audit chain (M4) and the
+> human-gate action machinery (M5) are designed in the spec and not yet
+> built — `draft()`, the issue-drafter half of M3's advisory LLM, is fully
+> wired but provably unreachable until M5's gates exist.
 > **This is an operated instance, not a product you install.** Nothing here is
 > published to npm; forking and pointing it at your own surfaces is unsupported
-> — `docs/OPERATIONS.md` (fork-and-operate notes, Neon CU math, secrets) lands
-> at M6 alongside the deployed site. Until then [`docs/SPEC.md`](docs/SPEC.md)
-> is the complete, binding design document.
+> — `docs/OPERATIONS.md` (fork-and-operate notes, Neon CU math, secrets) is
+> not yet written. Until then [`docs/SPEC.md`](docs/SPEC.md) is the
+> complete, binding design document; the deployed site itself is not live
+> yet — publishing stops at James (SPEC's own gate), so `apps/web` today is
+> built and e2e-tested, not deployed.
 
 ## What it watches
 
@@ -83,8 +92,9 @@ error code — no rule may pass a violation with a warning. `dogwatch verify --a
 
 R11's chain check calls `@jamessuuu/sluice`'s own `verifyEvents` — sluice's
 primitive, not a re-derived copy of it (SPEC non-goal: no sluice
-reimplementation). The same isomorphic function runs offline here and, at M6,
-inside a visitor's browser with zero server.
+reimplementation). The same isomorphic function runs offline here, in CI, and
+(landed at M6) inside a visitor's browser via the `/runs/<id>` Verify button,
+with zero server.
 
 ## Autonomy ladder
 
@@ -138,10 +148,10 @@ them.
 
 | Path | Purpose |
 |---|---|
-| `packages/dogwatch` | **Private, never published** — bin `dogwatch`. `src/checks` (pure rules) · `src/probe` (the only network code) · `src/record` (builder, canonical JSON, hashing) · `src/verify` (the rubric, browser-safe) · `src/cli` |
+| `packages/dogwatch` | **Private, never published** — bin `dogwatch`. `src/checks` (pure rules) · `src/probe` (the only network code) · `src/record` (builder, canonical JSON, hashing) · `src/verify` (the rubric, browser-safe) · `src/llm` (advisory triage, landed M3) · `src/cli` |
 | `packages/dogwatch/src/effects` | Gate/action wiring — lands at M5 |
-| `packages/dogwatch/src/llm` | Advisory triage + issue drafting — lands at M3 |
-| `apps/web` | Next.js entry — the site itself lands at M6; today a workspace placeholder |
+| `packages/dogwatch/src/llm` | Advisory triage (`triage`, landed M3) + issue drafting (`draft`, wired but provably unreachable until M5's gates exist) |
+| `apps/web` | Next.js 16 App Router, React 19 — landed at M6. Every page prerendered from committed JSON; zero route handlers (the only one in the product, `/api/gate/decide`, is M5); the `/runs/<id>` Verify button imports `packages/dogwatch`'s compiled `verify`/`checks`/`record` output plus `@jamessuuu/sluice`'s `verifyEvents` straight into the browser bundle |
 
 `src/checks` and `src/verify` never import a `node:*` builtin — enforced by an
 ESLint boundary rule — which is what lets a published record be re-derived and
@@ -163,12 +173,42 @@ verification, are sluice's, not dogwatch's own.
 
 ## Cost
 
-Through M2, every published `cost.microUsd` is `0` with `certainty: "reported"`
-— not an estimate, the true known cost, because no model call and no metered
-API call exists in this build yet (`llm: { calls: 0 }` on every run). M3 adds
-the first, capped, advisory model calls; M4 adds Neon. Non-token infrastructure
-(GitHub Actions minutes) is asserted "$0.00 billed, not $0.00 consumed" once a
-scheduled workflow exists.
+Every published `cost.microUsd` is computed in integer micro-USD from
+provider-reported usage × `pricing.<date>.json` — never a constant
+(`src/llm/cost.ts`). A quiet night still costs exactly `$0.0000`,
+`llm: { calls: 0, reason: "no_findings" }`. On a findings night, one
+advisory Haiku 4.5 call is attempted only if `ANTHROPIC_API_KEY` is
+configured (never true in this build or its tests — see `src/llm/README.md`)
+and the daily budget (`dogwatch_budget`, 20 calls / 100k in / 20k out /
+$0.20) hasn't tripped; every other case degrades honestly
+(`degraded: [{component:"llm", reason:...}]`) rather than silently skipping
+or crashing. M4 adds Neon, making the budget counter durable across
+processes instead of per-run. Non-token infrastructure (GitHub Actions
+minutes) is asserted "$0.00 billed, not $0.00 consumed" once a scheduled
+workflow exists.
+
+## The site (`apps/web`)
+
+Next.js 16 App Router, React 19, TS strict + `noUncheckedIndexedAccess`,
+Tailwind 4 (config in `app/globals.css`'s `@theme`, no `tailwind.config.js`).
+Every page is prerendered at build time from committed JSON — `/`, `/runs`,
+`/runs/<id>`, `/checks` (the same registry the runner reads), and
+`/methodology`. The only write path this product will ever have,
+`/api/gate/decide`, is M5 and not shipped — this build ships **zero route
+handlers**, enforced by the fact that nothing in `apps/web/app` defines one.
+
+`/runs/<id>`'s **Verify** button runs entirely in the browser: it imports
+`packages/dogwatch`'s compiled `verify`/`checks`/`record` modules (browser-
+bundled from `packages/dogwatch/dist`, built by `pnpm --filter dogwatch
+build` before the site builds — its `exports` field points `tsc` at raw
+source, so the site consumes the same build output any other npm consumer
+would) plus `@jamessuuu/sluice`'s own `verifyEvents`, re-derives every
+finding from the record's own stored evidence, and re-checks the audit hash
+chain — zero server, the exact same code CI already runs offline. A
+Playwright suite (`apps/web/e2e/smoke.spec.ts`) asserts it turns green on a
+real record and red on a planted rubric-violation fixture
+(`fixtures/violations/`), that `/` renders with JavaScript disabled, and
+that the footer + favicon appear on every page.
 
 ## License
 

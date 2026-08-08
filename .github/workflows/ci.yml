@@ -32,6 +32,21 @@ jobs:
           cache: pnpm
       - run: pnpm install --frozen-lockfile
 
+      # sluice's own devDependencies (just `typescript` + `@types/node` for
+      # its `tsc` build — sluice ships zero runtime dependencies by design)
+      # aren't installed by the checkout above; `apps/web`'s build compiles
+      # sluice with DOGWATCH's own `typescript` binary
+      # (`scripts/build-native-deps.mjs`), but type resolution for
+      # `@types/node` still walks sluice's own `node_modules` (SPEC's
+      # sequencing note: sluice is consumed pre-1.0.0-rc.1, as a sibling
+      # checkout, not an npm install).
+      - name: install sluice's own devDependencies (for its @types/node)
+        working-directory: ../sluice
+        run: pnpm install --frozen-lockfile
+      - name: install Playwright's chromium (apps/web's e2e:smoke)
+        working-directory: apps/web
+        run: npx playwright install --with-deps chromium
+
       # The five stages (PROGRAM.md D6). Order is the argument:
       # typecheck -> lint -> unit -> e2e:smoke -> eval.
       - name: typecheck
@@ -41,9 +56,12 @@ jobs:
       - name: unit
         run: pnpm test
       - name: e2e-smoke
-        # Real Playwright smoke lands at M6 (apps/web ships then). Kept as
-        # an explicit no-op stage, not omitted, so the pipeline shape is
-        # stable from the first commit (mirrors sluice's own M0-M6 gap).
+        # SPEC §11.6: Playwright against `next build && next start` (M6 —
+        # apps/web's own `e2e:smoke` script builds, starts the built app,
+        # and runs the suite; `pnpm build:deps` inside that build compiles
+        # dogwatch + sluice first, since apps/web consumes their build
+        # output, not their raw TypeScript source — see
+        # `apps/web/next.config.ts`).
         run: pnpm e2e:smoke
       - name: eval
         # fixtures/violations/ (one planted record per rubric rule, exact
