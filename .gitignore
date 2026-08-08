@@ -13,3 +13,5 @@ apps/web/playwright-report/
 apps/web/test-results/
 apps/web/out/
 .pglite-data/
+
+.vercel
