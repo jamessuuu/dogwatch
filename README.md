@@ -10,28 +10,50 @@ every finding citing recorded evidence — what it did, what it refused, and wha
 it cost to the micro-dollar. A quiet night publishes that it was quiet, with the
 checks it ran.**
 
-> **Status: M0–M3 and M6 (site) landed.** Workspace, TS strict, ESLint 9,
-> Vitest 4, the `reach`/`header`/`brand`/`link`/`weight` check families, the
-> full R1–R15 honesty rubric with exact error codes, planted-violation
-> fixtures, byte-identical replay goldens, the advisory LLM (Haiku 4.5,
-> forced tool schema, Zod-validated, capped, always-degradable — no live
-> call has ever been made from this build), and the site (`apps/web`,
-> statically prerendered from committed JSON, a browser Verify button that
-> re-derives findings and re-checks the audit hash chain with zero server)
-> are built and gated on real Playwright e2e, not a stub. `runs/` holds real
-> published records (below) — the first honest proof this pipeline runs,
-> not yet the 30-consecutive-night claim §13 of [docs/SPEC.md](docs/SPEC.md)
-> reserves for M7. Neon + the cross-run Postgres audit chain (M4) and the
-> human-gate action machinery (M5) are designed in the spec and not yet
-> built — `draft()`, the issue-drafter half of M3's advisory LLM, is fully
-> wired but provably unreachable until M5's gates exist.
+> **Status: M0–M6 landed.** Workspace, TS strict, ESLint 9, Vitest 4, the
+> full `reach`/`header`/`brand`/`link`/`weight` check pack, the R1–R15
+> honesty rubric with exact error codes, planted-violation fixtures,
+> byte-identical replay goldens, the advisory LLM (Haiku 4.5, forced tool
+> schema, Zod-validated, capped, always-degradable — no live call has ever
+> been made from this build), Neon + the cross-run Postgres audit chain
+> (M4, `src/store`), the human-gate action machinery — propose →
+> `gates.open` → notify → three decision channels → `/api/gate/decide` →
+> exactly-once execute → hash-linked amendment (M5, `src/effects`) — and
+> the site (`apps/web`, statically prerendered from committed JSON, a
+> browser Verify button that re-derives findings and re-checks the audit
+> hash chain with zero server, M6) are all built and gated on real
+> Playwright e2e, not a stub. `draft()`, the issue-drafter half of M3's
+> advisory LLM, is fully wired but still provably unreachable — M5's real
+> gate notifications use a deterministic template (`templateDraft`), never
+> the LLM path (`src/llm/unreachable.test.ts` statically enforces this).
+> `artifact`/`repo`/`pkg` remain registered-but-not-implemented check
+> families — [`src/checks/registry.ts`](packages/dogwatch/src/checks/registry.ts)
+> names the exact reason each is missing (a real GitHub/npm token, a
+> deployed sibling to poll).
+>
+> `runs/` holds real published records (below) — every one of them from a
+> local `dogwatch watch` invocation. **`.github/workflows/watch.yml` and
+> `canary.yml` are committed (SPEC §5's table) but have never executed** —
+> nothing has been pushed to trigger a scheduled run yet, so no autonomous
+> night has happened. `cli/trigger.ts`'s `resolveRunKind()` reads
+> `GITHUB_EVENT_NAME`, so a real cron firing of `watch.yml` is the only
+> thing that will ever produce `kind:"scheduled"`; every record published so
+> far honestly carries `kind:"manual"`, because every one of them was. What
+> remains is M7: 30 consecutive published nights, a README numbers block
+> (runs, quiet nights, findings, gates, refusals, total spend), and the
+> portfolio entry — none of which can start until `watch.yml` actually runs
+> on its own schedule.
 > **This is an operated instance, not a product you install.** Nothing here is
-> published to npm; forking and pointing it at your own surfaces is unsupported
-> — `docs/OPERATIONS.md` (fork-and-operate notes, Neon CU math, secrets) is
-> not yet written. Until then [`docs/SPEC.md`](docs/SPEC.md) is the
-> complete, binding design document; the deployed site itself is not live
-> yet — publishing stops at James (SPEC's own gate), so `apps/web` today is
-> built and e2e-tested, not deployed.
+> published to npm; forking and pointing it at your own surfaces is
+> unsupported. [`docs/OPERATIONS.md`](docs/OPERATIONS.md) documents what M5
+> needs an operator to know (the `/api/gate/decide` protections,
+> `resume.yml` polling economics, secrets inventory); the fuller M6
+> fork-and-operate pass is still outstanding — OPERATIONS.md's own scope
+> note says as much ("grows additively, never rewritten").
+> Until then [`docs/SPEC.md`](docs/SPEC.md) is the complete, binding design
+> document; the deployed site itself is not live yet — publishing stops at
+> James (SPEC's own gate), so `apps/web` today is built and e2e-tested, not
+> deployed.
 
 ## What it watches
 
@@ -56,7 +78,8 @@ system has no free-text path that produces one.
 | `brand` | M2 | footer backlink to agentjames + chip-mark favicon reachable |
 | `link` | M2 | bounded same-origin crawl (≤30 pages), external links HEAD-checked (≤60) |
 | `weight` | M2 | transfer bytes of `/` vs. a declared budget |
-| `artifact` / `repo` / `pkg` / `watch` | M4 | registered in [`src/checks/registry.ts`](packages/dogwatch/src/checks/registry.ts) with the exact reason each isn't implemented yet — a real GitHub/npm token, a deployed sibling, and the Postgres-anchored cross-run chain, respectively |
+| `watch` | M4 | dogwatch on itself — `watch.chain_gap` compares the store's actual audit-chain head against what git published last night |
+| `artifact` / `repo` / `pkg` | M4 (still not implemented) | registered in [`src/checks/registry.ts`](packages/dogwatch/src/checks/registry.ts) with the exact reason each isn't built yet — a deployed sibling to poll, a scoped GitHub token, and a real `npm i` smoke step, respectively |
 
 Timings and download counts are **metrics**, recorded and rendered, never
 judged and never a finding (R14) — a number moving is not an event.
@@ -99,8 +122,8 @@ with zero server.
 ## Autonomy ladder
 
 **L2 auto** — everything inside this repo: publishing the record, committing
-artifacts. **L3 human gate** (M5, not yet built) — every write to a repo dogwatch
-does not own. Publishing the record is deliberately ungated: withholding a run
+artifacts. **L3 human gate** (M5, landed) — every write to a repo dogwatch does
+not own. Publishing the record is deliberately ungated: withholding a run
 behind an approval would make the watch only as live as an operator's inbox.
 
 ## Non-goals
@@ -133,25 +156,27 @@ regenerated by `dogwatch render` and CI drift-checks the output.
 
 ```
 dogwatch watch [--dry-run] [--only <family>] [--targets <file>]   the full run
-dogwatch render                                                    regenerate runs/index.json + state/pending-gates.json
+dogwatch render [--check]                                          regenerate runs/index.json + state/pending-gates.json
 dogwatch verify <record…|--all> [--rerun-rules] [--offline]        the rubric validator
+dogwatch resume                                                    sweep timeouts, claim decided gates, execute exactly once, amend (M5)
+dogwatch gate ls|show <id>|decide <id> <approve|reject>             operator break-glass for gates — decide is decision channel (c) (M5)
 ```
 
 Exit codes: `0` clean · `1` findings at/above the gate · `2` probe/environment
 failure · `3` rubric violation in a record · `4` usage/config error · `5`
 internal — 1 and 3 are deliberate: a different owner fixes each.
-`dogwatch resume` and `dogwatch gate` land at M5 with the gate machinery; they
-are not registered in the CLI today rather than stubbed with nothing behind
-them.
+`resume`/`gate` are registered the same as every other command
+([`src/cli/index.ts`](packages/dogwatch/src/cli/index.ts)) — landed with the
+gate kernel at M5, not stubs.
 
 ## Monorepo
 
 | Path | Purpose |
 |---|---|
-| `packages/dogwatch` | **Private, never published** — bin `dogwatch`. `src/checks` (pure rules) · `src/probe` (the only network code) · `src/record` (builder, canonical JSON, hashing) · `src/verify` (the rubric, browser-safe) · `src/llm` (advisory triage, landed M3) · `src/cli` |
-| `packages/dogwatch/src/effects` | Gate/action wiring — lands at M5 |
-| `packages/dogwatch/src/llm` | Advisory triage (`triage`, landed M3) + issue drafting (`draft`, wired but provably unreachable until M5's gates exist) |
-| `apps/web` | Next.js 16 App Router, React 19 — landed at M6. Every page prerendered from committed JSON; zero route handlers (the only one in the product, `/api/gate/decide`, is M5); the `/runs/<id>` Verify button imports `packages/dogwatch`'s compiled `verify`/`checks`/`record` output plus `@jamessuuu/sluice`'s `verifyEvents` straight into the browser bundle |
+| `packages/dogwatch` | **Private, never published** — bin `dogwatch`. `src/checks` (pure rules) · `src/probe` (the only network code) · `src/record` (builder, canonical JSON, hashing) · `src/verify` (the rubric, browser-safe) · `src/llm` (advisory triage, landed M3) · `src/store` (Neon/`sluice-store-postgres` wiring + the `dogwatch_budget` table, landed M4) · `src/effects` (gate/action wiring, landed M5) · `src/cli` |
+| `packages/dogwatch/src/effects` | Propose → `gates.open` → notify → three decision channels → exactly-once execute → hash-linked amendment — landed M5 |
+| `packages/dogwatch/src/llm` | Advisory triage (`triage`, landed M3) + issue drafting (`draft`, fully wired but still provably unreachable — M5's real gate notifications use a deterministic template instead) |
+| `apps/web` | Next.js 16 App Router, React 19 — landed at M6, `/gate` (the decision page) added with M5. Every page prerendered from committed JSON except the one write path this product will ever have, `/api/gate/decide` (M5, the only route handler); the `/runs/<id>` Verify button imports `packages/dogwatch`'s compiled `verify`/`checks`/`record` output plus `@jamessuuu/sluice`'s `verifyEvents` straight into the browser bundle |
 
 `src/checks` and `src/verify` never import a `node:*` builtin — enforced by an
 ESLint boundary rule — which is what lets a published record be re-derived and
@@ -161,15 +186,18 @@ pipeline replays offline from a recorded transcript.
 
 ## Dependency on sluice
 
-`@jamessuuu/sluice` is linked as an unpublished sibling repo
-(`link:../sluice/packages/sluice` — SPEC's own sequencing note: M0–M3 build
-against sluice's `MemoryStore` today, and M4+ is blocked on sluice tagging
-`1.0.0-rc.1`). This becomes a pinned npm version range once sluice publishes;
-until then, CI checks the sibling repo out next to this one on every run so the
-link resolves the same way it does on a local clone with both repos checked out
-side by side. Every probe runs inside `sluice.run()` with `circuitKey = host`;
-the audit trail in every record's `audit` block, and its hash-chain
-verification, are sluice's, not dogwatch's own.
+`@jamessuuu/sluice` and `@jamessuuu/sluice-store-postgres` are both linked as
+an unpublished sibling repo (`link:../sluice/packages/*` — SPEC's own
+sequencing note). M0–M6 are all built against that sibling checkout, `MemoryStore`
+in tests and the browser verifier, `sluice-store-postgres` in production —
+M4/M5 did **not** wait for sluice to tag `1.0.0-rc.1`, they landed the same
+way M0–M3 did, against the sibling link. This becomes a pinned npm version
+range once sluice publishes; until then, CI checks the sibling repo out next
+to this one on every run so the link resolves the same way it does on a
+local clone with both repos checked out side by side. Every probe runs
+inside `sluice.run()` with `circuitKey = host`; the audit trail in every
+record's `audit` block, and its hash-chain verification, are sluice's, not
+dogwatch's own.
 
 ## Cost
 
@@ -182,10 +210,13 @@ configured (never true in this build or its tests — see `src/llm/README.md`)
 and the daily budget (`dogwatch_budget`, 20 calls / 100k in / 20k out /
 $0.20) hasn't tripped; every other case degrades honestly
 (`degraded: [{component:"llm", reason:...}]`) rather than silently skipping
-or crashing. M4 adds Neon, making the budget counter durable across
-processes instead of per-run. Non-token infrastructure (GitHub Actions
-minutes) is asserted "$0.00 billed, not $0.00 consumed" once a scheduled
-workflow exists.
+or crashing. With `DATABASE_URL` configured, the budget counter is Neon-backed
+and durable across processes (M4's `PostgresBudgetStore`) rather than
+per-run; unconfigured, it stays the honest in-memory M0–M3 default. Non-token
+infrastructure (GitHub Actions minutes) is asserted "$0.00 billed, not $0.00
+consumed" — `watch.yml`/`canary.yml` are committed but, per the Status block
+above, have never actually run, so this line is a documented intent, not yet
+a measured fact.
 
 ## The site (`apps/web`)
 
@@ -193,9 +224,10 @@ Next.js 16 App Router, React 19, TS strict + `noUncheckedIndexedAccess`,
 Tailwind 4 (config in `app/globals.css`'s `@theme`, no `tailwind.config.js`).
 Every page is prerendered at build time from committed JSON — `/`, `/runs`,
 `/runs/<id>`, `/checks` (the same registry the runner reads), and
-`/methodology`. The only write path this product will ever have,
-`/api/gate/decide`, is M5 and not shipped — this build ships **zero route
-handlers**, enforced by the fact that nothing in `apps/web/app` defines one.
+`/methodology`. `/gate` (M5) is the one dynamic page — it POSTs a human's
+decision to the one write path this product will ever have:
+`/api/gate/decide` (`apps/web/app/api/gate/decide`), this build's **only
+route handler**.
 
 `/runs/<id>`'s **Verify** button runs entirely in the browser: it imports
 `packages/dogwatch`'s compiled `verify`/`checks`/`record` modules (browser-

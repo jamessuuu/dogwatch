@@ -45,6 +45,11 @@ jobs:
           repository: jamessuuu/sluice
           path: ../sluice
       - uses: actions/checkout@v4
+        with:
+          # Full history, not the default shallow depth-1 clone: the
+          # README drift check (below) walks `git log` for every feat(mN)
+          # milestone commit, which a shallow clone would silently hide.
+          fetch-depth: 0
 
       - uses: pnpm/action-setup@v4
       - uses: actions/setup-node@v4
@@ -105,6 +110,8 @@ jobs:
         run: pnpm render:check
       - name: brand drift (apps/web/public/brand vs scripts/brand.mjs)
         run: pnpm brand:check
+      - name: README drift (Status block's declared milestone vs the newest feat(mN) commit)
+        run: pnpm readme:check
 
       # SPEC §11.1: every committed record, on every push — findings
       # re-derived from stored evidence must match byte-for-byte, and the
