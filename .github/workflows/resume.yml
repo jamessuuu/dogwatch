@@ -1,0 +1,117 @@
+name: resume
+
+# SPEC §5/§12 M5: */30 poller (bounded by the Neon CU-hour math in
+# docs/OPERATIONS.md — quiet nights: one wake) + workflow_dispatch, decision
+# channel (b) of three: "authenticated by GitHub repo permissions, works
+# with no token and no Vercel, usable from the GitHub mobile app."
+#
+# MUST read state/pending-gates.json first and exit in ~5s touching
+# nothing when empty — the fast path lives at TWO layers on purpose: this
+# job's own early-exit step (never even installs dependencies) AND
+# `dogwatch resume`'s own internal check (SPEC's belt-and-suspenders,
+# since workflow_dispatch with real inputs always has a job to do and
+# skips straight past this step by construction).
+on:
+  schedule:
+    - cron: "*/30 * * * *"
+  workflow_dispatch:
+    inputs:
+      gateId:
+        description: "Gate id to decide (leave empty to just sweep/execute pending decisions)"
+        required: false
+        type: string
+      decision:
+        description: "approve or reject — required if gateId is set"
+        required: false
+        type: choice
+        options: [approve, reject]
+      reason:
+        description: "Decision reason (optional)"
+        required: false
+        type: string
+
+# One run at a time — a second trigger while one is still working queues
+# rather than racing it (sluice's own claim/lease already makes concurrent
+# execution safe, SPEC §11.4 scenario 2 proves it, but there is no reason to
+# spend two Neon wakes on the same work).
+concurrency:
+  group: dogwatch-resume
+  cancel-in-progress: false
+
+jobs:
+  resume:
+    # Repo-guarded: never runs on a fork (SPEC's own repo-guard convention
+    # for anything that can write — this workflow both decides AND executes).
+    if: github.repository == 'jamessuuu/dogwatch'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      issues: write
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: fast path — exit now if there is nothing pending and no explicit decision was given
+        id: check
+        run: |
+          if [ -n "${{ github.event.inputs.gateId }}" ]; then
+            echo "run=true" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          if [ "$(jq '.gates | length' state/pending-gates.json)" = "0" ]; then
+            echo "dogwatch resume: state/pending-gates.json is empty. Nothing to do."
+            echo "run=false" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          echo "run=true" >> "$GITHUB_OUTPUT"
+
+      # See ci.yml's own comment: sluice is consumed as an unpublished
+      # sibling checkout pre-1.0.0-rc.1 (SPEC's sequencing note), never an
+      # npm install.
+      - uses: actions/checkout@v4
+        if: steps.check.outputs.run == 'true'
+        with:
+          repository: jamessuuu/sluice
+          path: ../sluice
+
+      - uses: pnpm/action-setup@v4
+        if: steps.check.outputs.run == 'true'
+      - uses: actions/setup-node@v4
+        if: steps.check.outputs.run == 'true'
+        with:
+          node-version: 22
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+        if: steps.check.outputs.run == 'true'
+      - name: install sluice's own devDependencies
+        if: steps.check.outputs.run == 'true'
+        working-directory: ../sluice
+        run: pnpm install --frozen-lockfile
+
+      - name: decide (workflow_dispatch with an explicit gateId only)
+        if: steps.check.outputs.run == 'true' && github.event.inputs.gateId != ''
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+          APPROVAL_SECRET: ${{ secrets.APPROVAL_SECRET }}
+        run: |
+          pnpm dogwatch gate decide "${{ github.event.inputs.gateId }}" "${{ github.event.inputs.decision }}" \
+            --channel workflow_dispatch \
+            --actor "${{ github.actor }}" \
+            ${{ github.event.inputs.reason != '' && format('--reason "{0}"', github.event.inputs.reason) || '' }}
+
+      - name: resume — sweep timeouts, claim decided gates, execute exactly once, amend
+        if: steps.check.outputs.run == 'true'
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+          APPROVAL_SECRET: ${{ secrets.APPROVAL_SECRET }}
+          GITHUB_TOKEN: ${{ secrets.DOGWATCH_ISSUES_TOKEN }}
+        run: pnpm dogwatch resume
+
+      - name: commit any amendment + regenerated state
+        if: steps.check.outputs.run == 'true'
+        run: |
+          git config user.name "dogwatch[bot]"
+          git config user.email "dogwatch[bot]@users.noreply.github.com"
+          git add runs/ state/pending-gates.json
+          git diff --cached --quiet && echo "nothing to commit" && exit 0
+          git commit -m "chore(resume): gate decision(s) resolved"
+          git push

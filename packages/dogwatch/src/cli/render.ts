@@ -1,18 +1,13 @@
 import type { Command } from "commander";
-import { z } from "zod";
 import { buildIndex } from "../record/index-file.js";
 import { canonicalStringify } from "../record/canonical.js";
 import { runIndexPath } from "../record/paths.js";
+import { buildPendingGatesFile } from "../record/pending-gates.js";
 import { scanRunRecords } from "../record/scan.js";
 import { readJsonFileIfExists, writeJsonFileAtomic } from "../record/write.js";
 import { defaultRunsDir, repoRoot } from "./paths.js";
 import { EXIT } from "./exit-codes.js";
 import { join } from "node:path";
-
-const PendingGatesFileSchema = z.strictObject({
-  formatVersion: z.literal(1),
-  gates: z.array(z.unknown()),
-});
 
 interface RenderCliOptions {
   check?: boolean;
@@ -36,9 +31,12 @@ export function runRender(opts: RenderCliOptions): number {
   const indexText = canonicalStringify(index);
 
   const pendingGatesPath = join(repoRoot(), "state", "pending-gates.json");
-  // No gates exist before M5 (SPEC §12) — an empty, well-formed file is the
-  // honest state, not a placeholder.
-  const pendingGates = PendingGatesFileSchema.parse({ formatVersion: 1, gates: [] });
+  // M5 (SPEC §5): every gate with an EFFECTIVE status of "pending" across
+  // every committed record (a gate resolved via amendment is no longer
+  // pending, even though its base-record entry still says so — see
+  // pending-gates.ts's header comment). Empty before any gate has ever
+  // opened (M0-M4) — a well-formed empty file, not a placeholder.
+  const pendingGates = buildPendingGatesFile(records);
   const pendingGatesText = canonicalStringify(pendingGates);
 
   if (opts.check === true) {

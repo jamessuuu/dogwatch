@@ -615,7 +615,9 @@
               "duplicate_suppressed",
               "gate_timed_out",
               "circuit_open",
-              "not_confirmed"
+              "not_confirmed",
+              "rejected",
+              "effect_failed"
             ]
           },
           "reconciliationOf": {
@@ -710,7 +712,9 @@
               "duplicate_suppressed",
               "gate_timed_out",
               "circuit_open",
-              "not_confirmed"
+              "not_confirmed",
+              "rejected",
+              "effect_failed"
             ]
           },
           "detail": {
@@ -1240,7 +1244,9 @@
                     "duplicate_suppressed",
                     "gate_timed_out",
                     "circuit_open",
-                    "not_confirmed"
+                    "not_confirmed",
+                    "rejected",
+                    "effect_failed"
                   ]
                 },
                 "reconciliationOf": {
@@ -1252,6 +1258,69 @@
                 "kind",
                 "target",
                 "status"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "gates": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "key": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "status": {
+                  "type": "string",
+                  "enum": [
+                    "pending",
+                    "approved",
+                    "rejected",
+                    "timed_out",
+                    "cancelled"
+                  ]
+                },
+                "openedAt": {
+                  "type": "string",
+                  "format": "date-time",
+                  "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d(?::[0-5]\\d(?:\\.\\d+)?)?(?:Z))$"
+                },
+                "expiresAt": {
+                  "type": "string",
+                  "format": "date-time",
+                  "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d(?::[0-5]\\d(?:\\.\\d+)?)?(?:Z))$"
+                },
+                "decidedAt": {
+                  "type": "string",
+                  "format": "date-time",
+                  "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d(?::[0-5]\\d(?:\\.\\d+)?)?(?:Z))$"
+                },
+                "decidedBy": {
+                  "type": "string"
+                },
+                "decisionChannel": {
+                  "type": "string",
+                  "enum": [
+                    "token",
+                    "workflow_dispatch",
+                    "cli"
+                  ]
+                },
+                "reason": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "id",
+                "key",
+                "status",
+                "openedAt",
+                "expiresAt"
               ],
               "additionalProperties": false
             }
@@ -1272,7 +1341,9 @@
                     "duplicate_suppressed",
                     "gate_timed_out",
                     "circuit_open",
-                    "not_confirmed"
+                    "not_confirmed",
+                    "rejected",
+                    "effect_failed"
                   ]
                 },
                 "detail": {
@@ -1299,6 +1370,7 @@
           "kind",
           "events",
           "actions",
+          "gates",
           "refusals",
           "amendmentHash"
         ],

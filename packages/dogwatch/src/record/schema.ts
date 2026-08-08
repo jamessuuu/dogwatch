@@ -93,13 +93,22 @@ export type GateStatus = z.infer<typeof GateStatusSchema>;
 export const DecisionChannelSchema = z.enum(["token", "workflow_dispatch", "cli"]);
 export type DecisionChannel = z.infer<typeof DecisionChannelSchema>;
 
-/** SPEC §9's failure-contract table, closed into an enum for R7. */
+/** SPEC §9's failure-contract table, closed into an enum for R7. `rejected`
+ * and `effect_failed` are M5 additions beyond the table's literal text
+ * (which only spells out `gate_timed_out` for the timeout path) — a human
+ * explicitly rejecting a gate, and a governed effect failing non-
+ * indeterminately (a real API rejection, not "we don't know"), are both
+ * real terminal outcomes `dogwatch resume` must publish a reasonCode for
+ * (R7: "refused requires a reasonCode"), and neither fits any of the other
+ * five codes without being dishonest about which one actually happened. */
 export const RefusalReasonCodeSchema = z.enum([
   "store_unavailable",
   "duplicate_suppressed",
   "gate_timed_out",
   "circuit_open",
   "not_confirmed",
+  "rejected",
+  "effect_failed",
 ]);
 export type RefusalReasonCode = z.infer<typeof RefusalReasonCodeSchema>;
 
@@ -390,6 +399,17 @@ export const AmendmentSchema = z.strictObject({
   kind: z.string().min(1),
   events: z.array(AuditEventSchema),
   actions: z.array(ActionSchema),
+  /** M5 addition: a gate is opened once, during the run that proposed it,
+   * and published in that run's top-level `gates[]` — Decision 2 forbids
+   * ever rewriting that. Its eventual decision/execution almost always
+   * happens LATER, in a different process (`dogwatch resume`), so the
+   * updated `GateEntry` (decidedAt/decidedBy/decisionChannel/reason/status)
+   * lands here instead: the LATEST amendment carrying a given gate id is
+   * that gate's current, effective state (`verify/rubric.ts`'s R7/R8 read
+   * it this way). Safe to add as a required field — no amendment has ever
+   * been published by this repo yet, so no historical record can violate
+   * it. */
+  gates: z.array(GateEntrySchema),
   refusals: z.array(RefusalSchema),
   amendmentHash: z.string().min(1),
 });

@@ -30,6 +30,7 @@ describe("computeRecordHash", () => {
           kind: "gate_decided",
           events: [],
           actions: [],
+          gates: [],
           refusals: [],
           amendmentHash: "amendment-hash",
         },

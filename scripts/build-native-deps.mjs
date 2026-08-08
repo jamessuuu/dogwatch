@@ -21,6 +21,14 @@ import { fileURLToPath } from "node:url";
 
 const repoRoot = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const sluiceTsconfig = resolve(repoRoot, "..", "sluice", "packages", "sluice", "tsconfig.build.json");
+const sluiceStorePostgresTsconfig = resolve(
+  repoRoot,
+  "..",
+  "sluice",
+  "packages",
+  "sluice-store-postgres",
+  "tsconfig.build.json"
+);
 const dogwatchTsconfig = join(repoRoot, "packages", "dogwatch", "tsconfig.build.json");
 // The `tsc` JS entry point directly (not the `.CMD`/shell wrapper in
 // `.bin/`) — runnable via `node`, identically on Windows and POSIX, no
@@ -45,4 +53,12 @@ function build(label, tsconfigPath) {
 }
 
 build("@jamessuuu/sluice", sluiceTsconfig);
+// M5: apps/web's /api/gate/decide route imports dogwatch's server.ts,
+// which pulls in @jamessuuu/sluice-store-postgres — same "compiled output,
+// not raw NodeNext-resolution TS source" story as sluice core above (its
+// own package.json exports "." -> "./src/index.ts" for ITS OWN tsc build,
+// never published — SPEC's sequencing note).
+if (existsSync(sluiceStorePostgresTsconfig)) {
+  build("@jamessuuu/sluice-store-postgres", sluiceStorePostgresTsconfig);
+}
 build("dogwatch", dogwatchTsconfig);

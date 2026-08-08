@@ -14,6 +14,8 @@ import { writeJsonFileAtomic } from "../record/write.js";
 import { buildRun } from "../record/build-run.js";
 import { createDogwatchStore } from "../store/index.js";
 import { createPgPoolSqlExecutor } from "../store/sql-executor.js";
+import { proposeAndGateFindings } from "../effects/propose.js";
+import { gatePageBaseUrlFromEnv, githubTransportFromEnv, reconcilePreviousIndeterminates } from "./effects-config.js";
 import { defaultPricingManifestPath, defaultRunsDir, defaultTargetsPath, repoRoot } from "./paths.js";
 import { restrictToFamily } from "./family-filter.js";
 import { buildTrigger } from "./trigger.js";
@@ -92,6 +94,18 @@ export async function runWatch(opts: WatchCliOptions): Promise<number> {
       ? createBudgetStore({ databaseUrl, sqlExecutor: createPgPoolSqlExecutor(dogwatchStore.pool) })
       : undefined;
 
+  // M5 (SPEC §5 steps 1-3): only constructed when GITHUB_TOKEN is present —
+  // every local/dev/CI invocation without the secret wired degrades to "no
+  // gate can notify or execute" (propose still runs and still refuses
+  // store-unavailable actions; it simply has nowhere to open the
+  // notification issue, so the hook below skips proposing anything that
+  // would need one). This mirrors the ANTHROPIC_API_KEY / DATABASE_URL
+  // degrade pattern already established for M3/M4.
+  const githubTransport = githubTransportFromEnv();
+  const approvalSecret = process.env.APPROVAL_SECRET;
+  const notifyWebhookUrl = process.env.NOTIFY_WEBHOOK_URL;
+  const gatePageBaseUrl = gatePageBaseUrlFromEnv();
+
   let record;
   try {
     record = await buildRun({
@@ -115,6 +129,37 @@ export async function runWatch(opts: WatchCliOptions): Promise<number> {
       store: dogwatchStore.store,
       storeKind: dogwatchStore.kind,
       ...(dogwatchStore.degradeReason === undefined ? {} : { storeDegradeReason: dogwatchStore.degradeReason }),
+      ...(approvalSecret === undefined ? {} : { approvalSecret }),
+      ...(githubTransport === undefined
+        ? {}
+        : {
+            proposeActions: async (ctx) => {
+              // SPEC §9 reconciliation runs FIRST, against the record this
+              // run is about to supersede as "latest" — its resolution
+              // actions are folded into the SAME actions[] this run
+              // publishes (there is no separate reconciliation record).
+              const reconciled = await reconcilePreviousIndeterminates(prevRecord, githubTransport);
+              const proposed = await proposeAndGateFindings(ctx.findings, {
+                sluice: ctx.sluice,
+                checks: ctx.checks,
+                actionPolicy: targets.actionPolicy,
+                targets,
+                storeKind: ctx.storeKind,
+                runId: ctx.runId,
+                startedAt: ctx.startedAt,
+                now: ctx.now,
+                githubTransport,
+                gatePageBaseUrl,
+                ...(notifyWebhookUrl === undefined ? {} : { notifyWebhookUrl }),
+                ...(approvalSecret === undefined ? {} : { approvalSecret }),
+              });
+              return {
+                actions: [...reconciled, ...proposed.actions],
+                gates: proposed.gates,
+                refusals: proposed.refusals,
+              };
+            },
+          }),
     });
   } catch (cause) {
     console.error(`internal error building the run: ${cause instanceof Error ? cause.stack ?? cause.message : String(cause)}`);

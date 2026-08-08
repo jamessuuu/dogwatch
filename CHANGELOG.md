@@ -5,6 +5,65 @@ Format: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/). Versioning: se
 
 ## [Unreleased]
 
+### Added (M5)
+- The gate kernel (`src/effects`): propose → `gates.open` (idempotent on
+  the finding fingerprint) → notify. Notification is a tokenless self-repo
+  issue, always; an optional webhook carries `gates.mintToken`'s tokenized
+  link. `PublicGateSummary` (`notify.ts`) has no token field at all — a
+  token cannot reach a public issue by construction, pinned by a
+  `// @ts-expect-error` test.
+- Three decision channels, all through one `decideGate` wrapper, all
+  recorded with `decisionChannel`: `POST /api/gate/decide` (the product's
+  only write route — Zod body, sluice's own timing-safe token verify, the
+  `dogwatch_budget.decide_attempts` counter, the Hobby WAF rule documented
+  in `docs/OPERATIONS.md`), `workflow_dispatch` on `.github/workflows/resume.yml`,
+  and `dogwatch gate decide` (local break-glass).
+- `dogwatch resume`: sweep timeouts → claim decided gates → execute the
+  approved ones exactly once (`sluice.run`, intent-derived
+  `idempotencyKey`, 90d retention) → append a hash-linked amendment
+  (`record/amendment.ts`) → close the notification issue → regenerate
+  `state/pending-gates.json`. Never rewrites a published record.
+- Recurring findings: a gate re-proposed after its own decision publishes
+  `refusal{reasonCode:"duplicate_suppressed"}` instead of a second gate or
+  a repeat notification — one issue, ever.
+- Indeterminate-issue-creation reconciliation (`reconcile.ts`): the run
+  after an `E_INDETERMINATE` github issue-open searches the target repo
+  for the hidden `dogwatch:effect:<key>` HTML-comment marker and publishes
+  a new, evidenced resolution action.
+- The SPEC §11.4 scenario suite (`effects/scenarios.test.ts`) on sluice
+  `MemoryStore` + `FakeGithubTransport` (no real GitHub API call anywhere
+  in the test suite): open→approve→execute, duplicate poller, crash
+  mid-execute then resume, reject, timeout, decision race, token replay —
+  each asserted against the fake transport's own issue ledger.
+- `verify/rubric.ts`'s R7/R8 now read a gate's/action's EFFECTIVE state
+  across the base record and every amendment (a decision published later,
+  in a different process, is not "unbacked").
+- Bug fix: a `mailto:`/non-http(s) link discovered by the crawler is
+  skipped (`not_applicable`) before ever reaching an HTTP request; the
+  error-path checkId for a failed external link now carries its
+  discriminator (a real collision risk when two links fail in one run).
+
+### Added (M4)
+- `@jamessuuu/sluice-store-postgres` wired as dogwatch's production store
+  (`src/store`), with the one dogwatch table (`dogwatch_budget`),
+  forward-only migrations, `db:migrate`/`db:seed` — verified locally
+  against `@electric-sql/pglite` (no Docker on this machine) and against a
+  real `postgres:17` CI service container (`store.real.test.ts`, gated on
+  `DATABASE_URL`).
+- Cross-run audit anchoring: `record/build-run.ts` carries the previous
+  run's `audit.head` forward as this run's `prevHead` and anchors its
+  event query at the previous run's `toSeq` — the actual mechanism behind
+  `chain.anchored`.
+- `watch.chain_gap` (`checks/watch.ts`): compares the store's actual first
+  new event's `prevHash` against what git published, not seq numbers (a
+  seq comparison anchored at the query cursor is tautological — see the
+  module's header comment).
+- Store-unavailable degrade: a configured-but-unreachable `DATABASE_URL`
+  falls back to `MemoryStore` (`audit.store:"memory"`,
+  `chain.anchored:false`) rather than crashing the run; a plain
+  never-configured `DATABASE_URL` (every existing test, golden fixture,
+  and local dev run) stays byte-identical to pre-M4 output.
+
 ### Added (M6)
 - The site (`apps/web`, Next.js 16 App Router, React 19, TS strict +
   `noUncheckedIndexedAccess`, Tailwind 4 config-in-CSS). Every page

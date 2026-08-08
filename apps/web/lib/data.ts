@@ -16,9 +16,11 @@ import { fileURLToPath } from "node:url";
 // build output `pnpm --filter dogwatch build` already produces.
 import {
   CHECK_REGISTRY,
+  PendingGatesFileSchema,
   RunIndexFileSchema,
   RunRecordSchema,
   type FamilyCatalogEntry,
+  type PendingGateEntry,
   type RunIndexEntry,
   type RunIndexFile,
   type RunRecord,
@@ -33,6 +35,16 @@ export function repoRoot(): string {
 export function loadRunIndex(): RunIndexFile {
   const raw = readFileSync(join(repoRoot(), "runs", "index.json"), "utf8");
   return RunIndexFileSchema.parse(JSON.parse(raw) as unknown);
+}
+
+/** M5: `/gate` reads this committed, tokenless file to render a pending
+ * gate's basic facts (SPEC §5: "open gates (from the committed file,
+ * tokenless)") — no server call, no Postgres read, for the page shell
+ * itself; only the Approve/Reject POST touches `/api/gate/decide`. */
+export function findPendingGate(gateId: string): PendingGateEntry | null {
+  const raw = readFileSync(join(repoRoot(), "state", "pending-gates.json"), "utf8");
+  const file = PendingGatesFileSchema.parse(JSON.parse(raw) as unknown);
+  return file.gates.find((g) => g.gateId === gateId) ?? null;
 }
 
 export interface LoadedRun {

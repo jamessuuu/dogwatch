@@ -135,6 +135,19 @@ test.describe("/checks — the catalog", () => {
   });
 });
 
+test.describe("/gate — the only page that POSTs (SPEC S5 step 3, M5)", () => {
+  test("no id -> a clear message, not a crash", async ({ page }) => {
+    await page.goto("/gate");
+    await expect(page.getByRole("heading", { name: "Decide a gate" })).toBeVisible();
+    await expect(page.getByText("No gate id given.")).toBeVisible();
+  });
+
+  test("unknown id -> reports the gate is not currently pending, not a crash", async ({ page }) => {
+    await page.goto("/gate?id=nonexistent-gate-id");
+    await expect(page.getByText("This gate is not currently pending")).toBeVisible();
+  });
+});
+
 test.describe("/methodology", () => {
   test("prints the rubric, the anti-manufacture rule, the autonomy ladder, and limitations", async ({ page }) => {
     await page.goto("/methodology");

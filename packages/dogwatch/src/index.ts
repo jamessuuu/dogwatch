@@ -11,6 +11,7 @@ export * from "./record/schema.js";
 export * from "./record/canonical.js";
 export * from "./record/hash.js";
 export * from "./record/index-schema.js";
+export * from "./record/pending-gates.js";
 export * from "./record/targets-schema.js";
 export * from "./verify/rubric.js";
 export * from "./verify/types.js";

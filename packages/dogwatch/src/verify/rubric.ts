@@ -156,12 +156,37 @@ function checkR6(record: RunRecord): Violation[] {
   return out;
 }
 
+// ── shared: the amendment gate-overlay (M5) ────────────────────────────────
+
+/**
+ * A gate is opened once, in the run that proposed it, and published in that
+ * run's TOP-LEVEL `gates[]` — Decision 2 forbids ever rewriting that entry.
+ * Its decision/execution almost always happens later, in a different
+ * process (`dogwatch resume`), and lands in an AMENDMENT's `gates[]`
+ * instead (schema.ts's `AmendmentSchema` comment). The overlay below maps
+ * each gate id to the LATEST amendment's version of it, if any — that is
+ * the gate's current, effective state; R7/R8 both need it to avoid treating
+ * every gate that has since been decided as permanently "unbacked".
+ */
+function effectiveGatesById(record: RunRecord): Map<string, RunRecord["gates"][number]> {
+  const byId = new Map(record.gates.map((g) => [g.id, g]));
+  for (const amendment of record.amendments) {
+    for (const g of amendment.gates) byId.set(g.id, g);
+  }
+  return byId;
+}
+
 // ── R7 ───────────────────────────────────────────────────────────────────
 
 function checkR7(record: RunRecord): Violation[] {
   const out: Violation[] = [];
-  const gatesById = new Map(record.gates.map((g) => [g.id, g]));
-  for (const a of record.actions) {
+  const gatesById = effectiveGatesById(record);
+  // Executed/refused actions almost always arrive via an amendment (the
+  // decision + execution happen in a later `dogwatch resume` process, not
+  // inside the run that only ever got as far as `gated_pending`) — R7 must
+  // see both the base record's actions and every amendment's.
+  const allActions = [...record.actions, ...record.amendments.flatMap((a) => a.actions)];
+  for (const a of allActions) {
     if (a.status === "executed") {
       if (a.gateId === undefined || a.effectKey === undefined || a.effectOutcome === undefined) {
         out.push(violation("R7", "E_ACTION_UNBACKED", `action ${a.id} is executed but missing gateId/effectKey/effectOutcome`, a.id));
@@ -186,19 +211,27 @@ const GATE_TERMINAL_EVENT_TYPES = new Set(["gate.decided", "gate.timed_out"]);
 function checkR8(record: RunRecord): Violation[] {
   const out: Violation[] = [];
   const endedAtMs = Date.parse(record.endedAt);
+  const effectiveById = effectiveGatesById(record);
+  // gate.opened always lands in THIS run's own audit trail (opening happens
+  // synchronously during propose, inside the same sluice session that
+  // produced record.audit.events); the terminal event almost always lands
+  // in whichever amendment recorded the eventual decision — so the terminal
+  // search spans every amendment's events too.
+  const allEvents = [...record.audit.events, ...record.amendments.flatMap((a) => a.events)];
   for (const g of record.gates) {
-    const events = record.audit.events.filter((e) => e.subjectType === "gate" && e.subjectKey === g.key);
+    const effective = effectiveById.get(g.id) ?? g;
+    const events = allEvents.filter((e) => e.subjectType === "gate" && e.subjectKey === g.key);
     const opened = events.some((e) => e.type === "gate.opened");
     const terminal = events.some((e) => GATE_TERMINAL_EVENT_TYPES.has(e.type));
-    if (g.status === "pending") {
-      const expiresMs = Date.parse(g.expiresAt);
+    if (effective.status === "pending") {
+      const expiresMs = Date.parse(effective.expiresAt);
       if (!opened || Number.isNaN(expiresMs) || expiresMs <= endedAtMs) {
         out.push(violation("R8", "E_GATE_UNBACKED", `gate ${g.id} is pending but not backed by an open audit event with a future expiresAt`, g.id));
       }
       continue;
     }
     if (!opened || !terminal) {
-      out.push(violation("R8", "E_GATE_UNBACKED", `gate ${g.id} (status ${g.status}) is missing a gate.opened + terminal audit event pair`, g.id));
+      out.push(violation("R8", "E_GATE_UNBACKED", `gate ${g.id} (status ${effective.status}) is missing a gate.opened + terminal audit event pair`, g.id));
     }
   }
   return out;

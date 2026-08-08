@@ -23,6 +23,20 @@ const here = dirname(fileURLToPath(import.meta.url));
 // exact scenario (verified against Next 16.3.0). Webpack's `resolve.alias`
 // takes the same absolute path correctly.
 const SLUICE_DIST = resolve(here, "..", "..", "..", "sluice", "packages", "sluice", "dist", "index.js");
+// M5: /api/gate/decide (via dogwatch's server.ts) pulls in
+// @jamessuuu/sluice-store-postgres — same unpublished-package,
+// exports-points-at-raw-TS-source story as SLUICE_DIST above.
+const SLUICE_STORE_POSTGRES_DIST = resolve(
+  here,
+  "..",
+  "..",
+  "..",
+  "sluice",
+  "packages",
+  "sluice-store-postgres",
+  "dist",
+  "index.js"
+);
 
 // Next's own `NextConfig["webpack"]` type is `any` (see `next/dist/server/
 // config-shared.d.ts`) — this local type stands in so the function body
@@ -43,6 +57,7 @@ const nextConfig: NextConfig = {
     config.resolve.alias = {
       ...config.resolve.alias,
       "@jamessuuu/sluice": SLUICE_DIST,
+      "@jamessuuu/sluice-store-postgres": SLUICE_STORE_POSTGRES_DIST,
     };
     return config;
   },

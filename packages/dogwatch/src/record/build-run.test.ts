@@ -3,6 +3,8 @@ import { describe, expect, it } from "vitest";
 import { buildRun } from "./build-run.js";
 import { createReplayHttpProbe } from "../probe/replay.js";
 import { TEST_PRICING_MANIFEST } from "./test-helper.js";
+import { verifyRecord } from "../verify/rubric.js";
+import { FakeGithubTransport, proposeAndGateFindings } from "../effects/index.js";
 import type { RunRecord } from "./schema.js";
 import type { TargetsFile } from "./targets-schema.js";
 import type { HttpGetResult, HttpHeadResult } from "../probe/types.js";
@@ -394,6 +396,63 @@ describe("buildRun — link bug fix, 2026-08-09: non-http(s) schemes + check id 
     expect(checkA?.verdict).toBe("error");
     expect(checkB?.verdict).toBe("error");
     expect(checkA?.id).not.toBe(checkB?.id);
+  });
+});
+
+describe("buildRun — M5 proposeActions hook wiring (build-run.ts <-> src/effects/propose.ts)", () => {
+  it("a confirmed, in-policy finding produces a real gate + action + self-repo notification, and the resulting record is rubric-clean", async () => {
+    const transport = new FakeGithubTransport();
+    const gatedTargets: TargetsFile = {
+      ...oneDeployedSite,
+      actionPolicy: { issueRepos: ["jamessuuu/agentjames"], confirmations: 2, gateTimeoutHours: 48 },
+    };
+    const record = await buildRun({
+      targets: gatedTargets,
+      targetsHash: "test-targets-hash",
+      probe: createReplayHttpProbe({ get: { "https://agentjames.vercel.app": okResult({ status: 503 }) } }),
+      now: () => FIXED_NOW_MS,
+      random: seededRandom(7),
+      commit: "0".repeat(40),
+      watchVersion: "0.0.0-test",
+      checkPackVersion: "1",
+      pricingManifest: "pricing.2026-08-08.json",
+      pricing: TEST_PRICING_MANIFEST,
+      kind: "manual",
+      scheduledFor: null,
+      trigger: { workflow: null, runUrl: null, actor: "test" },
+      prevRecord: null,
+      store: new MemoryStore(),
+      storeKind: "postgres",
+      approvalSecret: "s3cr3t",
+      proposeActions: (ctx) =>
+        proposeAndGateFindings(ctx.findings, {
+          sluice: ctx.sluice,
+          checks: ctx.checks,
+          actionPolicy: gatedTargets.actionPolicy,
+          targets: gatedTargets,
+          storeKind: ctx.storeKind,
+          runId: ctx.runId,
+          startedAt: ctx.startedAt,
+          now: ctx.now,
+          githubTransport: transport,
+          gatePageBaseUrl: "https://dogwatch.vercel.app/gate",
+        }),
+    });
+
+    // reach.status_not_200 on a 503 is HIGH severity -> confirmed on first
+    // sight (SPEC §2 hysteresis) -> immediately eligible to propose.
+    expect(record.findings[0]?.status).toBe("confirmed");
+    expect(record.gates).toHaveLength(1);
+    expect(record.gates[0]?.status).toBe("pending");
+    expect(record.actions).toHaveLength(1);
+    expect(record.actions[0]?.status).toBe("gated_pending");
+    expect(transport.issuesOpened("jamessuuu/dogwatch")).toHaveLength(1);
+
+    // The gate-open audit event landed in THIS run's own audit.events (the
+    // whole point of running propose BEFORE the final audit query).
+    expect(record.audit.events.some((e) => e.type === "gate.opened")).toBe(true);
+
+    expect(verifyRecord(record, { rerunRules: true })).toEqual([]);
   });
 });
 

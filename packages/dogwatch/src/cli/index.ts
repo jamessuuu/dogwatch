@@ -3,16 +3,13 @@
  * The CLI entrypoint (SPEC §6). The only place in the whole pipeline with
  * env access / `process.exit` — every command handler below returns a plain
  * exit code (SPEC §6's table) and the `.action()` wrapper is what actually
- * calls `process.exit`, so `runWatch`/`runVerify`/`runRender` stay testable
- * as ordinary functions.
- *
- * `dogwatch gate ls|show|decide` is in SPEC §6's table but is NOT wired
- * here: gates land at M5 (src/effects/README.md) and this build is scoped
- * to M0-M2 — registering a `gate` command with nothing behind it would be
- * a stub that lies about what the CLI can do today.
+ * calls `process.exit`, so `runWatch`/`runVerify`/`runRender`/
+ * `runResumeCommand` stay testable as ordinary functions.
  */
 import { Command } from "commander";
+import { registerGateCommand } from "./gate.js";
 import { registerRenderCommand } from "./render.js";
+import { registerResumeCommand } from "./resume.js";
 import { registerVerifyCommand } from "./verify-cmd.js";
 import { registerWatchCommand } from "./watch.js";
 import { DOGWATCH_VERSION } from "./version.js";
@@ -24,7 +21,9 @@ program
   .version(DOGWATCH_VERSION);
 
 registerWatchCommand(program);
+registerResumeCommand(program);
 registerRenderCommand(program);
 registerVerifyCommand(program);
+registerGateCommand(program);
 
 await program.parseAsync(process.argv);
