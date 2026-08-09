@@ -71,7 +71,7 @@ jobs:
         run: pnpm install --frozen-lockfile
       - name: install Playwright's chromium (apps/web's e2e:smoke)
         working-directory: apps/web
-        run: npx playwright install --with-deps chromium
+        run: pnpm --filter @dogwatch/web exec playwright install --with-deps chromium
       - name: migrate postgres store (CI service — sluice-store-postgres's own migrations + dogwatch_budget)
         run: pnpm --filter dogwatch run db:migrate
 
