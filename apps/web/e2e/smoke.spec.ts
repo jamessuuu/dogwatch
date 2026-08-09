@@ -84,8 +84,16 @@ test.describe("/ — home", () => {
     await expect(video).toHaveAttribute("muted", "");
     await expect(video).toHaveAttribute("loop", "");
     await expect(video).not.toHaveAttribute("controls");
-    // The real record excerpt: never invented copy (HARD RULE).
+    // The real record excerpt: never invented copy (HARD RULE). The excerpt
+    // run is whichever published run has a finding (runWithFindings, same
+    // fallback as the Verify-button tests below) — assert the finding
+    // itself renders, with a real source URL and retrieval timestamp, not
+    // just the section heading around it.
     await expect(page.getByRole("heading", { name: "A real published record, not a description of one" })).toBeVisible();
+    if (runWithFindings.findings > 0) {
+      await expect(page.getByRole("heading", { name: "A finding, with its source" })).toBeVisible();
+      await expect(page.getByText(/→ \d+ at \d{4}-\d{2}-\d{2}T/)).not.toHaveCount(0);
+    }
     await expect(page.getByRole("link", { name: /See the full record/ })).toBeVisible();
     await expect(page.getByRole("heading", { name: "What runs on its own, and what doesn't yet" })).toBeVisible();
   });
