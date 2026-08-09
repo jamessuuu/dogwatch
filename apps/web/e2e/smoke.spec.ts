@@ -13,6 +13,7 @@ const REPO_ROOT = join(import.meta.dirname, "..", "..", "..");
 interface RunIndexEntry {
   runId: string;
   findings: number;
+  checksTotal: number;
 }
 interface RunIndexFile {
   runs: RunIndexEntry[];
@@ -30,7 +31,7 @@ if (latestRun === undefined) throw new Error("e2e smoke: runs/index.json has no 
 const runWithFindings = runIndex.runs.find((r) => r.findings > 0) ?? latestRun;
 
 test.describe("footer + favicon on every page", () => {
-  const pages = ["/", "/runs", `/runs/${latestRun.runId}`, "/checks", "/methodology"];
+  const pages = ["/", "/runs", `/runs/${latestRun.runId}`, "/checks", "/methodology", "/docs"];
   for (const path of pages) {
     test(`footer attribution + repo link + favicon present on ${path}`, async ({ page }) => {
       await page.goto(path);
@@ -65,6 +66,42 @@ test.describe("/ — home", () => {
     await expect(page.getByRole("link", { name: "All runs" })).toBeVisible();
     await expect(page.getByRole("link", { name: "The check catalog" })).toBeVisible();
     await expect(page.getByRole("link", { name: "Methodology & limitations" })).toBeVisible();
+    await expect(page.getByRole("link", { name: "Documentation" })).toBeVisible();
+  });
+
+  test("shows the last run's line at size, the diagram, the demo video, and a real record excerpt", async ({ page }) => {
+    await page.goto("/");
+    // The proof: checks/findings/gates/cost, read straight off runs/index.json,
+    // rendered at size. Scoped to the stat-line paragraph specifically — the
+    // record excerpt below repeats "N checks" in its own absence-of-evidence
+    // prose, so a bare text match is ambiguous.
+    await expect(page.locator("p.font-mono.text-3xl")).toContainText(`${String(latestRun.checksTotal)} checks`);
+    // The mechanism diagram (scripts/diagram.mjs), with a real alt text, not "image".
+    await expect(page.getByRole("img", { name: /gate/i })).toBeVisible();
+    // The demo video — poster set, muted, looped, no controls.
+    const video = page.locator("video");
+    await expect(video).toHaveAttribute("poster", "/demo/dogwatch-poster.png");
+    await expect(video).toHaveAttribute("muted", "");
+    await expect(video).toHaveAttribute("loop", "");
+    await expect(video).not.toHaveAttribute("controls");
+    // The real record excerpt: never invented copy (HARD RULE).
+    await expect(page.getByRole("heading", { name: "A real published record, not a description of one" })).toBeVisible();
+    await expect(page.getByRole("link", { name: /See the full record/ })).toBeVisible();
+    await expect(page.getByRole("heading", { name: "What runs on its own, and what doesn't yet" })).toBeVisible();
+  });
+
+  test("reduced motion shows the poster and a link instead of the autoplaying video", async ({ browser }) => {
+    const context = await browser.newContext({ reducedMotion: "reduce" });
+    const page = await context.newPage();
+    await page.goto("/");
+    await expect(page.locator(".demo-motion")).not.toBeVisible();
+    await expect(page.locator(".demo-reduced")).toBeVisible();
+    await expect(page.locator(".demo-reduced img")).toBeVisible();
+    await expect(page.locator(".demo-reduced a", { hasText: "Watch the recording" })).toHaveAttribute(
+      "href",
+      "/demo/dogwatch-demo.webm",
+    );
+    await context.close();
   });
 });
 
@@ -156,5 +193,31 @@ test.describe("/methodology", () => {
     await expect(page.getByRole("heading", { name: "The autonomy ladder" })).toBeVisible();
     await expect(page.getByRole("heading", { name: "Limitations" })).toBeVisible();
     await expect(page.getByText("not a product you install")).toBeVisible();
+  });
+});
+
+test.describe("/docs", () => {
+  test("is reachable from the nav and prints the full rubric, the gate flow, cost accounting, and failure modes", async ({ page }) => {
+    await page.goto("/");
+    await page.getByRole("link", { name: "Docs" }).click();
+    await expect(page).toHaveURL(/\/docs$/);
+    await expect(page.getByRole("heading", { name: "Documentation" })).toBeVisible();
+    await expect(page.getByRole("heading", { name: "What this is, and what it is not" })).toBeVisible();
+    await expect(page.getByRole("heading", { name: "How to read a run record, field by field" })).toBeVisible();
+    await expect(page.getByRole("heading", { name: "The gate flow, and the three decision channels" })).toBeVisible();
+    await expect(page.getByRole("img", { name: /gate/i })).toBeVisible();
+    await expect(page.getByText("R15", { exact: true }).first()).toBeVisible();
+    await expect(page.getByRole("heading", { name: "Cost accounting, and why micro-dollars" })).toBeVisible();
+    await expect(page.getByRole("heading", { name: "Failure modes" })).toBeVisible();
+    await expect(page.getByText("A gate is never decided", { exact: true })).toBeVisible();
+    await expect(page.getByRole("heading", { name: "Limitations" })).toBeVisible();
+  });
+
+  test("keyboard reachable: every section anchor is a real, focusable link", async ({ page }) => {
+    await page.goto("/docs");
+    const anchors = page.getByRole("navigation", { name: "On this page" }).getByRole("link");
+    await expect(anchors).toHaveCount(7);
+    await anchors.first().focus();
+    await expect(anchors.first()).toBeFocused();
   });
 });

@@ -47,3 +47,21 @@ body {
 .rule-line {
   border-color: var(--color-rule);
 }
+
+/* Demo video (DESIGN-DIRECTION.md §3): a pure-CSS toggle, no JS, no
+ * hydration flash. `.demo-motion` (the autoplaying <video>) and
+ * `.demo-reduced` (the static poster + link) are both always in the DOM;
+ * only one is ever visible, decided by the same media query a JS-disabled
+ * or pre-hydration visitor already gets for free. `no-preference` is the
+ * explicit default so a browser that doesn't support the query at all
+ * still shows the video, matching every other browser's default. */
+@media (prefers-reduced-motion: reduce) {
+  .demo-motion {
+    display: none;
+  }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .demo-reduced {
+    display: none;
+  }
+}

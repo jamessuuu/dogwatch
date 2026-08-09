@@ -22,6 +22,8 @@
     "dogwatch": "tsx packages/dogwatch/src/cli/index.ts",
     "brand": "node scripts/brand.mjs --project=dogwatch --out=apps/web/public/brand",
     "brand:check": "node scripts/brand-check.mjs",
+    "diagram": "node scripts/diagram.mjs --out=apps/web/public/diagram/gate-flow.svg",
+    "diagram:check": "node scripts/diagram-check.mjs",
     "readme:check": "node scripts/readme-check.mjs"
   },
   "devDependencies": {

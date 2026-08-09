@@ -14,6 +14,13 @@ export default tseslint.config(
       parserOptions: {
         projectService: {
           allowDefaultProject: ["*.mjs", "scripts/*.mjs", "packages/*/bin/*.mjs", "apps/*/*.config.mjs"],
+          // scripts/ is a deliberately growing pile of small, untyped
+          // generator + drift-check pairs (brand, diagram, schema, readme,
+          // render...) — each one is legitimately its own default-project
+          // file. The stock cap (8) is a generic performance guard, not a
+          // rule about this repo; raised once, here, rather than re-tripping
+          // it on every future scripts/*.mjs addition.
+          maximumDefaultProjectFileMatchCount_THIS_WILL_SLOW_DOWN_LINTING: 24,
         },
         tsconfigRootDir: import.meta.dirname,
       },

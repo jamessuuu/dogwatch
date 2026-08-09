@@ -110,6 +110,8 @@ jobs:
         run: pnpm render:check
       - name: brand drift (apps/web/public/brand vs scripts/brand.mjs)
         run: pnpm brand:check
+      - name: diagram drift (apps/web/public/diagram/gate-flow.svg vs scripts/diagram.mjs)
+        run: pnpm diagram:check
       - name: README drift (Status block's declared milestone vs the newest feat(mN) commit)
         run: pnpm readme:check
 

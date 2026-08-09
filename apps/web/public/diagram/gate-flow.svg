@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1140 460" role="img" aria-labelledby="dw-diagram-title dw-diagram-desc">
+<title id="dw-diagram-title">The dogwatch gate flow</title>
+<desc id="dw-diagram-desc">A confirmed finding is proposed as an action. Opening the gate starts a 48-hour timer and notifies through an issue in dogwatch's own repo, plus an optional webhook. A human decides through one of three channels — a single-use HMAC token on the web, a GitHub Actions workflow_dispatch usable from the mobile app with no token, or the CLI as a recorded break-glass — all converging on one decision. Approval executes the action exactly once through sluice's idempotent effect runner. Rejection refuses it. So does 48 hours passing with no decision at all: that timeout path, drawn in amber, is the only edge in this diagram that fires without a human choosing anything — fail-closed is what happens when nobody acts, which is the whole argument.</desc>
+<rect width="1140" height="460" fill="#FAF7F2"/>
+<rect x="40" y="32" width="160" height="72" fill="#FAF7F2" stroke="#1A1712" stroke-width="2"/>
+<rect x="240" y="32" width="200" height="72" fill="#FAF7F2" stroke="#1A1712" stroke-width="2"/>
+<rect x="590" y="32" width="160" height="72" fill="#FAF7F2" stroke="#1A1712" stroke-width="2"/>
+<rect x="810" y="32" width="260" height="72" fill="#FAF7F2" stroke="#1A1712" stroke-width="2"/>
+<text x="120" y="62" font-family='ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif' font-size="15" font-weight="600" fill="#1A1712" text-anchor="middle">PROPOSE</text>
+<text x="120" y="86" font-family='ui-monospace, "Cascadia Code", "SF Mono", "Roboto Mono", Consolas, "Liberation Mono", monospace' font-size="11" font-weight="400" fill="#6B6154" text-anchor="middle">finding → action</text>
+<text x="340" y="62" font-family='ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif' font-size="15" font-weight="600" fill="#1A1712" text-anchor="middle">GATE OPENED</text>
+<text x="340" y="86" font-family='ui-monospace, "Cascadia Code", "SF Mono", "Roboto Mono", Consolas, "Liberation Mono", monospace' font-size="11" font-weight="400" fill="#6B6154" text-anchor="middle">gates.open() · 48h timer</text>
+<text x="670" y="62" font-family='ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif' font-size="15" font-weight="600" fill="#1A1712" text-anchor="middle">DECIDE</text>
+<text x="670" y="86" font-family='ui-monospace, "Cascadia Code", "SF Mono", "Roboto Mono", Consolas, "Liberation Mono", monospace' font-size="11" font-weight="400" fill="#6B6154" text-anchor="middle">gates.decide()</text>
+<text x="940" y="62" font-family='ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif' font-size="15" font-weight="600" fill="#1A1712" text-anchor="middle">EXECUTE</text>
+<text x="940" y="86" font-family='ui-monospace, "Cascadia Code", "SF Mono", "Roboto Mono", Consolas, "Liberation Mono", monospace' font-size="11" font-weight="400" fill="#6B6154" text-anchor="middle">sluice.run() · exactly once</text>
+<path d="M200 68 L240 68" fill="none" stroke="#1A1712" stroke-width="2"/><polygon points="240,68 230,62 230,74" fill="#1A1712"/>
+<path d="M440 68 L590 68" fill="none" stroke="#1A1712" stroke-width="2"/><polygon points="590,68 580,62 580,74" fill="#1A1712"/>
+<path d="M750 68 L810 68" fill="none" stroke="#1A1712" stroke-width="2"/><polygon points="810,68 800,62 800,74" fill="#1A1712"/>
+<text x="780" y="58" font-family='ui-monospace, "Cascadia Code", "SF Mono", "Roboto Mono", Consolas, "Liberation Mono", monospace' font-size="10.5" font-weight="400" fill="#6B6154" text-anchor="middle">approve</text>
+<text x="670" y="186" font-family='ui-monospace, "Cascadia Code", "SF Mono", "Roboto Mono", Consolas, "Liberation Mono", monospace' font-size="10.5" font-weight="600" fill="#6B6154" text-anchor="middle" letter-spacing="0.04em">DECISION — THREE CHANNELS, ONE GATE</text>
+<rect x="325" y="200" width="210" height="80" fill="#FAF7F2" stroke="#1A1712" stroke-width="2"/>
+<rect x="565" y="200" width="210" height="80" fill="#FAF7F2" stroke="#1A1712" stroke-width="2"/>
+<rect x="805" y="200" width="210" height="80" fill="#FAF7F2" stroke="#1A1712" stroke-width="2"/>
+<text x="430" y="222" font-family='ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif' font-size="13" font-weight="600" fill="#1A1712" text-anchor="middle">(a) WEB</text>
+<text x="430" y="242" font-family='ui-monospace, "Cascadia Code", "SF Mono", "Roboto Mono", Consolas, "Liberation Mono", monospace' font-size="10.5" font-weight="400" fill="#6B6154" text-anchor="middle">POST /api/gate/decide</text>
+<text x="430" y="260" font-family='ui-monospace, "Cascadia Code", "SF Mono", "Roboto Mono", Consolas, "Liberation Mono", monospace' font-size="10.5" font-weight="400" fill="#6B6154" text-anchor="middle">single-use HMAC token</text>
+<text x="670" y="222" font-family='ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif' font-size="13" font-weight="600" fill="#1A1712" text-anchor="middle">(b) MOBILE / CI</text>
+<text x="670" y="242" font-family='ui-monospace, "Cascadia Code", "SF Mono", "Roboto Mono", Consolas, "Liberation Mono", monospace' font-size="10.5" font-weight="400" fill="#6B6154" text-anchor="middle">workflow_dispatch</text>
+<text x="670" y="260" font-family='ui-monospace, "Cascadia Code", "SF Mono", "Roboto Mono", Consolas, "Liberation Mono", monospace' font-size="10.5" font-weight="400" fill="#6B6154" text-anchor="middle">resume.yml, no token</text>
+<text x="910" y="222" font-family='ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif' font-size="13" font-weight="600" fill="#1A1712" text-anchor="middle">(c) CLI</text>
+<text x="910" y="242" font-family='ui-monospace, "Cascadia Code", "SF Mono", "Roboto Mono", Consolas, "Liberation Mono", monospace' font-size="10.5" font-weight="400" fill="#6B6154" text-anchor="middle">dogwatch gate decide</text>
+<text x="910" y="260" font-family='ui-monospace, "Cascadia Code", "SF Mono", "Roboto Mono", Consolas, "Liberation Mono", monospace' font-size="10.5" font-weight="400" fill="#6B6154" text-anchor="middle">break-glass (recorded)</text>
+<path d="M430 200 L430 160" fill="none" stroke="#1A1712" stroke-width="2"/>
+<path d="M910 200 L910 160" fill="none" stroke="#1A1712" stroke-width="2"/>
+<path d="M430 160 L910 160" fill="none" stroke="#1A1712" stroke-width="2"/>
+<path d="M670 200 L670 104" fill="none" stroke="#1A1712" stroke-width="2"/><polygon points="670,104 664,114 676,114" fill="#1A1712"/>
+<rect x="570" y="340" width="200" height="80" fill="#FAF7F2" stroke="#1A1712" stroke-width="2"/>
+<text x="670" y="372" font-family='ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif' font-size="16" font-weight="600" fill="#1A1712" text-anchor="middle">REFUSED</text>
+<text x="670" y="396" font-family='ui-monospace, "Cascadia Code", "SF Mono", "Roboto Mono", Consolas, "Liberation Mono", monospace' font-size="10.5" font-weight="400" fill="#6B6154" text-anchor="middle">reject, or 48h with no decision</text>
+<path d="M730 104 L730 130 L1095 130 L1095 380 L770 380" fill="none" stroke="#1A1712" stroke-width="2"/><polygon points="770,380 780,374 780,386" fill="#1A1712"/>
+<text x="744" y="122" font-family='ui-monospace, "Cascadia Code", "SF Mono", "Roboto Mono", Consolas, "Liberation Mono", monospace' font-size="11" font-weight="400" fill="#6B6154" text-anchor="start">reject</text>
+<path d="M340 104 L340 150 L150 150 L150 380 L570 380" fill="none" stroke="#B45309" stroke-width="2"/><polygon points="570,380 560,374 560,386" fill="#B45309"/>
+<text x="245" y="142" font-family='ui-monospace, "Cascadia Code", "SF Mono", "Roboto Mono", Consolas, "Liberation Mono", monospace' font-size="11" font-weight="600" fill="#B45309" text-anchor="middle">48h · no decision</text>
+<text x="570" y="446" font-family='ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif' font-size="11.5" font-weight="400" fill="#6B6154" text-anchor="middle">Amber: the only edge that fires with no human on it. Silence refuses — nothing auto-approves.</text>
+</svg>

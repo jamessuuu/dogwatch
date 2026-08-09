@@ -19,6 +19,7 @@ import {
   PendingGatesFileSchema,
   RunIndexFileSchema,
   RunRecordSchema,
+  type Check,
   type FamilyCatalogEntry,
   type PendingGateEntry,
   type RunIndexEntry,
@@ -79,6 +80,47 @@ export function loadLatestRun(): LoadedRun | null {
 
 export function loadRunsNewestFirst(): RunIndexEntry[] {
   return [...loadRunIndex().runs].reverse();
+}
+
+/** The landing page's live excerpt (SPEC §10 `/`) needs a record with an
+ * actual finding to show — not a fabricated one (R13's whole point). Picks
+ * the newest run that has one; falls back to the newest run overall on a
+ * history that is quiet end to end, same fallback the e2e suite uses
+ * (`apps/web/e2e/smoke.spec.ts`'s `runWithFindings`). */
+export function loadRunWithFindings(): LoadedRun | null {
+  const index = loadRunIndex();
+  const entry = [...index.runs].reverse().find((r) => r.findings > 0) ?? index.runs.at(-1);
+  if (entry === undefined) return null;
+  return loadRunRecord(entry.runId);
+}
+
+/** The landing page's excerpt (SPEC §10 `/`) shows a handful of real
+ * checks, not the whole record — one `pass` check per distinct family, up
+ * to `max`, each with its own `curl` reproduce line. Never picks a
+ * `skipped`/`error` check for this purpose: the excerpt's job is to show
+ * the watch actually checking something, not the many `not_published`
+ * entries a two-site-live program still has. */
+export function pickRepresentativeChecks(record: RunRecord, max = 3): Check[] {
+  const seen = new Set<string>();
+  const picked: Check[] = [];
+  for (const check of record.checks) {
+    if (check.verdict !== "pass") continue;
+    if (seen.has(check.family)) continue;
+    seen.add(check.family);
+    picked.push(check);
+    if (picked.length >= max) break;
+  }
+  return picked;
+}
+
+/** Whether any published run has actually fired from the schedule
+ * (`kind:"scheduled"`) rather than a manual `dogwatch watch` invocation or a
+ * `kind:"gap"` record. Drives the landing page's honest status line (SPEC's
+ * own README Status block makes the same claim) — computed from the
+ * published index rather than hand-maintained, so the claim corrects itself
+ * the moment a real scheduled run lands instead of silently going stale. */
+export function hasScheduledRun(): boolean {
+  return loadRunIndex().runs.some((r) => r.kind === "scheduled");
 }
 
 export function checksCatalog(): readonly FamilyCatalogEntry[] {
