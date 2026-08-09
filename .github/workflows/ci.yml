@@ -36,14 +36,22 @@ jobs:
       # sibling repo out next to this one — `packages/dogwatch/package.json`
       # resolves `link:../../../sluice/packages/sluice` relative to this
       # checkout, so `sluice` must land as this checkout's OWN sibling
-      # directory (`path: ../sluice`, relative to github.workspace) for the
-      # link to be the exact same relative path a local clone uses. At
-      # publish time this becomes a pinned npm version and this step is
-      # deleted (README "Status" section).
+      # directory for the link to be the exact same relative path a local
+      # clone uses. At publish time this becomes a pinned npm version and
+      # this step is deleted (README "Status" section).
+      #
+      # actions/checkout@v4 now refuses `path:` values outside
+      # `GITHUB_WORKSPACE` ("Repository path ... is not under ...") — a
+      # restriction added after this workflow was first written, unrelated
+      # to anything in this commit. Checking out inside the workspace and
+      # moving it to the true sibling position afterward gets the same
+      # on-disk layout without hitting that guard.
       - uses: actions/checkout@v4
         with:
           repository: jamessuuu/sluice
-          path: ../sluice
+          path: sluice-checkout
+      - name: move sluice checkout to the sibling path the workspace link expects
+        run: mv sluice-checkout ../sluice
       - uses: actions/checkout@v4
         with:
           # Full history, not the default shallow depth-1 clone: the
