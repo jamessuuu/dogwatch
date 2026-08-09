@@ -9,7 +9,7 @@ export function Footer() {
       <div className="mx-auto flex max-w-3xl flex-col gap-3 px-6 py-8 text-sm text-ink-muted sm:flex-row sm:items-center sm:justify-between">
         <div className="flex items-center gap-2">
           {/* next/image's optimizer is a function; this site ships zero route handlers (SPEC §10) — a plain <img> is deliberate, not an oversight */}
-          <img src="/brand/favicon.svg" alt="" width={16} height={16} className="shrink-0" />
+          <img src="/brand/mark-16.svg" alt="" width={16} height={16} className="shrink-0" />
           <span>
             Built by{" "}
             <a href="https://agentjames.vercel.app" className="text-ink underline decoration-rule underline-offset-2 hover:decoration-ink">

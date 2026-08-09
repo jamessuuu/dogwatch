@@ -1,33 +1,40 @@
 import type { Metadata } from "next";
 import { Footer } from "../components/Footer";
 import { Nav } from "../components/Nav";
+import { SITE_DESCRIPTION } from "../lib/site";
 import "./globals.css";
 
 const SITE_URL = "https://dogwatch.vercel.app";
-const DESCRIPTION =
-  "The night watch over the six public surfaces of the Agent James program. Every night: what it checked, what it found, what it did, what it refused, and what it cost — published as one immutable record.";
+const DESCRIPTION = SITE_DESCRIPTION;
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: { default: "dogwatch", template: "%s — dogwatch" },
   description: DESCRIPTION,
   icons: {
-    icon: "/brand/favicon.svg",
+    icon: [
+      { url: "/brand/favicon.svg", type: "image/svg+xml" },
+      { url: "/brand/favicon-16.png", sizes: "16x16", type: "image/png" },
+      { url: "/brand/favicon-32.png", sizes: "32x32", type: "image/png" },
+      { url: "/brand/favicon-48.png", sizes: "48x48", type: "image/png" },
+    ],
     shortcut: "/brand/favicon.svg",
+    apple: [{ url: "/brand/apple-touch-icon.png", sizes: "180x180", type: "image/png" }],
+    other: [{ rel: "mask-icon", url: "/brand/icon-maskable.svg", color: "#B45309" }],
   },
   openGraph: {
     title: "dogwatch — the night watch",
     description: DESCRIPTION,
     url: SITE_URL,
     siteName: "dogwatch",
-    images: [{ url: "/brand/og.svg", width: 1200, height: 630, alt: "dogwatch — Agent James" }],
+    images: [{ url: "/brand/og.png", width: 1200, height: 630, alt: "dogwatch — Agent James" }],
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
     title: "dogwatch — the night watch",
     description: DESCRIPTION,
-    images: ["/brand/og.svg"],
+    images: ["/brand/og.png"],
   },
 };
 

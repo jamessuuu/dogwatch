@@ -33,7 +33,7 @@ const runWithFindings = runIndex.runs.find((r) => r.findings > 0) ?? latestRun;
 test.describe("footer + favicon on every page", () => {
   const pages = ["/", "/runs", `/runs/${latestRun.runId}`, "/checks", "/methodology", "/docs"];
   for (const path of pages) {
-    test(`footer attribution + repo link + favicon present on ${path}`, async ({ page }) => {
+    test(`footer attribution + repo link + favicon present on ${path}`, async ({ page, request }) => {
       await page.goto(path);
       await expect(page.getByRole("link", { name: "James Lorenz Santos" })).toHaveAttribute(
         "href",
@@ -43,10 +43,43 @@ test.describe("footer + favicon on every page", () => {
         "href",
         "https://github.com/jamessuuu/dogwatch"
       );
-      const favicon = page.locator('link[rel="icon"]');
-      await expect(favicon).toHaveAttribute("href", /brand\/favicon\.svg/);
+      // The favicon is dogwatch's own compact glyph (a bell, not the chip) —
+      // metadata.icons emits one SVG link plus three PNG sizes, all pointing
+      // at the same regenerated /brand/favicon*.{svg,png}. Assert the
+      // primary SVG icon link specifically (the scalable one browsers prefer)
+      // and that it actually resolves over HTTP, not just that the DOM has a
+      // plausible-looking <link>.
+      const svgIcon = page.locator('link[rel="icon"][type="image/svg+xml"]');
+      await expect(svgIcon).toHaveAttribute("href", "/brand/favicon.svg");
+      const iconResponse = await request.get("/brand/favicon.svg");
+      expect(iconResponse.status()).toBe(200);
+      expect(iconResponse.headers()["content-type"]).toContain("image/svg+xml");
+
+      // The footer's mark stays the maker's chip, never the project glyph —
+      // this is the bug this same change fixed (Footer.tsx used to point at
+      // /brand/favicon.svg, which under the old generator WAS the chip but
+      // under the new one is the project glyph).
+      const chipImg = page.locator('footer img[src="/brand/mark-16.svg"]');
+      await expect(chipImg).toHaveCount(1);
     });
   }
+
+  test("apple-touch-icon and manifest links resolve", async ({ page, request }) => {
+    await page.goto("/");
+    const appleIcon = page.locator('link[rel="apple-touch-icon"]');
+    await expect(appleIcon).toHaveAttribute("href", "/brand/apple-touch-icon.png");
+    const appleResponse = await request.get("/brand/apple-touch-icon.png");
+    expect(appleResponse.status()).toBe(200);
+    expect(appleResponse.headers()["content-type"]).toContain("image/png");
+
+    const manifestLink = page.locator('link[rel="manifest"]');
+    const manifestHref = await manifestLink.getAttribute("href");
+    if (!manifestHref) throw new Error("smoke: <link rel=manifest> has no href");
+    const manifestResponse = await request.get(manifestHref);
+    expect(manifestResponse.status()).toBe(200);
+    const manifestJson = (await manifestResponse.json()) as { icons: { src: string }[] };
+    expect(manifestJson.icons.length).toBeGreaterThan(0);
+  });
 });
 
 test.describe("/ — home", () => {
