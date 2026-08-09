@@ -152,11 +152,25 @@ const SCENARIOS = {
     const firstRun = page.locator('a[href*="/runs/"]').first();
     if (await firstRun.count()) {
       await firstRun.click();
-      await pause(page, 2000);
-      await page.mouse.wheel(0, 500);
-      await pause(page, 2000);
-      await page.mouse.wheel(0, 500);
       await pause(page, 1800);
+      // Checks first — the curl reproduce lines are the point.
+      await page.mouse.wheel(0, 500);
+      await pause(page, 1600);
+      // Then jump straight to Findings and Cost by heading, not by a fixed
+      // pixel distance: a run's check count varies (a two-site-live program
+      // publishes many more `skipped:not_published` checks than a five-site
+      // one will), and a blind scroll can land mid-checks on a longer run,
+      // never reaching the sections the recording exists to prove.
+      const findings = page.getByRole("heading", { name: "Findings" });
+      if (await findings.count()) {
+        await findings.scrollIntoViewIfNeeded();
+        await pause(page, 2200);
+      }
+      const cost = page.getByRole("heading", { name: "Cost" });
+      if (await cost.count()) {
+        await cost.scrollIntoViewIfNeeded();
+        await pause(page, 2200);
+      }
     }
   },
 };
