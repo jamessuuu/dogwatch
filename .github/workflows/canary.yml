@@ -18,9 +18,11 @@ name: canary
 # now — deliberately reproduced below via an explicit `ref: main` checkout so
 # the intent survives that future change unattended.
 #
-# STATUS: this file has never executed — nothing has been pushed to trigger
-# it yet (see README's Status block). "a break proposes an issue on sluice
-# through the normal gate" (SPEC §5's table) is the target design; no code
+# STATUS: this file fired once on schedule (2026-08-10) and failed in 6s on
+# the actions/checkout@v4 sibling-path guard fixed just above — the same bug
+# watch.yml carried (see its STATUS note), never reaching typecheck/unit/eval.
+# "a break proposes an issue on sluice through the normal gate" (SPEC §5's
+# table) is the target design; no code
 # path exists yet that lets a CI job open a gate against a THIRD-PARTY repo
 # from a synthetic (non-finding-sourced) event — dogwatch's gate kernel only
 # ever proposes from a real finding on a real check (SPEC's own no-free-text
@@ -48,12 +50,17 @@ jobs:
 
       # Explicit `ref: main` (unlike ci.yml's un-pinned checkout) — the
       # point of this workflow is to track sluice's `main` on purpose, not
-      # by accident of not-yet-having-a-pin.
+      # by accident of not-yet-having-a-pin. Two-step checkout-then-move
+      # (see watch.yml's matching comment): actions/checkout@v4 now refuses
+      # a `path:` outside GITHUB_WORKSPACE — this is why the one canary run
+      # to date (2026-08-10) failed in 6s.
       - uses: actions/checkout@v4
         with:
           repository: jamessuuu/sluice
           ref: main
-          path: ../sluice
+          path: sluice-checkout
+      - name: move sluice checkout to the sibling path the workspace link expects
+        run: mv sluice-checkout ../sluice
 
       - uses: pnpm/action-setup@v4
       - uses: actions/setup-node@v4

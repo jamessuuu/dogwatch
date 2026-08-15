@@ -32,17 +32,30 @@ checks it ran.**
 > deployed sibling to poll).
 >
 > `runs/` holds real published records (below) — every one of them from a
-> local `dogwatch watch` invocation. **`.github/workflows/watch.yml` and
-> `canary.yml` are committed (SPEC §5's table) but have never executed** —
-> nothing has been pushed to trigger a scheduled run yet, so no autonomous
-> night has happened. `cli/trigger.ts`'s `resolveRunKind()` reads
-> `GITHUB_EVENT_NAME`, so a real cron firing of `watch.yml` is the only
-> thing that will ever produce `kind:"scheduled"`; every record published so
-> far honestly carries `kind:"manual"`, because every one of them was. What
-> remains is M7: 30 consecutive published nights, a README numbers block
-> (runs, quiet nights, findings, gates, refusals, total spend), and the
-> portfolio entry — none of which can start until `watch.yml` actually runs
-> on its own schedule.
+> local `dogwatch watch` invocation. **`.github/workflows/watch.yml` has
+> fired on its schedule every night from 2026-08-09 to 2026-08-14 and
+> failed every time, in 9-12 seconds — before ever reaching the probe
+> step** (`canary.yml`'s one weekly firing, 2026-08-10, failed the same
+> way). Root cause: `actions/checkout@v4` added a guard rejecting any
+> `path:` outside `GITHUB_WORKSPACE`, and the sibling checkout of
+> `jamessuuu/sluice` at `path: ../sluice` — needed pre-publish so the
+> workspace `link:` dependency resolves — tripped it. `ci.yml` hit the same
+> guard and was fixed at `478fcbb` (checkout-then-`mv` instead of a direct
+> out-of-workspace `path:`); that fix was never propagated to `watch.yml`,
+> `resume.yml`, and `canary.yml`, so the scheduled runs kept failing
+> silently (no autonomous night has published anything) while `ci.yml`
+> stayed green — the two were never exercising the same code path. All
+> three now carry the same fix locally. **Not yet pushed as of this
+> writing** — the fix needs a human to push it (this session's scope is
+> local commits only) before a scheduled run can actually succeed.
+> `cli/trigger.ts`'s `resolveRunKind()` reads `GITHUB_EVENT_NAME`, so a real
+> cron firing of `watch.yml` is the only thing that will ever produce
+> `kind:"scheduled"`; every record published so far honestly carries
+> `kind:"manual"`, because every one of them was. What remains is M7: 30
+> consecutive published nights, a README numbers block (runs, quiet nights,
+> findings, gates, refusals, total spend), and the portfolio entry — none of
+> which can start until the fix is pushed and `watch.yml` actually
+> completes a run on its own schedule.
 > **This is an operated instance, not a product you install.** Nothing here is
 > published to npm; forking and pointing it at your own surfaces is
 > unsupported. [`docs/OPERATIONS.md`](docs/OPERATIONS.md) documents what M5

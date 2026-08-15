@@ -66,12 +66,20 @@ jobs:
 
       # See ci.yml's own comment: sluice is consumed as an unpublished
       # sibling checkout pre-1.0.0-rc.1 (SPEC's sequencing note), never an
-      # npm install.
+      # npm install. Two-step checkout-then-move (see watch.yml's matching
+      # comment): actions/checkout@v4 now refuses a `path:` outside
+      # GITHUB_WORKSPACE. This step never actually ran in production yet
+      # (state/pending-gates.json has been empty every poll since no
+      # scheduled watch.yml run ever got far enough to open a gate — see
+      # watch.yml's STATUS note) but carried the same latent bug.
       - uses: actions/checkout@v4
         if: steps.check.outputs.run == 'true'
         with:
           repository: jamessuuu/sluice
-          path: ../sluice
+          path: sluice-checkout
+      - name: move sluice checkout to the sibling path the workspace link expects
+        if: steps.check.outputs.run == 'true'
+        run: mv sluice-checkout ../sluice
 
       - uses: pnpm/action-setup@v4
         if: steps.check.outputs.run == 'true'

@@ -5,6 +5,27 @@ Format: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/). Versioning: se
 
 ## [Unreleased]
 
+### Fixed (scheduled workflows — the M7 blocker)
+- **`watch.yml`/`resume.yml`/`canary.yml` never actually ran.** `ci.yml` hit
+  `actions/checkout@v4`'s guard against a `path:` outside `GITHUB_WORKSPACE`
+  and was fixed at `478fcbb` (checkout to a workspace-local dir, then `mv`
+  to the true sibling position `../sluice`) — but that fix was never
+  propagated to the other three workflows, which still checked sluice out
+  directly at `path: ../sluice`. Confirmed against real Actions run history
+  (`gh run list`): every scheduled firing of `watch.yml` from 2026-08-09
+  through 2026-08-14 (six nights) failed in 9-12s, and the one scheduled
+  `canary.yml` firing (2026-08-10) failed in 6s — both well before the
+  checkout-dependent install/probe/test steps, so `ci.yml` staying green
+  gave no signal either way. Net effect: no autonomous night has ever
+  published a `kind:"scheduled"` record, and M7 (30 consecutive published
+  nights) has never been able to start. All three workflows now carry the
+  same checkout-then-`mv` fix as `ci.yml`. `resume.yml`'s copy of the bug
+  was latent (never reached — its fast-path exits before the checkout step
+  whenever `state/pending-gates.json` is empty, which it always has been,
+  since no gate has ever opened). Each workflow's own header STATUS comment
+  is corrected to the true history instead of the stale "has never
+  executed" claim.
+
 ### Added (M5)
 - The gate kernel (`src/effects`): propose → `gates.open` (idempotent on
   the finding fingerprint) → notify. Notification is a tokenless self-repo
