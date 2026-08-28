@@ -222,6 +222,16 @@ down, a killed runner, a stolen token, a gate never decided) are at
 [`docs/SPEC.md` §9](docs/SPEC.md#9-failure-contracts-the-ugly-paths) and in
 prose at [the live `/docs`](https://dogwatch-two.vercel.app/docs#failure-modes).
 
+**Redeploy gap (open, 2026-08-29):** `watch.yml`'s nightly commit pushes a new
+run record to `main`, but this project has no Vercel git integration, so a
+push alone never rebuilds the site. `watch.yml` now carries a final `deploy`
+job that runs `vercel deploy --prod` right after a successful publish — gated
+on the `VERCEL_TOKEN` repo secret, which is **not yet set**. Until it is, that
+job prints `SKIPPED: VERCEL_TOKEN secret not set` and exits clean without
+deploying, and every new run page 404s live (`/runs/<runId>` for any record
+published after 2026-08-15) until either the secret is added or someone runs
+`vercel deploy --prod` by hand. This note stays here until the secret exists.
+
 ## CLI
 
 ```

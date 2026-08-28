@@ -370,6 +370,22 @@ function checkR12(record: RunRecord, prevRecord: RunRecord | null | undefined): 
  * `evaluateHeaderDrift`) DOES produce from real evidence — those stay in
  * R13's rerun. Every `error`-verdict check is the same story: a probe
  * failure (`classifyProbeFailure`) is caught upstream of any rule call.
+ *
+ * BUG (found 2026-08-29, live since the first `kind:"scheduled"` record,
+ * 2026-08-15): `not_applicable` is not exclusively a rule-evaluated skip
+ * reason. `build-site.ts`'s own mailto:/tel:/non-http-scheme link guard —
+ * itself a build-site-level, NEVER-rule-evaluated skip, same family as the
+ * three reasons in this set — also publishes `skipReason: "not_applicable"`
+ * on a `link.broken` check built via `skippedCheck()`/`emptyEvidence()`
+ * (no `evidence.json`), because it is reusing this schema literal for a
+ * structurally different situation than `evaluateLinkOffsiteRedirect`'s
+ * genuine rule-evaluated `not_applicable`. The string alone cannot tell
+ * the two apart, so this set can never fully enumerate the never-evaluated
+ * case by skip-reason name alone. The real, reliable signal is checked
+ * directly below: every rule function in `src/checks/*` reads
+ * `evidence.json` unconditionally (see each family's own `XJson` cast), so
+ * a skipped check with no `evidence.json` was never routed through one,
+ * full stop, regardless of which skipReason string it carries.
  */
 const NEVER_RULE_EVALUATED_SKIP_REASONS = new Set(["not_published", "circuit_open", "rate_limited"]);
 
@@ -381,6 +397,13 @@ function checkR13(record: RunRecord): Violation[] {
     if (c.verdict === "skipped" && c.skipReason !== undefined && NEVER_RULE_EVALUATED_SKIP_REASONS.has(c.skipReason)) {
       continue;
     }
+    // Belt-and-suspenders for the same invariant the set above encodes by
+    // name: a skipped check with no `evidence.json` has nothing for any
+    // rule function to re-derive FROM (they all require it — see the
+    // BUG note above). Re-running one anyway is not a stricter check, it
+    // is a crash: `ruleFn` dereferences `evidence.json` assuming the shape
+    // its own family always publishes when it actually ran.
+    if (c.verdict === "skipped" && c.evidence.json === undefined) continue;
     const ruleFn = RULES_BY_ID[c.ruleId];
     if (ruleFn === undefined) continue; // rule outside the pure-rerun registry (e.g. a stub family) — not R13's concern
     const rederived = ruleFn(c.evidence, {

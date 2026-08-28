@@ -3,8 +3,11 @@ name: watch
 # SPEC §5/§12 M1: the nightly autonomous run — probe the six targets, derive
 # findings, run the advisory LLM (capped, degrades honestly if unconfigured),
 # propose actions, open gates, publish the record + index +
-# state/pending-gates.json, commit, push (deploy). `workflow_dispatch` exists
-# for a manual re-run; `cli/trigger.ts`'s `resolveRunKind()` reads
+# state/pending-gates.json, commit, push, deploy (the `deploy` job below —
+# pushing to `main` is NOT a deploy: this project has no Vercel git
+# integration, same as agentjames, so a pushed record sat live-404 until
+# something ran `vercel deploy` by hand). `workflow_dispatch` exists for a
+# manual re-run; `cli/trigger.ts`'s `resolveRunKind()` reads
 # `GITHUB_EVENT_NAME` so ONLY a real cron firing of the `schedule` trigger
 # below ever produces `kind:"scheduled"` — a manual re-run of this same
 # workflow (or a local `dogwatch watch` invocation) honestly publishes
@@ -15,6 +18,13 @@ name: watch
 # actions/checkout@v4 sibling-path guard fixed just above; since 2026-08-15 it
 # publishes a `kind:"scheduled"` record per run (one GitHub-side gap on
 # 2026-08-27). Live count: runs/index.json. Lesson recorded in CHANGELOG.md.
+#
+# STATUS (2026-08-29, redeploy gap): every one of those 13 nightly commits
+# published a real record that then 404'd live (README.md's Limitations
+# section) — the workflow committed and pushed but nothing ever rebuilt the
+# site (last CLI deploy: 2026-08-15). The `deploy` job below closes that
+# gap, gated on `secrets.VERCEL_TOKEN` existing (it does not yet —
+# James-only to add; see README.md's Limitations until it does).
 on:
   schedule:
     - cron: "0 15 * * *" # ~01:00 AEST
@@ -106,3 +116,60 @@ jobs:
           git diff --cached --quiet && echo "nothing to commit" && exit 0
           git commit -m "chore(watch): nightly run published"
           git push
+
+  # Redeploy gap (README.md's Limitations section, CHANGELOG.md): `watch`
+  # above commits + pushes the published record to `main`, but this
+  # project has no Vercel git
+  # integration, so a push alone never rebuilds the live site. Every
+  # nightly record from 2026-08-15 through 2026-08-27 published a real
+  # `runs/<id>.json` that then 404'd at
+  # `https://dogwatch-two.vercel.app/runs/<id>` forever, because the last
+  # actual deploy was a one-off manual `vercel --prod` on 2026-08-15. This
+  # job closes that gap by running the same CLI deploy `watch` used to rely
+  # on a human for, right after a successful record push.
+  #
+  # `needs: watch` — only after `watch` actually succeeds (SPEC §6: exit 0
+  # or 1 are both a successful publish, and the job step already collapses
+  # both to a clean job exit — see its own comment above); a job whose
+  # `watch` dependency was skipped (fork) or failed is skipped too, same as
+  # every other guarded job in this file.
+  deploy:
+    needs: watch
+    if: github.repository == 'jamessuuu/dogwatch'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      # Remote build, not `--prebuilt`: `vercel.json`'s own
+      # `installCommand`/`buildCommand` (`scripts/vercel-install.sh` clones
+      # + builds the unpublished sibling `sluice` checkout on Vercel's OWN
+      # build infra, then `pnpm --filter @dogwatch/web build`) already does
+      # everything this job would otherwise have to repeat — this step is
+      # deliberately just the deploy call, nothing else. `VERCEL_ORG_ID` /
+      # `VERCEL_PROJECT_ID` stand in for the (gitignored, never-committed)
+      # `.vercel/project.json` the local CLI deploy reads them from — these
+      # two IDs are project identifiers, not secrets (Vercel's own CI docs
+      # publish them in plain env vars); only the token is.
+      #
+      # Gated, never a silent fake-pass (James-only to add the secret):
+      # `set -euo pipefail` means a REAL deploy failure (bad token, Vercel
+      # outage, build error) still fails this job loudly — the early
+      # `exit 0` path is the ONLY case that exits clean without deploying,
+      # and it says so on stdout every time it takes that path.
+      - name: deploy the site to Vercel (prod) — gated on VERCEL_TOKEN
+        env:
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+          VERCEL_ORG_ID: team_voAD54Kh39C3zNLIexzcCop1
+          VERCEL_PROJECT_ID: prj_x0A77CEVtYTDhCudnHbNFcLp1pqB
+        run: |
+          set -euo pipefail
+          if [ -z "${VERCEL_TOKEN:-}" ]; then
+            echo "SKIPPED: VERCEL_TOKEN secret not set — site not redeployed; run pages for new records will 404 until it is"
+            exit 0
+          fi
+          npx --yes vercel deploy --prod --token="$VERCEL_TOKEN"

@@ -5,6 +5,62 @@ Format: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/). Versioning: se
 
 ## [Unreleased]
 
+### Fixed (Verify button / `dogwatch verify --rerun-rules` crash on scheduled runs, 2026-08-29)
+- **R13's rerun (`verify/rubric.ts`'s `checkR13`) crashed on the first
+  `link.broken` check whose skip was decided before any rule function ran.**
+  Symptom: `e2e/smoke.spec.ts:166` ("Verify button › turns green on a real,
+  honest run record") failed in CI (`getByTestId("verify-result")` never
+  appeared) against `runs/index.json`'s latest run, `01a045b5-…` — and
+  `pnpm verify --all --rerun-rules` (CI's own last step) crashed identically
+  and uncaught on every one of the 13 `kind:"scheduled"` records published
+  since 2026-08-15. Root cause:
+  [`packages/dogwatch/src/record/build-site.ts:347-351`](packages/dogwatch/src/record/build-site.ts)
+  skips a `mailto:`/`tel:`/non-http(s) link with
+  `skipReason: "not_applicable"` via `skippedCheck()` — which, like every
+  build-site-level skip, uses `emptyEvidence()` (no `evidence.json`), i.e.
+  the check's `evaluateLinkBroken` rule function was never called at
+  record-build time. `checkR13`'s `NEVER_RULE_EVALUATED_SKIP_REASONS`
+  allowlist only excluded `not_published`/`circuit_open`/`rate_limited` from
+  its rerun, on the documented (but, for `link.broken`, false) assumption
+  that `not_applicable` always means a rule function DID produce it from
+  real evidence — true for `evaluateLinkOffsiteRedirect`'s own genuine
+  `not_applicable`, false for this build-site-level, pre-rule-function one.
+  So R13 called `evaluateLinkBroken(check.evidence, ctx)` on evidence with
+  no `.json`, which immediately threw `TypeError: Cannot read properties of
+  undefined (reading 'linkUrl')` (`checks/link.ts:85`) — uncaught, in both
+  the CLI (`verify-cmd.ts`'s rerun loop) and the browser (`VerifyButton.tsx`'s
+  click handler, which silently leaves `state:"idle"` on any thrown
+  exception, so the button visibly does nothing rather than erroring).
+  Fixed in `verify/rubric.ts`'s `checkR13`: a skipped check with no
+  `evidence.json` is now excluded from the rerun regardless of its
+  `skipReason` string, in addition to the existing allowlist — every rule
+  function in `src/checks/*` requires `evidence.json` to run at all, so
+  this is the actual, reliable signal, not a name that two different
+  producers can (and did) collide on. Verified against all 15 committed
+  records (`pnpm verify --all --rerun-rules` now `ok` on every one, zero
+  new violations) and the real e2e suite (22/22 passing, including the
+  previously-failing test). `runs/**` records themselves were not touched.
+
+### Fixed (nightly records publish but the site never redeploys, 2026-08-29)
+- **`watch.yml` committed + pushed a record every night; nothing rebuilt the
+  site.** This project has no Vercel git integration (`vercel.json` +
+  `scripts/vercel-install.sh` are consumed by an explicit CLI deploy, not a
+  webhook), so a push to `main` was never a deploy — confirmed live: every
+  scheduled run page from 2026-08-15 onward 404'd
+  (`https://dogwatch-two.vercel.app/runs/<runId>` for any record newer than
+  the last manual `vercel --prod`, 2026-08-15) while the manually-deployed
+  runs kept 200ing. `watch.yml` now carries a final `deploy` job
+  (`needs: watch`) that runs `npx vercel deploy --prod` after a successful
+  publish, using `VERCEL_ORG_ID`/`VERCEL_PROJECT_ID` (plain env, not
+  secrets — the project identifiers from the gitignored
+  `.vercel/project.json`) and `secrets.VERCEL_TOKEN`. Gated, not a silent
+  fake-pass: the step checks for `VERCEL_TOKEN` first and, if absent, prints
+  `SKIPPED: VERCEL_TOKEN secret not set — site not redeployed; run pages for
+  new records will 404 until it is` and exits 0; a real deploy failure once
+  the token exists still fails the job (`set -euo pipefail`, no swallowed
+  errors). `VERCEL_TOKEN` is not yet set — James-only to add (see README's
+  Limitations, which carries the same note until it is).
+
 ### Fixed (scheduled workflows — the M7 blocker)
 - **`watch.yml`/`resume.yml`/`canary.yml` never actually ran.** `ci.yml` hit
   `actions/checkout@v4`'s guard against a `path:` outside `GITHUB_WORKSPACE`
