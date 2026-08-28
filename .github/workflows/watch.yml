@@ -10,13 +10,11 @@ name: watch
 # workflow (or a local `dogwatch watch` invocation) honestly publishes
 # `kind:"manual"`.
 #
-# STATUS: this file has fired on schedule every night 2026-08-09 through
-# 2026-08-14 and failed every time, in 9-12s — well before the probe step —
-# on the actions/checkout@v4 sibling-path guard fixed just above. Nothing
-# was ever published by a scheduled run; every published record to date was
-# a local `dogwatch watch` invocation (see README's Status block, and
-# CHANGELOG.md for the fix). This comment must be corrected again once a
-# scheduled run actually publishes a `kind:"scheduled"` record.
+# STATUS (2026-08-29): fixed 2026-08-15 (5143aeb). This file fired on schedule
+# every night 2026-08-09 through 2026-08-14 and failed each time in 9-12s on the
+# actions/checkout@v4 sibling-path guard fixed just above; since 2026-08-15 it
+# publishes a `kind:"scheduled"` record per run (one GitHub-side gap on
+# 2026-08-27). Live count: runs/index.json. Lesson recorded in CHANGELOG.md.
 on:
   schedule:
     - cron: "0 15 * * *" # ~01:00 AEST

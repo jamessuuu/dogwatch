@@ -45,9 +45,10 @@ checks it ran.**
 > `resume.yml`, and `canary.yml`, so the scheduled runs kept failing
 > silently (no autonomous night has published anything) while `ci.yml`
 > stayed green — the two were never exercising the same code path. All
-> three now carry the same fix locally. **Not yet pushed as of this
-> writing** — the fix needs a human to push it (this session's scope is
-> local commits only) before a scheduled run can actually succeed.
+> three carry the same fix, pushed 2026-08-15 (`5143aeb`). The nightly
+> published its first `kind:"scheduled"` record that night; the six
+> failed runs before it (2026-08-09 to 2026-08-14) are still visible in
+> the Actions history, as they should be.
 > `cli/trigger.ts`'s `resolveRunKind()` reads `GITHUB_EVENT_NAME`, so a real
 > cron firing of `watch.yml` is the only thing that will ever produce
 > `kind:"scheduled"`; every record published so far honestly carries
@@ -68,12 +69,15 @@ checks it ran.**
 
 ## The record so far
 
-Two runs published as of this commit, both `kind:"manual"` for the reason above:
-one quiet, one with 2 low-severity findings (two outbound links dogwatch
-couldn't verify — one returned 403, the other a nonsense 999 status), 0 gates
-opened, **$0.0000** total spend.
-Small numbers, honestly reported — this is what a two-site-live program looks
-like before `watch.yml` has ever fired. [Every run, in full →](https://dogwatch-two.vercel.app/runs)
+Two `kind:"manual"` runs from 2026-08-08, then one `kind:"scheduled"` record per
+night since 2026-08-15 — the live count is in
+[`runs/index.json`](https://github.com/jamessuuu/dogwatch/blob/main/runs/index.json),
+not typed here, because a hand-typed count goes stale. Every scheduled night so far
+reads the same: 78 checks, 45 passes, 31 skips, 0 errors, 2 low-severity findings
+(two outbound links dogwatch couldn't verify — one returned 403, the other a
+nonsense 999 status), 0 gates opened, **$0.0000** spend. One gap: no record for
+2026-08-27 (GitHub delayed or dropped that cron; the next run started 32 hours
+after the previous). Boring is the correct output. [Every run, in full →](https://dogwatch-two.vercel.app/runs)
 
 ## Watch it work
 

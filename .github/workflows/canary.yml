@@ -18,7 +18,8 @@ name: canary
 # now — deliberately reproduced below via an explicit `ref: main` checkout so
 # the intent survives that future change unattended.
 #
-# STATUS: this file fired once on schedule (2026-08-10) and failed in 6s on
+# STATUS (2026-08-29): fix applied 2026-08-15 (5143aeb); verify the next weekly
+# run in the Actions tab. History: this file fired once on schedule (2026-08-10) and failed in 6s on
 # the actions/checkout@v4 sibling-path guard fixed just above — the same bug
 # watch.yml carried (see its STATUS note), never reaching typecheck/unit/eval.
 # "a break proposes an issue on sluice through the normal gate" (SPEC §5's
