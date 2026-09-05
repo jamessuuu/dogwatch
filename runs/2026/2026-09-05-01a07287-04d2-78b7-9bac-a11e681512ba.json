@@ -1,0 +1,4955 @@
+{
+  "absenceOfEvidence": {
+    "byFamily": {
+      "header": 2,
+      "link": 66,
+      "reach": 2,
+      "weight": 1
+    },
+    "checksClean": 71,
+    "notChecked": [
+      {
+        "checkId": "reach:tiltmeter:reach.status_not_200",
+        "reasonCode": "not_published"
+      },
+      {
+        "checkId": "reach:tiltmeter:reach.redirect_chain_changed",
+        "reasonCode": "not_published"
+      },
+      {
+        "checkId": "brand:tiltmeter:brand.backlink_missing",
+        "reasonCode": "not_published"
+      },
+      {
+        "checkId": "brand:tiltmeter:brand.favicon_missing",
+        "reasonCode": "not_published"
+      },
+      {
+        "checkId": "link:tiltmeter:link.broken",
+        "reasonCode": "not_published"
+      },
+      {
+        "checkId": "weight:tiltmeter:weight.budget_exceeded",
+        "reasonCode": "not_published"
+      },
+      {
+        "checkId": "reach:chaff:reach.status_not_200",
+        "reasonCode": "not_published"
+      },
+      {
+        "checkId": "reach:chaff:reach.redirect_chain_changed",
+        "reasonCode": "not_published"
+      },
+      {
+        "checkId": "brand:chaff:brand.backlink_missing",
+        "reasonCode": "not_published"
+      },
+      {
+        "checkId": "brand:chaff:brand.favicon_missing",
+        "reasonCode": "not_published"
+      },
+      {
+        "checkId": "link:chaff:link.broken",
+        "reasonCode": "not_published"
+      },
+      {
+        "checkId": "weight:chaff:weight.budget_exceeded",
+        "reasonCode": "not_published"
+      },
+      {
+        "checkId": "reach:sluice:reach.status_not_200",
+        "reasonCode": "not_published"
+      },
+      {
+        "checkId": "reach:sluice:reach.redirect_chain_changed",
+        "reasonCode": "not_published"
+      },
+      {
+        "checkId": "brand:sluice:brand.backlink_missing",
+        "reasonCode": "not_published"
+      },
+      {
+        "checkId": "brand:sluice:brand.favicon_missing",
+        "reasonCode": "not_published"
+      },
+      {
+        "checkId": "link:sluice:link.broken",
+        "reasonCode": "not_published"
+      },
+      {
+        "checkId": "weight:sluice:weight.budget_exceeded",
+        "reasonCode": "not_published"
+      },
+      {
+        "checkId": "reach:snapgauge:reach.status_not_200",
+        "reasonCode": "not_published"
+      },
+      {
+        "checkId": "reach:snapgauge:reach.redirect_chain_changed",
+        "reasonCode": "not_published"
+      },
+      {
+        "checkId": "brand:snapgauge:brand.backlink_missing",
+        "reasonCode": "not_published"
+      },
+      {
+        "checkId": "brand:snapgauge:brand.favicon_missing",
+        "reasonCode": "not_published"
+      },
+      {
+        "checkId": "link:snapgauge:link.broken",
+        "reasonCode": "not_published"
+      },
+      {
+        "checkId": "weight:snapgauge:weight.budget_exceeded",
+        "reasonCode": "not_published"
+      },
+      {
+        "checkId": "reach:dogwatch:reach.status_not_200",
+        "reasonCode": "not_published"
+      },
+      {
+        "checkId": "reach:dogwatch:reach.redirect_chain_changed",
+        "reasonCode": "not_published"
+      },
+      {
+        "checkId": "brand:dogwatch:brand.backlink_missing",
+        "reasonCode": "not_published"
+      },
+      {
+        "checkId": "brand:dogwatch:brand.favicon_missing",
+        "reasonCode": "not_published"
+      },
+      {
+        "checkId": "link:dogwatch:link.broken",
+        "reasonCode": "not_published"
+      },
+      {
+        "checkId": "weight:dogwatch:weight.budget_exceeded",
+        "reasonCode": "not_published"
+      },
+      {
+        "checkId": "link:agentjames:link.broken:mailto:jameslorenzsantos@gmail.com",
+        "reasonCode": "not_applicable"
+      }
+    ],
+    "statement": "71 of 104 checks came back clean; 31 were skipped or errored (see notChecked)."
+  },
+  "actions": [],
+  "amendments": [],
+  "audit": {
+    "events": [
+      {
+        "actor": "dogwatch:01a07287-04d2-78b7-9bac-a11e681512ba",
+        "attempt": 1,
+        "data": {},
+        "hash": "26a1763205eb8b6d6cf407f81bc04edb3ca7d96209fae3ab33e2aaaa3db67e97",
+        "id": "evt_dogwatch_1",
+        "namespace": "dogwatch",
+        "prevHash": null,
+        "seq": 1,
+        "subjectKey": "probe:01a07287-04d2-78b7-9bac-a11e681512ba:GET:https://agentjames.vercel.app",
+        "subjectType": "effect",
+        "ts": 1788627846357,
+        "type": "effect.claimed"
+      },
+      {
+        "actor": "dogwatch:01a07287-04d2-78b7-9bac-a11e681512ba",
+        "attempt": 1,
+        "data": {
+          "resultOmitted": false
+        },
+        "hash": "027bd3e79aa8604fc661fe3a4f7ec61fef194bb59fc97e76528cbe56091ccb2b",
+        "id": "evt_dogwatch_2",
+        "namespace": "dogwatch",
+        "prevHash": "26a1763205eb8b6d6cf407f81bc04edb3ca7d96209fae3ab33e2aaaa3db67e97",
+        "seq": 2,
+        "subjectKey": "probe:01a07287-04d2-78b7-9bac-a11e681512ba:GET:https://agentjames.vercel.app",
+        "subjectType": "effect",
+        "ts": 1788627846780,
+        "type": "effect.succeeded"
+      },
+      {
+        "actor": "dogwatch:01a07287-04d2-78b7-9bac-a11e681512ba",
+        "attempt": null,
+        "data": {
+          "firstSeenAt": 1788627846356
+        },
+        "hash": "fff23318dea5e708f2d60582d4e8b2a26903debabcf97cacd80ccc5894d1a163",
+        "id": "evt_dogwatch_3",
+        "namespace": "dogwatch",
+        "prevHash": "027bd3e79aa8604fc661fe3a4f7ec61fef194bb59fc97e76528cbe56091ccb2b",
+        "seq": 3,
+        "subjectKey": "probe:01a07287-04d2-78b7-9bac-a11e681512ba:GET:https://agentjames.vercel.app",
+        "subjectType": "effect",
+        "ts": 1788627846782,
+        "type": "effect.replayed"
+      },
+      {
+        "actor": "dogwatch:01a07287-04d2-78b7-9bac-a11e681512ba",
+        "attempt": 1,
+        "data": {},
+        "hash": "1ddee410032da67444127c46ddb35120d2b5ff6cda187f9db4edfdb886f4b57b",
+        "id": "evt_dogwatch_4",
+        "namespace": "dogwatch",
+        "prevHash": "fff23318dea5e708f2d60582d4e8b2a26903debabcf97cacd80ccc5894d1a163",
+        "seq": 4,
+        "subjectKey": "probe:01a07287-04d2-78b7-9bac-a11e681512ba:GET:https://agentjames.vercel.app/",
+        "subjectType": "effect",
+        "ts": 1788627846783,
+        "type": "effect.claimed"
+      },
+      {
+        "actor": "dogwatch:01a07287-04d2-78b7-9bac-a11e681512ba",
+        "attempt": 1,
+        "data": {
+          "resultOmitted": false
+        },
+        "hash": "e7abef82699accf9b974b098d3321bacb8678ed6527f72fb0e83b6495b5f497c",
+        "id": "evt_dogwatch_5",
+        "namespace": "dogwatch",
+        "prevHash": "1ddee410032da67444127c46ddb35120d2b5ff6cda187f9db4edfdb886f4b57b",
+        "seq": 5,
+        "subjectKey": "probe:01a07287-04d2-78b7-9bac-a11e681512ba:GET:https://agentjames.vercel.app/",
+        "subjectType": "effect",
+        "ts": 1788627846995,
+        "type": "effect.succeeded"
+      },
+      {
+        "actor": "dogwatch:01a07287-04d2-78b7-9bac-a11e681512ba",
+        "attempt": 1,
+        "data": {},
+        "hash": "2993f7a7fdee7dbcd56647b2897add60d5119775c6a8a9910075f3685f7a49e6",
+        "id": "evt_dogwatch_6",
+        "namespace": "dogwatch",
+        "prevHash": "e7abef82699accf9b974b098d3321bacb8678ed6527f72fb0e83b6495b5f497c",
+        "seq": 6,
+        "subjectKey": "probe:01a07287-04d2-78b7-9bac-a11e681512ba:GET:https://agentjames.vercel.app/cv/James-Lorenz-Santos-CV.pdf",
+        "subjectType": "effect",
+        "ts": 1788627846996,
+        "type": "effect.claimed"
+      },
+      {
+        "actor": "dogwatch:01a07287-04d2-78b7-9bac-a11e681512ba",
+        "attempt": 1,
+        "data": {
+          "resultOmitted": false
+        },
+        "hash": "25b29f891f22acce2afbbd4887c7fc77f4f442552b153ee5d1ecdbc900b41f66",
+        "id": "evt_dogwatch_7",
+        "namespace": "dogwatch",
+        "prevHash": "2993f7a7fdee7dbcd56647b2897add60d5119775c6a8a9910075f3685f7a49e6",
+        "seq": 7,
+        "subjectKey": "probe:01a07287-04d2-78b7-9bac-a11e681512ba:GET:https://agentjames.vercel.app/cv/James-Lorenz-Santos-CV.pdf",
+        "subjectType": "effect",
+        "ts": 1788627847292,
+        "type": "effect.succeeded"
+      },
+      {
+        "actor": "dogwatch:01a07287-04d2-78b7-9bac-a11e681512ba",
+        "attempt": 1,
+        "data": {},
+        "hash": "da0dcff7d14c7e472eb524e2e49ade9a512e19f86bc4147e7f95af6ac20c1bd1",
+        "id": "evt_dogwatch_8",
+        "namespace": "dogwatch",
+        "prevHash": "25b29f891f22acce2afbbd4887c7fc77f4f442552b153ee5d1ecdbc900b41f66",
+        "seq": 8,
+        "subjectKey": "probe:01a07287-04d2-78b7-9bac-a11e681512ba:GET:https://agentjames.vercel.app/hire",
+        "subjectType": "effect",
+        "ts": 1788627847292,
+        "type": "effect.claimed"
+      },
+      {
+        "actor": "dogwatch:01a07287-04d2-78b7-9bac-a11e681512ba",
+        "attempt": 1,
+        "data": {
+          "resultOmitted": false
+        },
+        "hash": "96c138b04ce91245ec5f5f76561c3443700d2632b07c7028ed850c1f4799c0e0",
+        "id": "evt_dogwatch_9",
+        "namespace": "dogwatch",
+        "prevHash": "da0dcff7d14c7e472eb524e2e49ade9a512e19f86bc4147e7f95af6ac20c1bd1",
+        "seq": 9,
+        "subjectKey": "probe:01a07287-04d2-78b7-9bac-a11e681512ba:GET:https://agentjames.vercel.app/hire",
+        "subjectType": "effect",
+        "ts": 1788627847408,
+        "type": "effect.succeeded"
+      },
+      {
+        "actor": "dogwatch:01a07287-04d2-78b7-9bac-a11e681512ba",
+        "attempt": 1,
+        "data": {},
+        "hash": "15c6506afb9984b72d146d20a7efac4a13fbbfaaf1718387434e2c0467bf1a5e",
+        "id": "evt_dogwatch_10",
+        "namespace": "dogwatch",
+        "prevHash": "96c138b04ce91245ec5f5f76561c3443700d2632b07c7028ed850c1f4799c0e0",
+        "seq": 10,
+        "subjectKey": "probe:01a07287-04d2-78b7-9bac-a11e681512ba:GET:https://agentjames.vercel.app/resume",
+        "subjectType": "effect",
+        "ts": 1788627847409,
+        "type": "effect.claimed"
+      },
+      {
+        "actor": "dogwatch:01a07287-04d2-78b7-9bac-a11e681512ba",
+        "attempt": 1,
+        "data": {
+          "resultOmitted": false
+        },
+        "hash": "cd7d679dca72b13758169b30f33c9a9ad5049caea99f131950cdecc460a80517",
+        "id": "evt_dogwatch_11",
+        "namespace": "dogwatch",
+        "prevHash": "15c6506afb9984b72d146d20a7efac4a13fbbfaaf1718387434e2c0467bf1a5e",
+        "seq": 11,
+        "subjectKey": "probe:01a07287-04d2-78b7-9bac-a11e681512ba:GET:https://agentjames.vercel.app/resume",
+        "subjectType": "effect",
+        "ts": 1788627847533,
+        "type": "effect.succeeded"
+      },
+      {
+        "actor": "dogwatch:01a07287-04d2-78b7-9bac-a11e681512ba",
+        "attempt": 1,
+        "data": {},
+        "hash": "999b616ae119b73a496b483267a736d88b13b017ba027dee42b23c945c51fdc8",
+        "id": "evt_dogwatch_12",
+        "namespace": "dogwatch",
+        "prevHash": "cd7d679dca72b13758169b30f33c9a9ad5049caea99f131950cdecc460a80517",
+        "seq": 12,
+        "subjectKey": "probe:01a07287-04d2-78b7-9bac-a11e681512ba:GET:https://agentjames.vercel.app/projects",
+        "subjectType": "effect",
+        "ts": 1788627847533,
+        "type": "effect.claimed"
+      },
+      {
+        "actor": "dogwatch:01a07287-04d2-78b7-9bac-a11e681512ba",
+        "attempt": 1,
+        "data": {
+          "resultOmitted": false
+        },
+        "hash": "d1c05b504f19643b2b24760bca7ee3552049649c815106e9db68374e69a63a01",
+        "id": "evt_dogwatch_13",
+        "namespace": "dogwatch",
+        "prevHash": "999b616ae119b73a496b483267a736d88b13b017ba027dee42b23c945c51fdc8",
+        "seq": 13,
+        "subjectKey": "probe:01a07287-04d2-78b7-9bac-a11e681512ba:GET:https://agentjames.vercel.app/projects",
+        "subjectType": "effect",
+        "ts": 1788627847712,
+        "type": "effect.succeeded"
+      },
+      {
+        "actor": "dogwatch:01a07287-04d2-78b7-9bac-a11e681512ba",
+        "attempt": 1,
+        "data": {},
+        "hash": "538968eb819575f95e5789a6709a2302002da6500ed700a1f6c04809e17991fa",
+        "id": "evt_dogwatch_14",
+        "namespace": "dogwatch",
+        "prevHash": "d1c05b504f19643b2b24760bca7ee3552049649c815106e9db68374e69a63a01",
+        "seq": 14,
+        "subjectKey": "probe:01a07287-04d2-78b7-9bac-a11e681512ba:GET:https://agentjames.vercel.app/about",
+        "subjectType": "effect",
+        "ts": 1788627847712,
+        "type": "effect.claimed"
+      },
+      {
+        "actor": "dogwatch:01a07287-04d2-78b7-9bac-a11e681512ba",
+        "attempt": 1,
+        "data": {
+          "resultOmitted": false
+        },
+        "hash": "f34ab48f33f2833734d43c3460aabbaeb978d3a6614362a97f26c448314bfe77",
+        "id": "evt_dogwatch_15",
+        "namespace": "dogwatch",
+        "prevHash": "538968eb819575f95e5789a6709a2302002da6500ed700a1f6c04809e17991fa",
+        "seq": 15,
+        "subjectKey": "probe:01a07287-04d2-78b7-9bac-a11e681512ba:GET:https://agentjames.vercel.app/about",
+        "subjectType": "effect",
+        "ts": 1788627847798,
+        "type": "effect.succeeded"
+      },
+      {
+        "actor": "dogwatch:01a07287-04d2-78b7-9bac-a11e681512ba",
+        "attempt": 1,
+        "data": {},
+        "hash": "6b71a7602f84aba0af1b54317b19099a9451098f2028f92dcde4858fa6b6587e",
+        "id": "evt_dogwatch_16",
+        "namespace": "dogwatch",
+        "prevHash": "f34ab48f33f2833734d43c3460aabbaeb978d3a6614362a97f26c448314bfe77",
+        "seq": 16,
+        "subjectKey": "probe:01a07287-04d2-78b7-9bac-a11e681512ba:GET:https://agentjames.vercel.app/services",
+        "subjectType": "effect",
+        "ts": 1788627847799,
+        "type": "effect.claimed"
+      },
+      {
+        "actor": "dogwatch:01a07287-04d2-78b7-9bac-a11e681512ba",
+        "attempt": 1,
+        "data": {
+          "resultOmitted": false
+        },
+        "hash": "b2ca5b1416eff0356adc7dacb2ef290efaaacbd8b5b7a9f1b73dc25b651d590f",
+        "id": "evt_dogwatch_17",
+        "namespace": "dogwatch",
+        "prevHash": "6b71a7602f84aba0af1b54317b19099a9451098f2028f92dcde4858fa6b6587e",
+        "seq": 17,
+        "subjectKey": "probe:01a07287-04d2-78b7-9bac-a11e681512ba:GET:https://agentjames.vercel.app/services",
+        "subjectType": "effect",
+        "ts": 1788627847889,
+        "type": "effect.succeeded"
+      },
+      {
+        "actor": "dogwatch:01a07287-04d2-78b7-9bac-a11e681512ba",
+        "attempt": 1,
+        "data": {},
+        "hash": "995a3d0658379112907359dc2136af5637bfa7b5074d7cbf1bd94a31bed187ca",
+        "id": "evt_dogwatch_18",
+        "namespace": "dogwatch",
+        "prevHash": "b2ca5b1416eff0356adc7dacb2ef290efaaacbd8b5b7a9f1b73dc25b651d590f",
+        "seq": 18,
+        "subjectKey": "probe:01a07287-04d2-78b7-9bac-a11e681512ba:GET:https://agentjames.vercel.app/blog",
+        "subjectType": "effect",
+        "ts": 1788627847889,
+        "type": "effect.claimed"
+      },
+      {
+        "actor": "dogwatch:01a07287-04d2-78b7-9bac-a11e681512ba",
+        "attempt": 1,
+        "data": {
+          "resultOmitted": false
+        },
+        "hash": "c7736f43699ef85d6d005904a3d380e89db34383043cb3949c698836a0f9334e",
+        "id": "evt_dogwatch_19",
+        "namespace": "dogwatch",
+        "prevHash": "995a3d0658379112907359dc2136af5637bfa7b5074d7cbf1bd94a31bed187ca",
+        "seq": 19,
+        "subjectKey": "probe:01a07287-04d2-78b7-9bac-a11e681512ba:GET:https://agentjames.vercel.app/blog",
+        "subjectType": "effect",
+        "ts": 1788627847994,
+        "type": "effect.succeeded"
+      },
+      {
+        "actor": "dogwatch:01a07287-04d2-78b7-9bac-a11e681512ba",
+        "attempt": 1,
+        "data": {},
+        "hash": "d8eb62262e1438d2afff3a85f3a169daf144db2343e9cd7dc5ec5d866751e351",
+        "id": "evt_dogwatch_20",
+        "namespace": "dogwatch",
+        "prevHash": "c7736f43699ef85d6d005904a3d380e89db34383043cb3949c698836a0f9334e",
+        "seq": 20,
+        "subjectKey": "probe:01a07287-04d2-78b7-9bac-a11e681512ba:GET:https://agentjames.vercel.app/mcp",
+        "subjectType": "effect",
+        "ts": 1788627847995,
+        "type": "effect.claimed"
+      },
+      {
+        "actor": "dogwatch:01a07287-04d2-78b7-9bac-a11e681512ba",
+        "attempt": 1,
+        "data": {
+          "resultOmitted": false
+        },
+        "hash": "3b16a376a97ae1abcc82a039e4bd0982714c672e12826b0ca8c0d42eb5de9c3f",
+        "id": "evt_dogwatch_21",
+        "namespace": "dogwatch",
+        "prevHash": "d8eb62262e1438d2afff3a85f3a169daf144db2343e9cd7dc5ec5d866751e351",
+        "seq": 21,
+        "subjectKey": "probe:01a07287-04d2-78b7-9bac-a11e681512ba:GET:https://agentjames.vercel.app/mcp",
+        "subjectType": "effect",
+        "ts": 1788627848092,
+        "type": "effect.succeeded"
+      },
+      {
+        "actor": "dogwatch:01a07287-04d2-78b7-9bac-a11e681512ba",
+        "attempt": 1,
+        "data": {},
+        "hash": "faeb19653772984dbec0292bfbae37d03071f12624251dbbf284bc07511f7d9c",
+        "id": "evt_dogwatch_22",
+        "namespace": "dogwatch",
+        "prevHash": "3b16a376a97ae1abcc82a039e4bd0982714c672e12826b0ca8c0d42eb5de9c3f",
+        "seq": 22,
+        "subjectKey": "probe:01a07287-04d2-78b7-9bac-a11e681512ba:GET:https://agentjames.vercel.app/console",
+        "subjectType": "effect",
+        "ts": 1788627848092,
+        "type": "effect.claimed"
+      },
+      {
+        "actor": "dogwatch:01a07287-04d2-78b7-9bac-a11e681512ba",
+        "attempt": 1,
+        "data": {
+          "resultOmitted": false
+        },
+        "hash": "0e2399231fc7cd9be6039d912968c5c4d9c8b9b69fe9d43bf059f71fa309320e",
+        "id": "evt_dogwatch_23",
+        "namespace": "dogwatch",
+        "prevHash": "faeb19653772984dbec0292bfbae37d03071f12624251dbbf284bc07511f7d9c",
+        "seq": 23,
+        "subjectKey": "probe:01a07287-04d2-78b7-9bac-a11e681512ba:GET:https://agentjames.vercel.app/console",
+        "subjectType": "effect",
+        "ts": 1788627849249,
+        "type": "effect.succeeded"
+      },
+      {
+        "actor": "dogwatch:01a07287-04d2-78b7-9bac-a11e681512ba",
+        "attempt": 1,
+        "data": {},
+        "hash": "3e718dd1b498ce166f953cac19a973101bfbbeb8837263968fdda15bb5e5c3ac",
+        "id": "evt_dogwatch_24",
+        "namespace": "dogwatch",
+        "prevHash": "0e2399231fc7cd9be6039d912968c5c4d9c8b9b69fe9d43bf059f71fa309320e",
+        "seq": 24,
+        "subjectKey": "probe:01a07287-04d2-78b7-9bac-a11e681512ba:GET:https://agentjames.vercel.app/resume.md",
+        "subjectType": "effect",
+        "ts": 1788627849249,
+        "type": "effect.claimed"
+      },
+      {
+        "actor": "dogwatch:01a07287-04d2-78b7-9bac-a11e681512ba",
+        "attempt": 1,
+        "data": {
+          "resultOmitted": false
+        },
+        "hash": "99a307b11ccf7e5e6ae5201731c3808e48ffb8ca8d014ad8f02cf431090d0e16",
+        "id": "evt_dogwatch_25",
+        "namespace": "dogwatch",
+        "prevHash": "3e718dd1b498ce166f953cac19a973101bfbbeb8837263968fdda15bb5e5c3ac",
+        "seq": 25,
+        "subjectKey": "probe:01a07287-04d2-78b7-9bac-a11e681512ba:GET:https://agentjames.vercel.app/resume.md",
+        "subjectType": "effect",
+        "ts": 1788627849337,
+        "type": "effect.succeeded"
+      },
+      {
+        "actor": "dogwatch:01a07287-04d2-78b7-9bac-a11e681512ba",
+        "attempt": 1,
+        "data": {},
+        "hash": "ce7690b731e7de20cada1ec4f516ad5bd302756b4958a759d03756b9d179c6b7",
+        "id": "evt_dogwatch_26",
+        "namespace": "dogwatch",
+        "prevHash": "99a307b11ccf7e5e6ae5201731c3808e48ffb8ca8d014ad8f02cf431090d0e16",
+        "seq": 26,
+        "subjectKey": "probe:01a07287-04d2-78b7-9bac-a11e681512ba:GET:https://agentjames.vercel.app/proof",
+        "subjectType": "effect",
+        "ts": 1788627849337,
+        "type": "effect.claimed"
+      },
+      {
+        "actor": "dogwatch:01a07287-04d2-78b7-9bac-a11e681512ba",
+        "attempt": 1,
+        "data": {
+          "resultOmitted": false
+        },
+        "hash": "955d67b816c16b32228be51e0e950a9075dda903e4cb675a47ed8feb3420403f",
+        "id": "evt_dogwatch_27",
+        "namespace": "dogwatch",
+        "prevHash": "ce7690b731e7de20cada1ec4f516ad5bd302756b4958a759d03756b9d179c6b7",
+        "seq": 27,
+        "subjectKey": "probe:01a07287-04d2-78b7-9bac-a11e681512ba:GET:https://agentjames.vercel.app/proof",
+        "subjectType": "effect",
+        "ts": 1788627849525,
+        "type": "effect.succeeded"
+      },
+      {
+        "actor": "dogwatch:01a07287-04d2-78b7-9bac-a11e681512ba",
+        "attempt": 1,
+        "data": {},
+        "hash": "ce04cd3eb65074584f755e14eb8f801c676a82fe16200a96e9e6ea8f33c8c02d",
+        "id": "evt_dogwatch_28",
+        "namespace": "dogwatch",
+        "prevHash": "955d67b816c16b32228be51e0e950a9075dda903e4cb675a47ed8feb3420403f",
+        "seq": 28,
+        "subjectKey": "probe:01a07287-04d2-78b7-9bac-a11e681512ba:GET:https://agentjames.vercel.app/services/agentic-web-development",
+        "subjectType": "effect",
+        "ts": 1788627849526,
+        "type": "effect.claimed"
+      },
+      {
+        "actor": "dogwatch:01a07287-04d2-78b7-9bac-a11e681512ba",
+        "attempt": 1,
+        "data": {
+          "resultOmitted": false
+        },
+        "hash": "52a3d59db27396b17f9a3d65da7759f9195b1c0217a2fbb1f3a0e52eaf243643",
+        "id": "evt_dogwatch_29",
+        "namespace": "dogwatch",
+        "prevHash": "ce04cd3eb65074584f755e14eb8f801c676a82fe16200a96e9e6ea8f33c8c02d",
+        "seq": 29,
+        "subjectKey": "probe:01a07287-04d2-78b7-9bac-a11e681512ba:GET:https://agentjames.vercel.app/services/agentic-web-development",
+        "subjectType": "effect",
+        "ts": 1788627849618,
+        "type": "effect.succeeded"
+      },
+      {
+        "actor": "dogwatch:01a07287-04d2-78b7-9bac-a11e681512ba",
+        "attempt": 1,
+        "data": {},
+        "hash": "9878581135f00155123bf4fcbdb31bb05016ea3b34ef2324bfe03788fa447825",
+        "id": "evt_dogwatch_30",
+        "namespace": "dogwatch",
+        "prevHash": "52a3d59db27396b17f9a3d65da7759f9195b1c0217a2fbb1f3a0e52eaf243643",
+        "seq": 30,
+        "subjectKey": "probe:01a07287-04d2-78b7-9bac-a11e681512ba:GET:https://agentjames.vercel.app/services/ai-automation",
+        "subjectType": "effect",
+        "ts": 1788627849618,
+        "type": "effect.claimed"
+      },
+      {
+        "actor": "dogwatch:01a07287-04d2-78b7-9bac-a11e681512ba",
+        "attempt": 1,
+        "data": {
+          "resultOmitted": false
+        },
+        "hash": "116cc310bd03839173b9b5936ebf5436bbbaa4cd09feb6a3b607713c473ecd52",
+        "id": "evt_dogwatch_31",
+        "namespace": "dogwatch",
+        "prevHash": "9878581135f00155123bf4fcbdb31bb05016ea3b34ef2324bfe03788fa447825",
+        "seq": 31,
+        "subjectKey": "probe:01a07287-04d2-78b7-9bac-a11e681512ba:GET:https://agentjames.vercel.app/services/ai-automation",
+        "subjectType": "effect",
+        "ts": 1788627849743,
+        "type": "effect.succeeded"
+      },
+      {
+        "actor": "dogwatch:01a07287-04d2-78b7-9bac-a11e681512ba",
+        "attempt": 1,
+        "data": {},
+        "hash": "e6e998c72b742ea949ff2a468a680db1301243f95febf4e3e832bee7e5088a2d",
+        "id": "evt_dogwatch_32",
+        "namespace": "dogwatch",
+        "prevHash": "116cc310bd03839173b9b5936ebf5436bbbaa4cd09feb6a3b607713c473ecd52",
+        "seq": 32,
+        "subjectKey": "probe:01a07287-04d2-78b7-9bac-a11e681512ba:GET:https://agentjames.vercel.app/services/full-stack-development",
+        "subjectType": "effect",
+        "ts": 1788627849743,
+        "type": "effect.claimed"
+      },
+      {
+        "actor": "dogwatch:01a07287-04d2-78b7-9bac-a11e681512ba",
+        "attempt": 1,
+        "data": {
+          "resultOmitted": false
+        },
+        "hash": "85bdf158407052cb80240dcb1001de6b56ce460481c36a1867733526ad8899b2",
+        "id": "evt_dogwatch_33",
+        "namespace": "dogwatch",
+        "prevHash": "e6e998c72b742ea949ff2a468a680db1301243f95febf4e3e832bee7e5088a2d",
+        "seq": 33,
+        "subjectKey": "probe:01a07287-04d2-78b7-9bac-a11e681512ba:GET:https://agentjames.vercel.app/services/full-stack-development",
+        "subjectType": "effect",
+        "ts": 1788627849828,
+        "type": "effect.succeeded"
+      },
+      {
+        "actor": "dogwatch:01a07287-04d2-78b7-9bac-a11e681512ba",
+        "attempt": 1,
+        "data": {},
+        "hash": "8065c1c1cfb0c8d90bd9df4341d515d076138675f09d93d8f35701a46b035a78",
+        "id": "evt_dogwatch_34",
+        "namespace": "dogwatch",
+        "prevHash": "85bdf158407052cb80240dcb1001de6b56ce460481c36a1867733526ad8899b2",
+        "seq": 34,
+        "subjectKey": "probe:01a07287-04d2-78b7-9bac-a11e681512ba:GET:https://agentjames.vercel.app/services/legacy-modernization",
+        "subjectType": "effect",
+        "ts": 1788627849828,
+        "type": "effect.claimed"
+      },
+      {
+        "actor": "dogwatch:01a07287-04d2-78b7-9bac-a11e681512ba",
+        "attempt": 1,
+        "data": {
+          "resultOmitted": false
+        },
+        "hash": "89db59ece61ac1c6f49fbb884c7245914a87709e12a545e39065715eba5ddc16",
+        "id": "evt_dogwatch_35",
+        "namespace": "dogwatch",
+        "prevHash": "8065c1c1cfb0c8d90bd9df4341d515d076138675f09d93d8f35701a46b035a78",
+        "seq": 35,
+        "subjectKey": "probe:01a07287-04d2-78b7-9bac-a11e681512ba:GET:https://agentjames.vercel.app/services/legacy-modernization",
+        "subjectType": "effect",
+        "ts": 1788627849926,
+        "type": "effect.succeeded"
+      },
+      {
+        "actor": "dogwatch:01a07287-04d2-78b7-9bac-a11e681512ba",
+        "attempt": 1,
+        "data": {},
+        "hash": "44e39fcc42b79c1a8f341991d6675444f75ea763bccd3a68001f46f97279502c",
+        "id": "evt_dogwatch_36",
+        "namespace": "dogwatch",
+        "prevHash": "89db59ece61ac1c6f49fbb884c7245914a87709e12a545e39065715eba5ddc16",
+        "seq": 36,
+        "subjectKey": "probe:01a07287-04d2-78b7-9bac-a11e681512ba:GET:https://agentjames.vercel.app/services/qa-testing",
+        "subjectType": "effect",
+        "ts": 1788627849926,
+        "type": "effect.claimed"
+      },
+      {
+        "actor": "dogwatch:01a07287-04d2-78b7-9bac-a11e681512ba",
+        "attempt": 1,
+        "data": {
+          "resultOmitted": false
+        },
+        "hash": "b1ce827f0c918cca1eec6a6f3b529620a2f70150ef662853f9745b88e7a4e97d",
+        "id": "evt_dogwatch_37",
+        "namespace": "dogwatch",
+        "prevHash": "44e39fcc42b79c1a8f341991d6675444f75ea763bccd3a68001f46f97279502c",
+        "seq": 37,
+        "subjectKey": "probe:01a07287-04d2-78b7-9bac-a11e681512ba:GET:https://agentjames.vercel.app/services/qa-testing",
+        "subjectType": "effect",
+        "ts": 1788627850024,
+        "type": "effect.succeeded"
+      },
+      {
+        "actor": "dogwatch:01a07287-04d2-78b7-9bac-a11e681512ba",
+        "attempt": 1,
+        "data": {},
+        "hash": "4dbffc3942ae4a535d0f6eb72409f8f11dc1c6cdc89f610911e4ec686fa819a2",
+        "id": "evt_dogwatch_38",
+        "namespace": "dogwatch",
+        "prevHash": "b1ce827f0c918cca1eec6a6f3b529620a2f70150ef662853f9745b88e7a4e97d",
+        "seq": 38,
+        "subjectKey": "probe:01a07287-04d2-78b7-9bac-a11e681512ba:GET:https://agentjames.vercel.app/services/project-management",
+        "subjectType": "effect",
+        "ts": 1788627850024,
+        "type": "effect.claimed"
+      },
+      {
+        "actor": "dogwatch:01a07287-04d2-78b7-9bac-a11e681512ba",
+        "attempt": 1,
+        "data": {
+          "resultOmitted": false
+        },
+        "hash": "b4fc4ef5fb02b19309e26224c4df7aa048f81d133ce82250236e8afdefa17d8f",
+        "id": "evt_dogwatch_39",
+        "namespace": "dogwatch",
+        "prevHash": "4dbffc3942ae4a535d0f6eb72409f8f11dc1c6cdc89f610911e4ec686fa819a2",
+        "seq": 39,
+        "subjectKey": "probe:01a07287-04d2-78b7-9bac-a11e681512ba:GET:https://agentjames.vercel.app/services/project-management",
+        "subjectType": "effect",
+        "ts": 1788627850135,
+        "type": "effect.succeeded"
+      },
+      {
+        "actor": "dogwatch:01a07287-04d2-78b7-9bac-a11e681512ba",
+        "attempt": 1,
+        "data": {},
+        "hash": "bb69ed6c9d7320102b6f5dee39b12afaf000384e6868c2d89289811a368ffb84",
+        "id": "evt_dogwatch_40",
+        "namespace": "dogwatch",
+        "prevHash": "b4fc4ef5fb02b19309e26224c4df7aa048f81d133ce82250236e8afdefa17d8f",
+        "seq": 40,
+        "subjectKey": "probe:01a07287-04d2-78b7-9bac-a11e681512ba:GET:https://agentjames.vercel.app/blog/how-i-built-this-website",
+        "subjectType": "effect",
+        "ts": 1788627850136,
+        "type": "effect.claimed"
+      },
+      {
+        "actor": "dogwatch:01a07287-04d2-78b7-9bac-a11e681512ba",
+        "attempt": 1,
+        "data": {
+          "resultOmitted": false
+        },
+        "hash": "4cb1571be467722deac4706a21289de163a40399923d34a5761f3a25a99e96fc",
+        "id": "evt_dogwatch_41",
+        "namespace": "dogwatch",
+        "prevHash": "bb69ed6c9d7320102b6f5dee39b12afaf000384e6868c2d89289811a368ffb84",
+        "seq": 41,
+        "subjectKey": "probe:01a07287-04d2-78b7-9bac-a11e681512ba:GET:https://agentjames.vercel.app/blog/how-i-built-this-website",
+        "subjectType": "effect",
+        "ts": 1788627850300,
+        "type": "effect.succeeded"
+      },
+      {
+        "actor": "dogwatch:01a07287-04d2-78b7-9bac-a11e681512ba",
+        "attempt": 1,
+        "data": {},
+        "hash": "6146a41f086bf62bafe7b7943c4c18ea7d4d577ad681cce495f97c33bc827c75",
+        "id": "evt_dogwatch_42",
+        "namespace": "dogwatch",
+        "prevHash": "4cb1571be467722deac4706a21289de163a40399923d34a5761f3a25a99e96fc",
+        "seq": 42,
+        "subjectKey": "probe:01a07287-04d2-78b7-9bac-a11e681512ba:GET:https://agentjames.vercel.app/blog/agentic-development",
+        "subjectType": "effect",
+        "ts": 1788627850300,
+        "type": "effect.claimed"
+      },
+      {
+        "actor": "dogwatch:01a07287-04d2-78b7-9bac-a11e681512ba",
+        "attempt": 1,
+        "data": {
+          "resultOmitted": false
+        },
+        "hash": "ec57d5f1210df1640f41d88ef7fd273fe013552ee187f78e5d283d36af6833aa",
+        "id": "evt_dogwatch_43",
+        "namespace": "dogwatch",
+        "prevHash": "6146a41f086bf62bafe7b7943c4c18ea7d4d577ad681cce495f97c33bc827c75",
+        "seq": 43,
+        "subjectKey": "probe:01a07287-04d2-78b7-9bac-a11e681512ba:GET:https://agentjames.vercel.app/blog/agentic-development",
+        "subjectType": "effect",
+        "ts": 1788627850437,
+        "type": "effect.succeeded"
+      },
+      {
+        "actor": "dogwatch:01a07287-04d2-78b7-9bac-a11e681512ba",
+        "attempt": 1,
+        "data": {},
+        "hash": "11ed199ffe47e5fc5d07eb57b86224913d0adcf5da6ad236401b9343874342d4",
+        "id": "evt_dogwatch_44",
+        "namespace": "dogwatch",
+        "prevHash": "ec57d5f1210df1640f41d88ef7fd273fe013552ee187f78e5d283d36af6833aa",
+        "seq": 44,
+        "subjectKey": "probe:01a07287-04d2-78b7-9bac-a11e681512ba:GET:https://agentjames.vercel.app/blog/the-future-of-ai-automation",
+        "subjectType": "effect",
+        "ts": 1788627850437,
+        "type": "effect.claimed"
+      },
+      {
+        "actor": "dogwatch:01a07287-04d2-78b7-9bac-a11e681512ba",
+        "attempt": 1,
+        "data": {
+          "resultOmitted": false
+        },
+        "hash": "6e1a011960d653661b0bf9158f06cdd3cc669ef703360caa2a1d63a9f521f5c5",
+        "id": "evt_dogwatch_45",
+        "namespace": "dogwatch",
+        "prevHash": "11ed199ffe47e5fc5d07eb57b86224913d0adcf5da6ad236401b9343874342d4",
+        "seq": 45,
+        "subjectKey": "probe:01a07287-04d2-78b7-9bac-a11e681512ba:GET:https://agentjames.vercel.app/blog/the-future-of-ai-automation",
+        "subjectType": "effect",
+        "ts": 1788627850547,
+        "type": "effect.succeeded"
+      },
+      {
+        "actor": "dogwatch:01a07287-04d2-78b7-9bac-a11e681512ba",
+        "attempt": 1,
+        "data": {},
+        "hash": "e83925cd53b94bcf104516356be2e5d0d83e3edb7c8bf2e9137a17687e249721",
+        "id": "evt_dogwatch_46",
+        "namespace": "dogwatch",
+        "prevHash": "6e1a011960d653661b0bf9158f06cdd3cc669ef703360caa2a1d63a9f521f5c5",
+        "seq": 46,
+        "subjectKey": "probe:01a07287-04d2-78b7-9bac-a11e681512ba:GET:https://agentjames.vercel.app/blog/wordpress-to-nextjs-migration",
+        "subjectType": "effect",
+        "ts": 1788627850548,
+        "type": "effect.claimed"
+      },
+      {
+        "actor": "dogwatch:01a07287-04d2-78b7-9bac-a11e681512ba",
+        "attempt": 1,
+        "data": {
+          "resultOmitted": false
+        },
+        "hash": "18cba3cae5e4c57a20fa2a1595c121c3a2ec1373c4d1418ddf40119a151ffd1c",
+        "id": "evt_dogwatch_47",
+        "namespace": "dogwatch",
+        "prevHash": "e83925cd53b94bcf104516356be2e5d0d83e3edb7c8bf2e9137a17687e249721",
+        "seq": 47,
+        "subjectKey": "probe:01a07287-04d2-78b7-9bac-a11e681512ba:GET:https://agentjames.vercel.app/blog/wordpress-to-nextjs-migration",
+        "subjectType": "effect",
+        "ts": 1788627850659,
+        "type": "effect.succeeded"
+      },
+      {
+        "actor": "dogwatch:01a07287-04d2-78b7-9bac-a11e681512ba",
+        "attempt": 1,
+        "data": {},
+        "hash": "399422e4cec120ad03526d8d36a43639ccad458a47940fb5d4a0b1706cad58c2",
+        "id": "evt_dogwatch_48",
+        "namespace": "dogwatch",
+        "prevHash": "18cba3cae5e4c57a20fa2a1595c121c3a2ec1373c4d1418ddf40119a151ffd1c",
+        "seq": 48,
+        "subjectKey": "probe:01a07287-04d2-78b7-9bac-a11e681512ba:GET:https://agentjames.vercel.app/llms.txt",
+        "subjectType": "effect",
+        "ts": 1788627850659,
+        "type": "effect.claimed"
+      },
+      {
+        "actor": "dogwatch:01a07287-04d2-78b7-9bac-a11e681512ba",
+        "attempt": 1,
+        "data": {
+          "resultOmitted": false
+        },
+        "hash": "157f83970d4488f82f0044a8b11201c6dc47a8fd7aefb1fced73e297f9a4288d",
+        "id": "evt_dogwatch_49",
+        "namespace": "dogwatch",
+        "prevHash": "399422e4cec120ad03526d8d36a43639ccad458a47940fb5d4a0b1706cad58c2",
+        "seq": 49,
+        "subjectKey": "probe:01a07287-04d2-78b7-9bac-a11e681512ba:GET:https://agentjames.vercel.app/llms.txt",
+        "subjectType": "effect",
+        "ts": 1788627850852,
+        "type": "effect.succeeded"
+      },
+      {
+        "actor": "dogwatch:01a07287-04d2-78b7-9bac-a11e681512ba",
+        "attempt": 1,
+        "data": {},
+        "hash": "72616fb5725c22de131f75f1fb2e8aeddcf17d050414b8c235bad4f90184dfe5",
+        "id": "evt_dogwatch_50",
+        "namespace": "dogwatch",
+        "prevHash": "157f83970d4488f82f0044a8b11201c6dc47a8fd7aefb1fced73e297f9a4288d",
+        "seq": 50,
+        "subjectKey": "probe:01a07287-04d2-78b7-9bac-a11e681512ba:GET:https://agentjames.vercel.app/llms-full.txt",
+        "subjectType": "effect",
+        "ts": 1788627850852,
+        "type": "effect.claimed"
+      },
+      {
+        "actor": "dogwatch:01a07287-04d2-78b7-9bac-a11e681512ba",
+        "attempt": 1,
+        "data": {
+          "resultOmitted": false
+        },
+        "hash": "030a3475e5c8ea84af2d553e8d01c0a4c1912882417e3c7131211cb19f98a0ee",
+        "id": "evt_dogwatch_51",
+        "namespace": "dogwatch",
+        "prevHash": "72616fb5725c22de131f75f1fb2e8aeddcf17d050414b8c235bad4f90184dfe5",
+        "seq": 51,
+        "subjectKey": "probe:01a07287-04d2-78b7-9bac-a11e681512ba:GET:https://agentjames.vercel.app/llms-full.txt",
+        "subjectType": "effect",
+        "ts": 1788627851005,
+        "type": "effect.succeeded"
+      },
+      {
+        "actor": "dogwatch:01a07287-04d2-78b7-9bac-a11e681512ba",
+        "attempt": 1,
+        "data": {},
+        "hash": "f459e0fadc67f2f74b11d9f2cf556539262437c44df543dce22cb9099e09f7cc",
+        "id": "evt_dogwatch_52",
+        "namespace": "dogwatch",
+        "prevHash": "030a3475e5c8ea84af2d553e8d01c0a4c1912882417e3c7131211cb19f98a0ee",
+        "seq": 52,
+        "subjectKey": "probe:01a07287-04d2-78b7-9bac-a11e681512ba:GET:https://agentjames.vercel.app/agent.json",
+        "subjectType": "effect",
+        "ts": 1788627851005,
+        "type": "effect.claimed"
+      },
+      {
+        "actor": "dogwatch:01a07287-04d2-78b7-9bac-a11e681512ba",
+        "attempt": 1,
+        "data": {
+          "resultOmitted": false
+        },
+        "hash": "d4ff5cd2def9d8352da1e3dddda631de3c62826a26ad1a5a9eaffa4f01c1621e",
+        "id": "evt_dogwatch_53",
+        "namespace": "dogwatch",
+        "prevHash": "f459e0fadc67f2f74b11d9f2cf556539262437c44df543dce22cb9099e09f7cc",
+        "seq": 53,
+        "subjectKey": "probe:01a07287-04d2-78b7-9bac-a11e681512ba:GET:https://agentjames.vercel.app/agent.json",
+        "subjectType": "effect",
+        "ts": 1788627851112,
+        "type": "effect.succeeded"
+      },
+      {
+        "actor": "dogwatch:01a07287-04d2-78b7-9bac-a11e681512ba",
+        "attempt": 1,
+        "data": {},
+        "hash": "fba075414a520b827d9733b1b7083f4e242f61fe56e80d4323f6d0910e413f38",
+        "id": "evt_dogwatch_54",
+        "namespace": "dogwatch",
+        "prevHash": "d4ff5cd2def9d8352da1e3dddda631de3c62826a26ad1a5a9eaffa4f01c1621e",
+        "seq": 54,
+        "subjectKey": "probe:01a07287-04d2-78b7-9bac-a11e681512ba:GET:https://agentjames.vercel.app/console?c=workflow",
+        "subjectType": "effect",
+        "ts": 1788627851112,
+        "type": "effect.claimed"
+      },
+      {
+        "actor": "dogwatch:01a07287-04d2-78b7-9bac-a11e681512ba",
+        "attempt": 1,
+        "data": {
+          "resultOmitted": false
+        },
+        "hash": "6bbcb27ebf2ab678ddb787a6e8b2773f3eafe3ca96ceb604d1aa1090f42c21fa",
+        "id": "evt_dogwatch_55",
+        "namespace": "dogwatch",
+        "prevHash": "fba075414a520b827d9733b1b7083f4e242f61fe56e80d4323f6d0910e413f38",
+        "seq": 55,
+        "subjectKey": "probe:01a07287-04d2-78b7-9bac-a11e681512ba:GET:https://agentjames.vercel.app/console?c=workflow",
+        "subjectType": "effect",
+        "ts": 1788627851334,
+        "type": "effect.succeeded"
+      },
+      {
+        "actor": "dogwatch:01a07287-04d2-78b7-9bac-a11e681512ba",
+        "attempt": 1,
+        "data": {},
+        "hash": "02290a1dfa2c1b8297a40811537d03dc6032d2297d5994db689e39cefe437832",
+        "id": "evt_dogwatch_56",
+        "namespace": "dogwatch",
+        "prevHash": "6bbcb27ebf2ab678ddb787a6e8b2773f3eafe3ca96ceb604d1aa1090f42c21fa",
+        "seq": 56,
+        "subjectKey": "probe:01a07287-04d2-78b7-9bac-a11e681512ba:GET:https://agentjames.vercel.app/console?c=workflow%20speed-to-lead",
+        "subjectType": "effect",
+        "ts": 1788627851335,
+        "type": "effect.claimed"
+      },
+      {
+        "actor": "dogwatch:01a07287-04d2-78b7-9bac-a11e681512ba",
+        "attempt": 1,
+        "data": {
+          "resultOmitted": false
+        },
+        "hash": "7f9af4eaf75cd27b2a4d1e7c218ac2002754159a9c0ba4ad2b849fa47f27fdbf",
+        "id": "evt_dogwatch_57",
+        "namespace": "dogwatch",
+        "prevHash": "02290a1dfa2c1b8297a40811537d03dc6032d2297d5994db689e39cefe437832",
+        "seq": 57,
+        "subjectKey": "probe:01a07287-04d2-78b7-9bac-a11e681512ba:GET:https://agentjames.vercel.app/console?c=workflow%20speed-to-lead",
+        "subjectType": "effect",
+        "ts": 1788627851519,
+        "type": "effect.succeeded"
+      },
+      {
+        "actor": "dogwatch:01a07287-04d2-78b7-9bac-a11e681512ba",
+        "attempt": 1,
+        "data": {},
+        "hash": "f0d22e3452b6ca6aac78092dd347c3d250db3b9475935f7b6aaf5c024abedd7b",
+        "id": "evt_dogwatch_58",
+        "namespace": "dogwatch",
+        "prevHash": "7f9af4eaf75cd27b2a4d1e7c218ac2002754159a9c0ba4ad2b849fa47f27fdbf",
+        "seq": 58,
+        "subjectKey": "probe:01a07287-04d2-78b7-9bac-a11e681512ba:GET:https://agentjames.vercel.app/console?c=help",
+        "subjectType": "effect",
+        "ts": 1788627851520,
+        "type": "effect.claimed"
+      },
+      {
+        "actor": "dogwatch:01a07287-04d2-78b7-9bac-a11e681512ba",
+        "attempt": 1,
+        "data": {
+          "resultOmitted": false
+        },
+        "hash": "1c9984e9fb825c27eecf68dcbd45fe74e0d8631b2da8bd6be751acd5b0f309df",
+        "id": "evt_dogwatch_59",
+        "namespace": "dogwatch",
+        "prevHash": "f0d22e3452b6ca6aac78092dd347c3d250db3b9475935f7b6aaf5c024abedd7b",
+        "seq": 59,
+        "subjectKey": "probe:01a07287-04d2-78b7-9bac-a11e681512ba:GET:https://agentjames.vercel.app/console?c=help",
+        "subjectType": "effect",
+        "ts": 1788627851673,
+        "type": "effect.succeeded"
+      },
+      {
+        "actor": "dogwatch:01a07287-04d2-78b7-9bac-a11e681512ba",
+        "attempt": 1,
+        "data": {},
+        "hash": "fd22fd2c582c585da84fa9c7580745f74ba698f76b5421ed101d669064b7ab79",
+        "id": "evt_dogwatch_60",
+        "namespace": "dogwatch",
+        "prevHash": "1c9984e9fb825c27eecf68dcbd45fe74e0d8631b2da8bd6be751acd5b0f309df",
+        "seq": 60,
+        "subjectKey": "probe:01a07287-04d2-78b7-9bac-a11e681512ba:GET:https://agentjames.vercel.app/console?c=tour",
+        "subjectType": "effect",
+        "ts": 1788627851674,
+        "type": "effect.claimed"
+      },
+      {
+        "actor": "dogwatch:01a07287-04d2-78b7-9bac-a11e681512ba",
+        "attempt": 1,
+        "data": {
+          "resultOmitted": false
+        },
+        "hash": "f1471c69348dc3d686d1a336658e2082bfced26c92c984ba8b2aae626a6fee5c",
+        "id": "evt_dogwatch_61",
+        "namespace": "dogwatch",
+        "prevHash": "fd22fd2c582c585da84fa9c7580745f74ba698f76b5421ed101d669064b7ab79",
+        "seq": 61,
+        "subjectKey": "probe:01a07287-04d2-78b7-9bac-a11e681512ba:GET:https://agentjames.vercel.app/console?c=tour",
+        "subjectType": "effect",
+        "ts": 1788627851818,
+        "type": "effect.succeeded"
+      },
+      {
+        "actor": "dogwatch:01a07287-04d2-78b7-9bac-a11e681512ba",
+        "attempt": 1,
+        "data": {},
+        "hash": "eb474ee0c7773f90f234f7401d2e051306eea214056d2d0b449cda781c3457b4",
+        "id": "evt_dogwatch_62",
+        "namespace": "dogwatch",
+        "prevHash": "f1471c69348dc3d686d1a336658e2082bfced26c92c984ba8b2aae626a6fee5c",
+        "seq": 62,
+        "subjectKey": "probe:01a07287-04d2-78b7-9bac-a11e681512ba:HEAD:https://joinklik.app/",
+        "subjectType": "effect",
+        "ts": 1788627851819,
+        "type": "effect.claimed"
+      },
+      {
+        "actor": "dogwatch:01a07287-04d2-78b7-9bac-a11e681512ba",
+        "attempt": 1,
+        "data": {
+          "resultOmitted": false
+        },
+        "hash": "caf5a58323286cb47839b52909991a20679808b4f7333815a8df9c60f9742f76",
+        "id": "evt_dogwatch_63",
+        "namespace": "dogwatch",
+        "prevHash": "eb474ee0c7773f90f234f7401d2e051306eea214056d2d0b449cda781c3457b4",
+        "seq": 63,
+        "subjectKey": "probe:01a07287-04d2-78b7-9bac-a11e681512ba:HEAD:https://joinklik.app/",
+        "subjectType": "effect",
+        "ts": 1788627852384,
+        "type": "effect.succeeded"
+      },
+      {
+        "actor": "dogwatch:01a07287-04d2-78b7-9bac-a11e681512ba",
+        "attempt": 1,
+        "data": {},
+        "hash": "d933cc6871f12e6e8e3c9ade8e4ced1ac5790ed552a5137d11b20e9f5e84aaed",
+        "id": "evt_dogwatch_64",
+        "namespace": "dogwatch",
+        "prevHash": "caf5a58323286cb47839b52909991a20679808b4f7333815a8df9c60f9742f76",
+        "seq": 64,
+        "subjectKey": "probe:01a07287-04d2-78b7-9bac-a11e681512ba:HEAD:https://sluice-iota.vercel.app/",
+        "subjectType": "effect",
+        "ts": 1788627852384,
+        "type": "effect.claimed"
+      },
+      {
+        "actor": "dogwatch:01a07287-04d2-78b7-9bac-a11e681512ba",
+        "attempt": 1,
+        "data": {
+          "resultOmitted": false
+        },
+        "hash": "dfd77a5e42d2b258be53a0d14edee73441d7e9a7e872a5449d3a33a3a2c6fa80",
+        "id": "evt_dogwatch_65",
+        "namespace": "dogwatch",
+        "prevHash": "d933cc6871f12e6e8e3c9ade8e4ced1ac5790ed552a5137d11b20e9f5e84aaed",
+        "seq": 65,
+        "subjectKey": "probe:01a07287-04d2-78b7-9bac-a11e681512ba:HEAD:https://sluice-iota.vercel.app/",
+        "subjectType": "effect",
+        "ts": 1788627852649,
+        "type": "effect.succeeded"
+      },
+      {
+        "actor": "dogwatch:01a07287-04d2-78b7-9bac-a11e681512ba",
+        "attempt": 1,
+        "data": {},
+        "hash": "b29fc40077739accfa8db06a4a3a838fe98618e7ea0fe2cca4bf74f7fd99a0fa",
+        "id": "evt_dogwatch_66",
+        "namespace": "dogwatch",
+        "prevHash": "dfd77a5e42d2b258be53a0d14edee73441d7e9a7e872a5449d3a33a3a2c6fa80",
+        "seq": 66,
+        "subjectKey": "probe:01a07287-04d2-78b7-9bac-a11e681512ba:HEAD:https://snapgauge.vercel.app/",
+        "subjectType": "effect",
+        "ts": 1788627852649,
+        "type": "effect.claimed"
+      },
+      {
+        "actor": "dogwatch:01a07287-04d2-78b7-9bac-a11e681512ba",
+        "attempt": 1,
+        "data": {
+          "resultOmitted": false
+        },
+        "hash": "d45040c752d7500cec0ce22b53a762e953d9b1deceb39709dec5473336c8eece",
+        "id": "evt_dogwatch_67",
+        "namespace": "dogwatch",
+        "prevHash": "b29fc40077739accfa8db06a4a3a838fe98618e7ea0fe2cca4bf74f7fd99a0fa",
+        "seq": 67,
+        "subjectKey": "probe:01a07287-04d2-78b7-9bac-a11e681512ba:HEAD:https://snapgauge.vercel.app/",
+        "subjectType": "effect",
+        "ts": 1788627852921,
+        "type": "effect.succeeded"
+      },
+      {
+        "actor": "dogwatch:01a07287-04d2-78b7-9bac-a11e681512ba",
+        "attempt": 1,
+        "data": {},
+        "hash": "39262433252041b8a71a3348e91f2de2b1751c52c3170fc83e577ab80edd769a",
+        "id": "evt_dogwatch_68",
+        "namespace": "dogwatch",
+        "prevHash": "d45040c752d7500cec0ce22b53a762e953d9b1deceb39709dec5473336c8eece",
+        "seq": 68,
+        "subjectKey": "probe:01a07287-04d2-78b7-9bac-a11e681512ba:HEAD:https://chaff-xi.vercel.app/",
+        "subjectType": "effect",
+        "ts": 1788627852921,
+        "type": "effect.claimed"
+      },
+      {
+        "actor": "dogwatch:01a07287-04d2-78b7-9bac-a11e681512ba",
+        "attempt": 1,
+        "data": {
+          "resultOmitted": false
+        },
+        "hash": "8fbc05a010fe5495b9fc2bbbd504153def61d61b13f80cfc2347eb01e643d0ed",
+        "id": "evt_dogwatch_69",
+        "namespace": "dogwatch",
+        "prevHash": "39262433252041b8a71a3348e91f2de2b1751c52c3170fc83e577ab80edd769a",
+        "seq": 69,
+        "subjectKey": "probe:01a07287-04d2-78b7-9bac-a11e681512ba:HEAD:https://chaff-xi.vercel.app/",
+        "subjectType": "effect",
+        "ts": 1788627853254,
+        "type": "effect.succeeded"
+      },
+      {
+        "actor": "dogwatch:01a07287-04d2-78b7-9bac-a11e681512ba",
+        "attempt": 1,
+        "data": {},
+        "hash": "21e70a9a908c3d2cda319f0f6aec33249ede3e05307e6fe8739fe3f0f812c57d",
+        "id": "evt_dogwatch_70",
+        "namespace": "dogwatch",
+        "prevHash": "8fbc05a010fe5495b9fc2bbbd504153def61d61b13f80cfc2347eb01e643d0ed",
+        "seq": 70,
+        "subjectKey": "probe:01a07287-04d2-78b7-9bac-a11e681512ba:HEAD:https://tiltmeter.vercel.app/",
+        "subjectType": "effect",
+        "ts": 1788627853254,
+        "type": "effect.claimed"
+      },
+      {
+        "actor": "dogwatch:01a07287-04d2-78b7-9bac-a11e681512ba",
+        "attempt": 1,
+        "data": {
+          "resultOmitted": false
+        },
+        "hash": "a9336d31f96b9c8682733c4f4fb6dc2999d9e4d5684d3516153505cebe27e5c2",
+        "id": "evt_dogwatch_71",
+        "namespace": "dogwatch",
+        "prevHash": "21e70a9a908c3d2cda319f0f6aec33249ede3e05307e6fe8739fe3f0f812c57d",
+        "seq": 71,
+        "subjectKey": "probe:01a07287-04d2-78b7-9bac-a11e681512ba:HEAD:https://tiltmeter.vercel.app/",
+        "subjectType": "effect",
+        "ts": 1788627853564,
+        "type": "effect.succeeded"
+      },
+      {
+        "actor": "dogwatch:01a07287-04d2-78b7-9bac-a11e681512ba",
+        "attempt": 1,
+        "data": {},
+        "hash": "a2c3b40cc2eb2dd936ae19e78164961e81e055ead2ea66ed538f10e1b6f60292",
+        "id": "evt_dogwatch_72",
+        "namespace": "dogwatch",
+        "prevHash": "a9336d31f96b9c8682733c4f4fb6dc2999d9e4d5684d3516153505cebe27e5c2",
+        "seq": 72,
+        "subjectKey": "probe:01a07287-04d2-78b7-9bac-a11e681512ba:HEAD:https://dogwatch-two.vercel.app/",
+        "subjectType": "effect",
+        "ts": 1788627853565,
+        "type": "effect.claimed"
+      },
+      {
+        "actor": "dogwatch:01a07287-04d2-78b7-9bac-a11e681512ba",
+        "attempt": 1,
+        "data": {
+          "resultOmitted": false
+        },
+        "hash": "5a6474f85119774310b9c16ad642547c587c2985669df4c6acef11560b444de8",
+        "id": "evt_dogwatch_73",
+        "namespace": "dogwatch",
+        "prevHash": "a2c3b40cc2eb2dd936ae19e78164961e81e055ead2ea66ed538f10e1b6f60292",
+        "seq": 73,
+        "subjectKey": "probe:01a07287-04d2-78b7-9bac-a11e681512ba:HEAD:https://dogwatch-two.vercel.app/",
+        "subjectType": "effect",
+        "ts": 1788627854095,
+        "type": "effect.succeeded"
+      },
+      {
+        "actor": "dogwatch:01a07287-04d2-78b7-9bac-a11e681512ba",
+        "attempt": 1,
+        "data": {},
+        "hash": "e4456035419f723b82e6e383d7a1753cc5aa9f8713764209bf6f7ff2add2a6ff",
+        "id": "evt_dogwatch_74",
+        "namespace": "dogwatch",
+        "prevHash": "5a6474f85119774310b9c16ad642547c587c2985669df4c6acef11560b444de8",
+        "seq": 74,
+        "subjectKey": "probe:01a07287-04d2-78b7-9bac-a11e681512ba:HEAD:https://swage-swart.vercel.app/",
+        "subjectType": "effect",
+        "ts": 1788627854095,
+        "type": "effect.claimed"
+      },
+      {
+        "actor": "dogwatch:01a07287-04d2-78b7-9bac-a11e681512ba",
+        "attempt": 1,
+        "data": {
+          "resultOmitted": false
+        },
+        "hash": "3f978a16452c4ba01afe7b57225016cf6c2c330632490779fb7bb7e96aead05e",
+        "id": "evt_dogwatch_75",
+        "namespace": "dogwatch",
+        "prevHash": "e4456035419f723b82e6e383d7a1753cc5aa9f8713764209bf6f7ff2add2a6ff",
+        "seq": 75,
+        "subjectKey": "probe:01a07287-04d2-78b7-9bac-a11e681512ba:HEAD:https://swage-swart.vercel.app/",
+        "subjectType": "effect",
+        "ts": 1788627854399,
+        "type": "effect.succeeded"
+      },
+      {
+        "actor": "dogwatch:01a07287-04d2-78b7-9bac-a11e681512ba",
+        "attempt": 1,
+        "data": {},
+        "hash": "f89570cabc4ebc64fb6df0cde9b73d0c2228945e6cade3f3616dc07b422079e7",
+        "id": "evt_dogwatch_76",
+        "namespace": "dogwatch",
+        "prevHash": "3f978a16452c4ba01afe7b57225016cf6c2c330632490779fb7bb7e96aead05e",
+        "seq": 76,
+        "subjectKey": "probe:01a07287-04d2-78b7-9bac-a11e681512ba:HEAD:https://graticule-seven.vercel.app/",
+        "subjectType": "effect",
+        "ts": 1788627854399,
+        "type": "effect.claimed"
+      },
+      {
+        "actor": "dogwatch:01a07287-04d2-78b7-9bac-a11e681512ba",
+        "attempt": 1,
+        "data": {
+          "resultOmitted": false
+        },
+        "hash": "5ea0cbb61d6c8e5f1e2ce4df883d5abe8545e6dca8381d5dd9fa910505e38c5a",
+        "id": "evt_dogwatch_77",
+        "namespace": "dogwatch",
+        "prevHash": "f89570cabc4ebc64fb6df0cde9b73d0c2228945e6cade3f3616dc07b422079e7",
+        "seq": 77,
+        "subjectKey": "probe:01a07287-04d2-78b7-9bac-a11e681512ba:HEAD:https://graticule-seven.vercel.app/",
+        "subjectType": "effect",
+        "ts": 1788627854834,
+        "type": "effect.succeeded"
+      },
+      {
+        "actor": "dogwatch:01a07287-04d2-78b7-9bac-a11e681512ba",
+        "attempt": 1,
+        "data": {},
+        "hash": "a6acdf876d331445870359bc365b39a1fa2ac5a887371e36e7facb343e7b229f",
+        "id": "evt_dogwatch_78",
+        "namespace": "dogwatch",
+        "prevHash": "5ea0cbb61d6c8e5f1e2ce4df883d5abe8545e6dca8381d5dd9fa910505e38c5a",
+        "seq": 78,
+        "subjectKey": "probe:01a07287-04d2-78b7-9bac-a11e681512ba:HEAD:https://clarifier.vercel.app/",
+        "subjectType": "effect",
+        "ts": 1788627854834,
+        "type": "effect.claimed"
+      },
+      {
+        "actor": "dogwatch:01a07287-04d2-78b7-9bac-a11e681512ba",
+        "attempt": 1,
+        "data": {
+          "resultOmitted": false
+        },
+        "hash": "fb79f201f1d25ab56d7457e48587aca8ca45257618a1dc647d07541d70d4e589",
+        "id": "evt_dogwatch_79",
+        "namespace": "dogwatch",
+        "prevHash": "a6acdf876d331445870359bc365b39a1fa2ac5a887371e36e7facb343e7b229f",
+        "seq": 79,
+        "subjectKey": "probe:01a07287-04d2-78b7-9bac-a11e681512ba:HEAD:https://clarifier.vercel.app/",
+        "subjectType": "effect",
+        "ts": 1788627855082,
+        "type": "effect.succeeded"
+      },
+      {
+        "actor": "dogwatch:01a07287-04d2-78b7-9bac-a11e681512ba",
+        "attempt": 1,
+        "data": {},
+        "hash": "c19c002fe8c035edd9aa53ada426056747c0b893b3972e08c2bcd3f95169afdb",
+        "id": "evt_dogwatch_80",
+        "namespace": "dogwatch",
+        "prevHash": "fb79f201f1d25ab56d7457e48587aca8ca45257618a1dc647d07541d70d4e589",
+        "seq": 80,
+        "subjectKey": "probe:01a07287-04d2-78b7-9bac-a11e681512ba:HEAD:https://shipgauge.vercel.app/",
+        "subjectType": "effect",
+        "ts": 1788627855082,
+        "type": "effect.claimed"
+      },
+      {
+        "actor": "dogwatch:01a07287-04d2-78b7-9bac-a11e681512ba",
+        "attempt": 1,
+        "data": {
+          "resultOmitted": false
+        },
+        "hash": "687ec477496229eb846aeef14b5f26d23054ac48c8517e62f1660345f9c80faa",
+        "id": "evt_dogwatch_81",
+        "namespace": "dogwatch",
+        "prevHash": "c19c002fe8c035edd9aa53ada426056747c0b893b3972e08c2bcd3f95169afdb",
+        "seq": 81,
+        "subjectKey": "probe:01a07287-04d2-78b7-9bac-a11e681512ba:HEAD:https://shipgauge.vercel.app/",
+        "subjectType": "effect",
+        "ts": 1788627855282,
+        "type": "effect.succeeded"
+      },
+      {
+        "actor": "dogwatch:01a07287-04d2-78b7-9bac-a11e681512ba",
+        "attempt": 1,
+        "data": {},
+        "hash": "a8118809af67ecad6b78e2c43ef51d1c7bb19687e53044477aaac4439e92f7d5",
+        "id": "evt_dogwatch_82",
+        "namespace": "dogwatch",
+        "prevHash": "687ec477496229eb846aeef14b5f26d23054ac48c8517e62f1660345f9c80faa",
+        "seq": 82,
+        "subjectKey": "probe:01a07287-04d2-78b7-9bac-a11e681512ba:HEAD:https://galley-khaki.vercel.app/",
+        "subjectType": "effect",
+        "ts": 1788627855283,
+        "type": "effect.claimed"
+      },
+      {
+        "actor": "dogwatch:01a07287-04d2-78b7-9bac-a11e681512ba",
+        "attempt": 1,
+        "data": {
+          "resultOmitted": false
+        },
+        "hash": "c5d7320c980d772c720c2f5ee8331f2c9b8e2e14afed9cd57f730d07920f79c0",
+        "id": "evt_dogwatch_83",
+        "namespace": "dogwatch",
+        "prevHash": "a8118809af67ecad6b78e2c43ef51d1c7bb19687e53044477aaac4439e92f7d5",
+        "seq": 83,
+        "subjectKey": "probe:01a07287-04d2-78b7-9bac-a11e681512ba:HEAD:https://galley-khaki.vercel.app/",
+        "subjectType": "effect",
+        "ts": 1788627855473,
+        "type": "effect.succeeded"
+      },
+      {
+        "actor": "dogwatch:01a07287-04d2-78b7-9bac-a11e681512ba",
+        "attempt": 1,
+        "data": {},
+        "hash": "83b4bae00f7af268f68fb92b6e9bad3ed512648685c6899c9ed9888ae081ce3e",
+        "id": "evt_dogwatch_84",
+        "namespace": "dogwatch",
+        "prevHash": "c5d7320c980d772c720c2f5ee8331f2c9b8e2e14afed9cd57f730d07920f79c0",
+        "seq": 84,
+        "subjectKey": "probe:01a07287-04d2-78b7-9bac-a11e681512ba:HEAD:https://provenote.vercel.app/",
+        "subjectType": "effect",
+        "ts": 1788627855473,
+        "type": "effect.claimed"
+      },
+      {
+        "actor": "dogwatch:01a07287-04d2-78b7-9bac-a11e681512ba",
+        "attempt": 1,
+        "data": {
+          "resultOmitted": false
+        },
+        "hash": "7f42df97c1cd4404c6f9be7b6282209f00e35976d65a8f70afb9bb6dfcceb34f",
+        "id": "evt_dogwatch_85",
+        "namespace": "dogwatch",
+        "prevHash": "83b4bae00f7af268f68fb92b6e9bad3ed512648685c6899c9ed9888ae081ce3e",
+        "seq": 85,
+        "subjectKey": "probe:01a07287-04d2-78b7-9bac-a11e681512ba:HEAD:https://provenote.vercel.app/",
+        "subjectType": "effect",
+        "ts": 1788627855712,
+        "type": "effect.succeeded"
+      },
+      {
+        "actor": "dogwatch:01a07287-04d2-78b7-9bac-a11e681512ba",
+        "attempt": 1,
+        "data": {},
+        "hash": "538e81204fff8607cbc66e904a29992e5671b1bd1abb22926f10190185d409f2",
+        "id": "evt_dogwatch_86",
+        "namespace": "dogwatch",
+        "prevHash": "7f42df97c1cd4404c6f9be7b6282209f00e35976d65a8f70afb9bb6dfcceb34f",
+        "seq": 86,
+        "subjectKey": "probe:01a07287-04d2-78b7-9bac-a11e681512ba:HEAD:https://assay-flax.vercel.app/",
+        "subjectType": "effect",
+        "ts": 1788627855712,
+        "type": "effect.claimed"
+      },
+      {
+        "actor": "dogwatch:01a07287-04d2-78b7-9bac-a11e681512ba",
+        "attempt": 1,
+        "data": {
+          "resultOmitted": false
+        },
+        "hash": "a55ba1c43768809f72edb5062873cedc30654bc80ab7a0f9cb1b9a7d95abe534",
+        "id": "evt_dogwatch_87",
+        "namespace": "dogwatch",
+        "prevHash": "538e81204fff8607cbc66e904a29992e5671b1bd1abb22926f10190185d409f2",
+        "seq": 87,
+        "subjectKey": "probe:01a07287-04d2-78b7-9bac-a11e681512ba:HEAD:https://assay-flax.vercel.app/",
+        "subjectType": "effect",
+        "ts": 1788627855856,
+        "type": "effect.succeeded"
+      },
+      {
+        "actor": "dogwatch:01a07287-04d2-78b7-9bac-a11e681512ba",
+        "attempt": 1,
+        "data": {},
+        "hash": "3f00068f42054457d56f65bac6b17037faacfcacde7bcdf3049adc85405f50bb",
+        "id": "evt_dogwatch_88",
+        "namespace": "dogwatch",
+        "prevHash": "a55ba1c43768809f72edb5062873cedc30654bc80ab7a0f9cb1b9a7d95abe534",
+        "seq": 88,
+        "subjectKey": "probe:01a07287-04d2-78b7-9bac-a11e681512ba:HEAD:https://halo-halo-coral.vercel.app/",
+        "subjectType": "effect",
+        "ts": 1788627855856,
+        "type": "effect.claimed"
+      },
+      {
+        "actor": "dogwatch:01a07287-04d2-78b7-9bac-a11e681512ba",
+        "attempt": 1,
+        "data": {
+          "resultOmitted": false
+        },
+        "hash": "b2ac6d13fcd58dc995cc39b0697d29d0205efdd252ddbf649b4aee9c7e42cc73",
+        "id": "evt_dogwatch_89",
+        "namespace": "dogwatch",
+        "prevHash": "3f00068f42054457d56f65bac6b17037faacfcacde7bcdf3049adc85405f50bb",
+        "seq": 89,
+        "subjectKey": "probe:01a07287-04d2-78b7-9bac-a11e681512ba:HEAD:https://halo-halo-coral.vercel.app/",
+        "subjectType": "effect",
+        "ts": 1788627856101,
+        "type": "effect.succeeded"
+      },
+      {
+        "actor": "dogwatch:01a07287-04d2-78b7-9bac-a11e681512ba",
+        "attempt": 1,
+        "data": {},
+        "hash": "95d569a2271091cbc59fc6bb9604532eb694eb9c574623ae5f541d82b08e36e8",
+        "id": "evt_dogwatch_90",
+        "namespace": "dogwatch",
+        "prevHash": "b2ac6d13fcd58dc995cc39b0697d29d0205efdd252ddbf649b4aee9c7e42cc73",
+        "seq": 90,
+        "subjectKey": "probe:01a07287-04d2-78b7-9bac-a11e681512ba:HEAD:https://pitman-eight.vercel.app/",
+        "subjectType": "effect",
+        "ts": 1788627856101,
+        "type": "effect.claimed"
+      },
+      {
+        "actor": "dogwatch:01a07287-04d2-78b7-9bac-a11e681512ba",
+        "attempt": 1,
+        "data": {
+          "resultOmitted": false
+        },
+        "hash": "ce7d04da4bcede4e975fb4899e2148e85cd81f3ef7299075bf29654b460dd652",
+        "id": "evt_dogwatch_91",
+        "namespace": "dogwatch",
+        "prevHash": "95d569a2271091cbc59fc6bb9604532eb694eb9c574623ae5f541d82b08e36e8",
+        "seq": 91,
+        "subjectKey": "probe:01a07287-04d2-78b7-9bac-a11e681512ba:HEAD:https://pitman-eight.vercel.app/",
+        "subjectType": "effect",
+        "ts": 1788627856235,
+        "type": "effect.succeeded"
+      },
+      {
+        "actor": "dogwatch:01a07287-04d2-78b7-9bac-a11e681512ba",
+        "attempt": 1,
+        "data": {},
+        "hash": "63c55cbdf37f1726da8bd2a5a3971b6a461370b30ca3689bcd8cc216c27fcc79",
+        "id": "evt_dogwatch_92",
+        "namespace": "dogwatch",
+        "prevHash": "ce7d04da4bcede4e975fb4899e2148e85cd81f3ef7299075bf29654b460dd652",
+        "seq": 92,
+        "subjectKey": "probe:01a07287-04d2-78b7-9bac-a11e681512ba:HEAD:https://clubscope-insight-engine.vercel.app/",
+        "subjectType": "effect",
+        "ts": 1788627856235,
+        "type": "effect.claimed"
+      },
+      {
+        "actor": "dogwatch:01a07287-04d2-78b7-9bac-a11e681512ba",
+        "attempt": 1,
+        "data": {
+          "resultOmitted": false
+        },
+        "hash": "aa20ef77f87675e93ef5d46723be438fabbd03ca115f2dd6350263f2f85d6da9",
+        "id": "evt_dogwatch_93",
+        "namespace": "dogwatch",
+        "prevHash": "63c55cbdf37f1726da8bd2a5a3971b6a461370b30ca3689bcd8cc216c27fcc79",
+        "seq": 93,
+        "subjectKey": "probe:01a07287-04d2-78b7-9bac-a11e681512ba:HEAD:https://clubscope-insight-engine.vercel.app/",
+        "subjectType": "effect",
+        "ts": 1788627856569,
+        "type": "effect.succeeded"
+      },
+      {
+        "actor": "dogwatch:01a07287-04d2-78b7-9bac-a11e681512ba",
+        "attempt": 1,
+        "data": {},
+        "hash": "04a6f509bde902fc8ad06f85edeeea527905a3e75a451290e371f8ae4ea231eb",
+        "id": "evt_dogwatch_94",
+        "namespace": "dogwatch",
+        "prevHash": "aa20ef77f87675e93ef5d46723be438fabbd03ca115f2dd6350263f2f85d6da9",
+        "seq": 94,
+        "subjectKey": "probe:01a07287-04d2-78b7-9bac-a11e681512ba:HEAD:https://tayoquote.vercel.app/",
+        "subjectType": "effect",
+        "ts": 1788627856569,
+        "type": "effect.claimed"
+      },
+      {
+        "actor": "dogwatch:01a07287-04d2-78b7-9bac-a11e681512ba",
+        "attempt": 1,
+        "data": {
+          "resultOmitted": false
+        },
+        "hash": "3917db24d72adc59e4bd23a5c2c51aca474fcde0b7eb30b5944b9e498bc5f933",
+        "id": "evt_dogwatch_95",
+        "namespace": "dogwatch",
+        "prevHash": "04a6f509bde902fc8ad06f85edeeea527905a3e75a451290e371f8ae4ea231eb",
+        "seq": 95,
+        "subjectKey": "probe:01a07287-04d2-78b7-9bac-a11e681512ba:HEAD:https://tayoquote.vercel.app/",
+        "subjectType": "effect",
+        "ts": 1788627857028,
+        "type": "effect.succeeded"
+      },
+      {
+        "actor": "dogwatch:01a07287-04d2-78b7-9bac-a11e681512ba",
+        "attempt": 1,
+        "data": {},
+        "hash": "9bec89f5bae63ba764274e5e66d05a7c4e2ce766aebc39b252981d623560a439",
+        "id": "evt_dogwatch_96",
+        "namespace": "dogwatch",
+        "prevHash": "3917db24d72adc59e4bd23a5c2c51aca474fcde0b7eb30b5944b9e498bc5f933",
+        "seq": 96,
+        "subjectKey": "probe:01a07287-04d2-78b7-9bac-a11e681512ba:HEAD:https://cainesworld.vercel.app/",
+        "subjectType": "effect",
+        "ts": 1788627857028,
+        "type": "effect.claimed"
+      },
+      {
+        "actor": "dogwatch:01a07287-04d2-78b7-9bac-a11e681512ba",
+        "attempt": 1,
+        "data": {
+          "resultOmitted": false
+        },
+        "hash": "6828cf7baceb8d321c50f700d150044a35644609e633a570e255f55b368062cd",
+        "id": "evt_dogwatch_97",
+        "namespace": "dogwatch",
+        "prevHash": "9bec89f5bae63ba764274e5e66d05a7c4e2ce766aebc39b252981d623560a439",
+        "seq": 97,
+        "subjectKey": "probe:01a07287-04d2-78b7-9bac-a11e681512ba:HEAD:https://cainesworld.vercel.app/",
+        "subjectType": "effect",
+        "ts": 1788627857386,
+        "type": "effect.succeeded"
+      },
+      {
+        "actor": "dogwatch:01a07287-04d2-78b7-9bac-a11e681512ba",
+        "attempt": 1,
+        "data": {},
+        "hash": "17a5ff512e57e33acac4907edeeef4855b6685a1a75b5d136f574b58b45e3324",
+        "id": "evt_dogwatch_98",
+        "namespace": "dogwatch",
+        "prevHash": "6828cf7baceb8d321c50f700d150044a35644609e633a570e255f55b368062cd",
+        "seq": 98,
+        "subjectKey": "probe:01a07287-04d2-78b7-9bac-a11e681512ba:HEAD:https://www.ebizolution.com/",
+        "subjectType": "effect",
+        "ts": 1788627857386,
+        "type": "effect.claimed"
+      },
+      {
+        "actor": "dogwatch:01a07287-04d2-78b7-9bac-a11e681512ba",
+        "attempt": 1,
+        "data": {
+          "resultOmitted": false
+        },
+        "hash": "95ad16c082d828467379628c8e9eb82c8cae5b752d197e74dae53e2fdea9b20f",
+        "id": "evt_dogwatch_99",
+        "namespace": "dogwatch",
+        "prevHash": "17a5ff512e57e33acac4907edeeef4855b6685a1a75b5d136f574b58b45e3324",
+        "seq": 99,
+        "subjectKey": "probe:01a07287-04d2-78b7-9bac-a11e681512ba:HEAD:https://www.ebizolution.com/",
+        "subjectType": "effect",
+        "ts": 1788627857681,
+        "type": "effect.succeeded"
+      },
+      {
+        "actor": "dogwatch:01a07287-04d2-78b7-9bac-a11e681512ba",
+        "attempt": 1,
+        "data": {},
+        "hash": "ef485a1b0d9334b3daea149ecc2edfe4282ba4f6023183a26516df7a5574e9d8",
+        "id": "evt_dogwatch_100",
+        "namespace": "dogwatch",
+        "prevHash": "95ad16c082d828467379628c8e9eb82c8cae5b752d197e74dae53e2fdea9b20f",
+        "seq": 100,
+        "subjectKey": "probe:01a07287-04d2-78b7-9bac-a11e681512ba:GET:https://www.ebizolution.com/",
+        "subjectType": "effect",
+        "ts": 1788627857681,
+        "type": "effect.claimed"
+      },
+      {
+        "actor": "dogwatch:01a07287-04d2-78b7-9bac-a11e681512ba",
+        "attempt": 1,
+        "data": {
+          "resultOmitted": false
+        },
+        "hash": "17bda26b1a6552fe4645e1cdda7b0eab633b92155bf5fe304db09d64be8c04c7",
+        "id": "evt_dogwatch_101",
+        "namespace": "dogwatch",
+        "prevHash": "ef485a1b0d9334b3daea149ecc2edfe4282ba4f6023183a26516df7a5574e9d8",
+        "seq": 101,
+        "subjectKey": "probe:01a07287-04d2-78b7-9bac-a11e681512ba:GET:https://www.ebizolution.com/",
+        "subjectType": "effect",
+        "ts": 1788627857916,
+        "type": "effect.succeeded"
+      },
+      {
+        "actor": "dogwatch:01a07287-04d2-78b7-9bac-a11e681512ba",
+        "attempt": 1,
+        "data": {},
+        "hash": "d7d6b9e2f38824fea46756032f27ca091a953d5675714aa2a1f75015e2b5c39e",
+        "id": "evt_dogwatch_102",
+        "namespace": "dogwatch",
+        "prevHash": "17bda26b1a6552fe4645e1cdda7b0eab633b92155bf5fe304db09d64be8c04c7",
+        "seq": 102,
+        "subjectKey": "probe:01a07287-04d2-78b7-9bac-a11e681512ba:HEAD:https://www.linkedin.com/in/james-lorenz-santos-720776251/",
+        "subjectType": "effect",
+        "ts": 1788627857917,
+        "type": "effect.claimed"
+      },
+      {
+        "actor": "dogwatch:01a07287-04d2-78b7-9bac-a11e681512ba",
+        "attempt": 1,
+        "data": {
+          "resultOmitted": false
+        },
+        "hash": "0b06bb22757ab376e32c443b08aaec2c41d320a92e619fd1be026c283f4d263a",
+        "id": "evt_dogwatch_103",
+        "namespace": "dogwatch",
+        "prevHash": "d7d6b9e2f38824fea46756032f27ca091a953d5675714aa2a1f75015e2b5c39e",
+        "seq": 103,
+        "subjectKey": "probe:01a07287-04d2-78b7-9bac-a11e681512ba:HEAD:https://www.linkedin.com/in/james-lorenz-santos-720776251/",
+        "subjectType": "effect",
+        "ts": 1788627857972,
+        "type": "effect.succeeded"
+      },
+      {
+        "actor": "dogwatch:01a07287-04d2-78b7-9bac-a11e681512ba",
+        "attempt": 1,
+        "data": {},
+        "hash": "fdccb43fc826fc17a7885aa5f4ab2bba68eef2e9b8c5d676c4fe651972d4ca9d",
+        "id": "evt_dogwatch_104",
+        "namespace": "dogwatch",
+        "prevHash": "0b06bb22757ab376e32c443b08aaec2c41d320a92e619fd1be026c283f4d263a",
+        "seq": 104,
+        "subjectKey": "probe:01a07287-04d2-78b7-9bac-a11e681512ba:GET:https://www.linkedin.com/in/james-lorenz-santos-720776251/",
+        "subjectType": "effect",
+        "ts": 1788627857972,
+        "type": "effect.claimed"
+      },
+      {
+        "actor": "dogwatch:01a07287-04d2-78b7-9bac-a11e681512ba",
+        "attempt": 1,
+        "data": {
+          "resultOmitted": false
+        },
+        "hash": "7d85e6effc236486ad5c635d299c69310650eb2d2220b56bad59aade2ec382f2",
+        "id": "evt_dogwatch_105",
+        "namespace": "dogwatch",
+        "prevHash": "fdccb43fc826fc17a7885aa5f4ab2bba68eef2e9b8c5d676c4fe651972d4ca9d",
+        "seq": 105,
+        "subjectKey": "probe:01a07287-04d2-78b7-9bac-a11e681512ba:GET:https://www.linkedin.com/in/james-lorenz-santos-720776251/",
+        "subjectType": "effect",
+        "ts": 1788627858041,
+        "type": "effect.succeeded"
+      },
+      {
+        "actor": "dogwatch:01a07287-04d2-78b7-9bac-a11e681512ba",
+        "attempt": 1,
+        "data": {},
+        "hash": "3f79c87048f22be44b2ff68e81dee5f42172d07f517eca9f1bc2e6b37483e248",
+        "id": "evt_dogwatch_106",
+        "namespace": "dogwatch",
+        "prevHash": "7d85e6effc236486ad5c635d299c69310650eb2d2220b56bad59aade2ec382f2",
+        "seq": 106,
+        "subjectKey": "probe:01a07287-04d2-78b7-9bac-a11e681512ba:HEAD:https://github.com/jamessuuu",
+        "subjectType": "effect",
+        "ts": 1788627858042,
+        "type": "effect.claimed"
+      },
+      {
+        "actor": "dogwatch:01a07287-04d2-78b7-9bac-a11e681512ba",
+        "attempt": 1,
+        "data": {
+          "resultOmitted": false
+        },
+        "hash": "ea42763d34c9983274b5f632a0f167abf9460528db5fb8e72f07ddaaa67a2ee9",
+        "id": "evt_dogwatch_107",
+        "namespace": "dogwatch",
+        "prevHash": "3f79c87048f22be44b2ff68e81dee5f42172d07f517eca9f1bc2e6b37483e248",
+        "seq": 107,
+        "subjectKey": "probe:01a07287-04d2-78b7-9bac-a11e681512ba:HEAD:https://github.com/jamessuuu",
+        "subjectType": "effect",
+        "ts": 1788627858295,
+        "type": "effect.succeeded"
+      },
+      {
+        "actor": "dogwatch:01a07287-04d2-78b7-9bac-a11e681512ba",
+        "attempt": 1,
+        "data": {},
+        "hash": "523986b2d2df84c962a512157faf16cfe62019ba5491fff596fc7fb9757a1dd3",
+        "id": "evt_dogwatch_108",
+        "namespace": "dogwatch",
+        "prevHash": "ea42763d34c9983274b5f632a0f167abf9460528db5fb8e72f07ddaaa67a2ee9",
+        "seq": 108,
+        "subjectKey": "probe:01a07287-04d2-78b7-9bac-a11e681512ba:HEAD:https://ph.jobstreet.com/profiles/jameslorenz-santos-SXdpKyGqdK",
+        "subjectType": "effect",
+        "ts": 1788627858295,
+        "type": "effect.claimed"
+      },
+      {
+        "actor": "dogwatch:01a07287-04d2-78b7-9bac-a11e681512ba",
+        "attempt": 1,
+        "data": {
+          "resultOmitted": false
+        },
+        "hash": "90b50b4624f6e820d2a43722290d31b1e9f4e4f477fd81a081fa2998cfbe8367",
+        "id": "evt_dogwatch_109",
+        "namespace": "dogwatch",
+        "prevHash": "523986b2d2df84c962a512157faf16cfe62019ba5491fff596fc7fb9757a1dd3",
+        "seq": 109,
+        "subjectKey": "probe:01a07287-04d2-78b7-9bac-a11e681512ba:HEAD:https://ph.jobstreet.com/profiles/jameslorenz-santos-SXdpKyGqdK",
+        "subjectType": "effect",
+        "ts": 1788627859026,
+        "type": "effect.succeeded"
+      },
+      {
+        "actor": "dogwatch:01a07287-04d2-78b7-9bac-a11e681512ba",
+        "attempt": 1,
+        "data": {},
+        "hash": "9289556699864c146ce1b3ba009c41550fdbbab0d7595977f24c1ab0ac86d9e9",
+        "id": "evt_dogwatch_110",
+        "namespace": "dogwatch",
+        "prevHash": "90b50b4624f6e820d2a43722290d31b1e9f4e4f477fd81a081fa2998cfbe8367",
+        "seq": 110,
+        "subjectKey": "probe:01a07287-04d2-78b7-9bac-a11e681512ba:HEAD:https://github.com/jamessuuu/snapgauge",
+        "subjectType": "effect",
+        "ts": 1788627859026,
+        "type": "effect.claimed"
+      },
+      {
+        "actor": "dogwatch:01a07287-04d2-78b7-9bac-a11e681512ba",
+        "attempt": 1,
+        "data": {
+          "resultOmitted": false
+        },
+        "hash": "52cb78d5a044f4c3c5ffab5a1441dc46122b88c7aaca5117f1fd99d14f1d5538",
+        "id": "evt_dogwatch_111",
+        "namespace": "dogwatch",
+        "prevHash": "9289556699864c146ce1b3ba009c41550fdbbab0d7595977f24c1ab0ac86d9e9",
+        "seq": 111,
+        "subjectKey": "probe:01a07287-04d2-78b7-9bac-a11e681512ba:HEAD:https://github.com/jamessuuu/snapgauge",
+        "subjectType": "effect",
+        "ts": 1788627859483,
+        "type": "effect.succeeded"
+      },
+      {
+        "actor": "dogwatch:01a07287-04d2-78b7-9bac-a11e681512ba",
+        "attempt": 1,
+        "data": {},
+        "hash": "a031a45f093bf1fdf5b1df574e7084856ffbc826ec174467451099806c734d23",
+        "id": "evt_dogwatch_112",
+        "namespace": "dogwatch",
+        "prevHash": "52cb78d5a044f4c3c5ffab5a1441dc46122b88c7aaca5117f1fd99d14f1d5538",
+        "seq": 112,
+        "subjectKey": "probe:01a07287-04d2-78b7-9bac-a11e681512ba:HEAD:https://github.com/jamessuuu/chaff",
+        "subjectType": "effect",
+        "ts": 1788627859484,
+        "type": "effect.claimed"
+      },
+      {
+        "actor": "dogwatch:01a07287-04d2-78b7-9bac-a11e681512ba",
+        "attempt": 1,
+        "data": {
+          "resultOmitted": false
+        },
+        "hash": "4ef6038a03e492f55239859776de1bc6e4f6b1462a003933e6c6dfa0c5fb5e8f",
+        "id": "evt_dogwatch_113",
+        "namespace": "dogwatch",
+        "prevHash": "a031a45f093bf1fdf5b1df574e7084856ffbc826ec174467451099806c734d23",
+        "seq": 113,
+        "subjectKey": "probe:01a07287-04d2-78b7-9bac-a11e681512ba:HEAD:https://github.com/jamessuuu/chaff",
+        "subjectType": "effect",
+        "ts": 1788627859966,
+        "type": "effect.succeeded"
+      },
+      {
+        "actor": "dogwatch:01a07287-04d2-78b7-9bac-a11e681512ba",
+        "attempt": 1,
+        "data": {},
+        "hash": "a0966289b3850dd8ec2570f2d8bc43971000e236829630f9bbbc2eab05bc0b1d",
+        "id": "evt_dogwatch_114",
+        "namespace": "dogwatch",
+        "prevHash": "4ef6038a03e492f55239859776de1bc6e4f6b1462a003933e6c6dfa0c5fb5e8f",
+        "seq": 114,
+        "subjectKey": "probe:01a07287-04d2-78b7-9bac-a11e681512ba:HEAD:https://github.com/jamessuuu/provenote",
+        "subjectType": "effect",
+        "ts": 1788627859966,
+        "type": "effect.claimed"
+      },
+      {
+        "actor": "dogwatch:01a07287-04d2-78b7-9bac-a11e681512ba",
+        "attempt": 1,
+        "data": {
+          "resultOmitted": false
+        },
+        "hash": "f18defcedc69683108d6616009960ab6585ca370e3113b59116ee22f43f2fa2a",
+        "id": "evt_dogwatch_115",
+        "namespace": "dogwatch",
+        "prevHash": "a0966289b3850dd8ec2570f2d8bc43971000e236829630f9bbbc2eab05bc0b1d",
+        "seq": 115,
+        "subjectKey": "probe:01a07287-04d2-78b7-9bac-a11e681512ba:HEAD:https://github.com/jamessuuu/provenote",
+        "subjectType": "effect",
+        "ts": 1788627860523,
+        "type": "effect.succeeded"
+      },
+      {
+        "actor": "dogwatch:01a07287-04d2-78b7-9bac-a11e681512ba",
+        "attempt": 1,
+        "data": {},
+        "hash": "490dd9d54d6a8c91489ac4a7f30a0da557fdd656e5437f5c38c33c4e795971e6",
+        "id": "evt_dogwatch_116",
+        "namespace": "dogwatch",
+        "prevHash": "f18defcedc69683108d6616009960ab6585ca370e3113b59116ee22f43f2fa2a",
+        "seq": 116,
+        "subjectKey": "probe:01a07287-04d2-78b7-9bac-a11e681512ba:HEAD:https://github.com/jamessuuu/claude-code-boundary-guard",
+        "subjectType": "effect",
+        "ts": 1788627860523,
+        "type": "effect.claimed"
+      },
+      {
+        "actor": "dogwatch:01a07287-04d2-78b7-9bac-a11e681512ba",
+        "attempt": 1,
+        "data": {
+          "resultOmitted": false
+        },
+        "hash": "c9a3c0d65dce741cd8426d3780a4ce75a8cc8fd1329895e0bacfe419c106acc7",
+        "id": "evt_dogwatch_117",
+        "namespace": "dogwatch",
+        "prevHash": "490dd9d54d6a8c91489ac4a7f30a0da557fdd656e5437f5c38c33c4e795971e6",
+        "seq": 117,
+        "subjectKey": "probe:01a07287-04d2-78b7-9bac-a11e681512ba:HEAD:https://github.com/jamessuuu/claude-code-boundary-guard",
+        "subjectType": "effect",
+        "ts": 1788627861029,
+        "type": "effect.succeeded"
+      },
+      {
+        "actor": "dogwatch:01a07287-04d2-78b7-9bac-a11e681512ba",
+        "attempt": 1,
+        "data": {},
+        "hash": "9ca0cbb5fdf2b8ebec649f80a0de14920ff5a733879840d96c818cd07d251f19",
+        "id": "evt_dogwatch_118",
+        "namespace": "dogwatch",
+        "prevHash": "c9a3c0d65dce741cd8426d3780a4ce75a8cc8fd1329895e0bacfe419c106acc7",
+        "seq": 118,
+        "subjectKey": "probe:01a07287-04d2-78b7-9bac-a11e681512ba:HEAD:https://github.com/jamessuuu/sluice",
+        "subjectType": "effect",
+        "ts": 1788627861029,
+        "type": "effect.claimed"
+      },
+      {
+        "actor": "dogwatch:01a07287-04d2-78b7-9bac-a11e681512ba",
+        "attempt": 1,
+        "data": {
+          "resultOmitted": false
+        },
+        "hash": "641a691911986159c21af4c32483b90d06c85854523fc0c2a4b24009f12cdc9f",
+        "id": "evt_dogwatch_119",
+        "namespace": "dogwatch",
+        "prevHash": "9ca0cbb5fdf2b8ebec649f80a0de14920ff5a733879840d96c818cd07d251f19",
+        "seq": 119,
+        "subjectKey": "probe:01a07287-04d2-78b7-9bac-a11e681512ba:HEAD:https://github.com/jamessuuu/sluice",
+        "subjectType": "effect",
+        "ts": 1788627861539,
+        "type": "effect.succeeded"
+      },
+      {
+        "actor": "dogwatch:01a07287-04d2-78b7-9bac-a11e681512ba",
+        "attempt": 1,
+        "data": {},
+        "hash": "1b65250fbf5f91d5593a30e5ded5913553ac985e9f700ac921e60ebc633f760f",
+        "id": "evt_dogwatch_120",
+        "namespace": "dogwatch",
+        "prevHash": "641a691911986159c21af4c32483b90d06c85854523fc0c2a4b24009f12cdc9f",
+        "seq": 120,
+        "subjectKey": "probe:01a07287-04d2-78b7-9bac-a11e681512ba:HEAD:https://github.com/jamessuuu/shipgauge",
+        "subjectType": "effect",
+        "ts": 1788627861539,
+        "type": "effect.claimed"
+      },
+      {
+        "actor": "dogwatch:01a07287-04d2-78b7-9bac-a11e681512ba",
+        "attempt": 1,
+        "data": {
+          "resultOmitted": false
+        },
+        "hash": "e05b1d7906f0dd753b6a2cfa18b850db1bb2049590c6a883ef374527b396935e",
+        "id": "evt_dogwatch_121",
+        "namespace": "dogwatch",
+        "prevHash": "1b65250fbf5f91d5593a30e5ded5913553ac985e9f700ac921e60ebc633f760f",
+        "seq": 121,
+        "subjectKey": "probe:01a07287-04d2-78b7-9bac-a11e681512ba:HEAD:https://github.com/jamessuuu/shipgauge",
+        "subjectType": "effect",
+        "ts": 1788627862036,
+        "type": "effect.succeeded"
+      },
+      {
+        "actor": "dogwatch:01a07287-04d2-78b7-9bac-a11e681512ba",
+        "attempt": 1,
+        "data": {},
+        "hash": "ec0389e13661fee4f4571b0262ea2ae2f080f30f47dec6004665af53c188bdec",
+        "id": "evt_dogwatch_122",
+        "namespace": "dogwatch",
+        "prevHash": "e05b1d7906f0dd753b6a2cfa18b850db1bb2049590c6a883ef374527b396935e",
+        "seq": 122,
+        "subjectKey": "probe:01a07287-04d2-78b7-9bac-a11e681512ba:HEAD:https://github.com/jamessuuu/graticule",
+        "subjectType": "effect",
+        "ts": 1788627862036,
+        "type": "effect.claimed"
+      },
+      {
+        "actor": "dogwatch:01a07287-04d2-78b7-9bac-a11e681512ba",
+        "attempt": 1,
+        "data": {
+          "resultOmitted": false
+        },
+        "hash": "2d06baa84113ff5945f222c219b9af5f3657f8b64b38c6a3f0f076b01d80e1ea",
+        "id": "evt_dogwatch_123",
+        "namespace": "dogwatch",
+        "prevHash": "ec0389e13661fee4f4571b0262ea2ae2f080f30f47dec6004665af53c188bdec",
+        "seq": 123,
+        "subjectKey": "probe:01a07287-04d2-78b7-9bac-a11e681512ba:HEAD:https://github.com/jamessuuu/graticule",
+        "subjectType": "effect",
+        "ts": 1788627862457,
+        "type": "effect.succeeded"
+      },
+      {
+        "actor": "dogwatch:01a07287-04d2-78b7-9bac-a11e681512ba",
+        "attempt": 1,
+        "data": {},
+        "hash": "6d14fdf0f6965f05b51958d75bc4e071a7e54fedd7f1de5cd5da0384fc8dd138",
+        "id": "evt_dogwatch_124",
+        "namespace": "dogwatch",
+        "prevHash": "2d06baa84113ff5945f222c219b9af5f3657f8b64b38c6a3f0f076b01d80e1ea",
+        "seq": 124,
+        "subjectKey": "probe:01a07287-04d2-78b7-9bac-a11e681512ba:HEAD:https://github.com/jamessuuu/clarifier",
+        "subjectType": "effect",
+        "ts": 1788627862457,
+        "type": "effect.claimed"
+      },
+      {
+        "actor": "dogwatch:01a07287-04d2-78b7-9bac-a11e681512ba",
+        "attempt": 1,
+        "data": {
+          "resultOmitted": false
+        },
+        "hash": "c2b4ca3f7e2ce61a1e2abf90e562c1172cdf088a0d0909877b7f1d00bcffbfd6",
+        "id": "evt_dogwatch_125",
+        "namespace": "dogwatch",
+        "prevHash": "6d14fdf0f6965f05b51958d75bc4e071a7e54fedd7f1de5cd5da0384fc8dd138",
+        "seq": 125,
+        "subjectKey": "probe:01a07287-04d2-78b7-9bac-a11e681512ba:HEAD:https://github.com/jamessuuu/clarifier",
+        "subjectType": "effect",
+        "ts": 1788627862888,
+        "type": "effect.succeeded"
+      },
+      {
+        "actor": "dogwatch:01a07287-04d2-78b7-9bac-a11e681512ba",
+        "attempt": 1,
+        "data": {},
+        "hash": "9501d6fb66f29b514779aa3dfbb508d88ff3c8886f4cf19c2b0268652b7ae915",
+        "id": "evt_dogwatch_126",
+        "namespace": "dogwatch",
+        "prevHash": "c2b4ca3f7e2ce61a1e2abf90e562c1172cdf088a0d0909877b7f1d00bcffbfd6",
+        "seq": 126,
+        "subjectKey": "probe:01a07287-04d2-78b7-9bac-a11e681512ba:HEAD:https://github.com/jamessuuu/pitman",
+        "subjectType": "effect",
+        "ts": 1788627862888,
+        "type": "effect.claimed"
+      },
+      {
+        "actor": "dogwatch:01a07287-04d2-78b7-9bac-a11e681512ba",
+        "attempt": 1,
+        "data": {
+          "resultOmitted": false
+        },
+        "hash": "b6755de68dec88cb413d7ae3c0512f1c190b63c7056368011565cdb2669ac2da",
+        "id": "evt_dogwatch_127",
+        "namespace": "dogwatch",
+        "prevHash": "9501d6fb66f29b514779aa3dfbb508d88ff3c8886f4cf19c2b0268652b7ae915",
+        "seq": 127,
+        "subjectKey": "probe:01a07287-04d2-78b7-9bac-a11e681512ba:HEAD:https://github.com/jamessuuu/pitman",
+        "subjectType": "effect",
+        "ts": 1788627863342,
+        "type": "effect.succeeded"
+      },
+      {
+        "actor": "dogwatch:01a07287-04d2-78b7-9bac-a11e681512ba",
+        "attempt": 1,
+        "data": {},
+        "hash": "e060cc728b6ae92cc99e16111f4f7ae76a7c9e7bd6e4be165a44fcda3df4bffd",
+        "id": "evt_dogwatch_128",
+        "namespace": "dogwatch",
+        "prevHash": "b6755de68dec88cb413d7ae3c0512f1c190b63c7056368011565cdb2669ac2da",
+        "seq": 128,
+        "subjectKey": "probe:01a07287-04d2-78b7-9bac-a11e681512ba:HEAD:https://github.com/jamessuuu/tiltmeter",
+        "subjectType": "effect",
+        "ts": 1788627863343,
+        "type": "effect.claimed"
+      },
+      {
+        "actor": "dogwatch:01a07287-04d2-78b7-9bac-a11e681512ba",
+        "attempt": 1,
+        "data": {
+          "resultOmitted": false
+        },
+        "hash": "6970416cc9fd9d693ce63908583c544f69f03485cffca7a421a7b0d03e5f5e6a",
+        "id": "evt_dogwatch_129",
+        "namespace": "dogwatch",
+        "prevHash": "e060cc728b6ae92cc99e16111f4f7ae76a7c9e7bd6e4be165a44fcda3df4bffd",
+        "seq": 129,
+        "subjectKey": "probe:01a07287-04d2-78b7-9bac-a11e681512ba:HEAD:https://github.com/jamessuuu/tiltmeter",
+        "subjectType": "effect",
+        "ts": 1788627863795,
+        "type": "effect.succeeded"
+      },
+      {
+        "actor": "dogwatch:01a07287-04d2-78b7-9bac-a11e681512ba",
+        "attempt": 1,
+        "data": {},
+        "hash": "73a0eabce0872773f3c2e2364bbc98e5ff2a49f7dca6e02c5971569b58b75441",
+        "id": "evt_dogwatch_130",
+        "namespace": "dogwatch",
+        "prevHash": "6970416cc9fd9d693ce63908583c544f69f03485cffca7a421a7b0d03e5f5e6a",
+        "seq": 130,
+        "subjectKey": "probe:01a07287-04d2-78b7-9bac-a11e681512ba:HEAD:https://github.com/jamessuuu/dogwatch",
+        "subjectType": "effect",
+        "ts": 1788627863795,
+        "type": "effect.claimed"
+      },
+      {
+        "actor": "dogwatch:01a07287-04d2-78b7-9bac-a11e681512ba",
+        "attempt": 1,
+        "data": {
+          "resultOmitted": false
+        },
+        "hash": "3d649a953a20158ea833153e9e41d76067a23920ba953826a0722b227b5116cc",
+        "id": "evt_dogwatch_131",
+        "namespace": "dogwatch",
+        "prevHash": "73a0eabce0872773f3c2e2364bbc98e5ff2a49f7dca6e02c5971569b58b75441",
+        "seq": 131,
+        "subjectKey": "probe:01a07287-04d2-78b7-9bac-a11e681512ba:HEAD:https://github.com/jamessuuu/dogwatch",
+        "subjectType": "effect",
+        "ts": 1788627864436,
+        "type": "effect.succeeded"
+      },
+      {
+        "actor": "dogwatch:01a07287-04d2-78b7-9bac-a11e681512ba",
+        "attempt": 1,
+        "data": {},
+        "hash": "843b660676edcd1c627ce21b83f9438e2f19898192c5bda4ee19e36b7d6c80d0",
+        "id": "evt_dogwatch_132",
+        "namespace": "dogwatch",
+        "prevHash": "3d649a953a20158ea833153e9e41d76067a23920ba953826a0722b227b5116cc",
+        "seq": 132,
+        "subjectKey": "probe:01a07287-04d2-78b7-9bac-a11e681512ba:HEAD:https://github.com/jamessuuu/swage",
+        "subjectType": "effect",
+        "ts": 1788627864436,
+        "type": "effect.claimed"
+      },
+      {
+        "actor": "dogwatch:01a07287-04d2-78b7-9bac-a11e681512ba",
+        "attempt": 1,
+        "data": {
+          "resultOmitted": false
+        },
+        "hash": "0f042e33de0cc8ecc6bbaaa85d689b2b7b02c4491a29cfb7caeaf4d85228bf3f",
+        "id": "evt_dogwatch_133",
+        "namespace": "dogwatch",
+        "prevHash": "843b660676edcd1c627ce21b83f9438e2f19898192c5bda4ee19e36b7d6c80d0",
+        "seq": 133,
+        "subjectKey": "probe:01a07287-04d2-78b7-9bac-a11e681512ba:HEAD:https://github.com/jamessuuu/swage",
+        "subjectType": "effect",
+        "ts": 1788627865116,
+        "type": "effect.succeeded"
+      },
+      {
+        "actor": "dogwatch:01a07287-04d2-78b7-9bac-a11e681512ba",
+        "attempt": 1,
+        "data": {},
+        "hash": "246e319e671f33a9743d6bb3d6b6a3e489170aaddc18fa034b32eafde63a5258",
+        "id": "evt_dogwatch_134",
+        "namespace": "dogwatch",
+        "prevHash": "0f042e33de0cc8ecc6bbaaa85d689b2b7b02c4491a29cfb7caeaf4d85228bf3f",
+        "seq": 134,
+        "subjectKey": "probe:01a07287-04d2-78b7-9bac-a11e681512ba:HEAD:https://github.com/jamessuuu/galley",
+        "subjectType": "effect",
+        "ts": 1788627865116,
+        "type": "effect.claimed"
+      },
+      {
+        "actor": "dogwatch:01a07287-04d2-78b7-9bac-a11e681512ba",
+        "attempt": 1,
+        "data": {
+          "resultOmitted": false
+        },
+        "hash": "f21acfa367e108e355fa15a19b104fd3781316e2a2fbd74585c215ff2f917d6a",
+        "id": "evt_dogwatch_135",
+        "namespace": "dogwatch",
+        "prevHash": "246e319e671f33a9743d6bb3d6b6a3e489170aaddc18fa034b32eafde63a5258",
+        "seq": 135,
+        "subjectKey": "probe:01a07287-04d2-78b7-9bac-a11e681512ba:HEAD:https://github.com/jamessuuu/galley",
+        "subjectType": "effect",
+        "ts": 1788627865664,
+        "type": "effect.succeeded"
+      },
+      {
+        "actor": "dogwatch:01a07287-04d2-78b7-9bac-a11e681512ba",
+        "attempt": 1,
+        "data": {},
+        "hash": "8c7a886e98fe65c8809ed2682450a133cd958b5b5d7340f3d34af886a628520c",
+        "id": "evt_dogwatch_136",
+        "namespace": "dogwatch",
+        "prevHash": "f21acfa367e108e355fa15a19b104fd3781316e2a2fbd74585c215ff2f917d6a",
+        "seq": 136,
+        "subjectKey": "probe:01a07287-04d2-78b7-9bac-a11e681512ba:HEAD:https://github.com/jamessuuu/assay",
+        "subjectType": "effect",
+        "ts": 1788627865664,
+        "type": "effect.claimed"
+      },
+      {
+        "actor": "dogwatch:01a07287-04d2-78b7-9bac-a11e681512ba",
+        "attempt": 1,
+        "data": {
+          "resultOmitted": false
+        },
+        "hash": "a14cdc43bd494c319d8d0972d43f163c13a766155265f04b624c3e32e44c510d",
+        "id": "evt_dogwatch_137",
+        "namespace": "dogwatch",
+        "prevHash": "8c7a886e98fe65c8809ed2682450a133cd958b5b5d7340f3d34af886a628520c",
+        "seq": 137,
+        "subjectKey": "probe:01a07287-04d2-78b7-9bac-a11e681512ba:HEAD:https://github.com/jamessuuu/assay",
+        "subjectType": "effect",
+        "ts": 1788627866244,
+        "type": "effect.succeeded"
+      },
+      {
+        "actor": "dogwatch:01a07287-04d2-78b7-9bac-a11e681512ba",
+        "attempt": 1,
+        "data": {},
+        "hash": "65b6876ddf986ab4648185d808cbe9f1b1dc38823c133aad588f60783c062fc2",
+        "id": "evt_dogwatch_138",
+        "namespace": "dogwatch",
+        "prevHash": "a14cdc43bd494c319d8d0972d43f163c13a766155265f04b624c3e32e44c510d",
+        "seq": 138,
+        "subjectKey": "probe:01a07287-04d2-78b7-9bac-a11e681512ba:HEAD:https://github.com/jamessuuu/halo-halo",
+        "subjectType": "effect",
+        "ts": 1788627866244,
+        "type": "effect.claimed"
+      },
+      {
+        "actor": "dogwatch:01a07287-04d2-78b7-9bac-a11e681512ba",
+        "attempt": 1,
+        "data": {
+          "resultOmitted": false
+        },
+        "hash": "9f8782475580d53f8fbbb0b4ce9017737d59141c51a29f118fb416a382ec166d",
+        "id": "evt_dogwatch_139",
+        "namespace": "dogwatch",
+        "prevHash": "65b6876ddf986ab4648185d808cbe9f1b1dc38823c133aad588f60783c062fc2",
+        "seq": 139,
+        "subjectKey": "probe:01a07287-04d2-78b7-9bac-a11e681512ba:HEAD:https://github.com/jamessuuu/halo-halo",
+        "subjectType": "effect",
+        "ts": 1788627866761,
+        "type": "effect.succeeded"
+      },
+      {
+        "actor": "dogwatch:01a07287-04d2-78b7-9bac-a11e681512ba",
+        "attempt": 1,
+        "data": {},
+        "hash": "2678e2b54f26a2291f21abcf4bffb620c92620f9a7443a3cb5442fc589283778",
+        "id": "evt_dogwatch_140",
+        "namespace": "dogwatch",
+        "prevHash": "9f8782475580d53f8fbbb0b4ce9017737d59141c51a29f118fb416a382ec166d",
+        "seq": 140,
+        "subjectKey": "probe:01a07287-04d2-78b7-9bac-a11e681512ba:HEAD:https://github.com/jamessuuu/clubscope-insight-engine",
+        "subjectType": "effect",
+        "ts": 1788627866761,
+        "type": "effect.claimed"
+      },
+      {
+        "actor": "dogwatch:01a07287-04d2-78b7-9bac-a11e681512ba",
+        "attempt": 1,
+        "data": {
+          "resultOmitted": false
+        },
+        "hash": "87a82894d06e8bcfe18da00d2ba1548f77553e8d3d79c8175750c0a9acc4b2f0",
+        "id": "evt_dogwatch_141",
+        "namespace": "dogwatch",
+        "prevHash": "2678e2b54f26a2291f21abcf4bffb620c92620f9a7443a3cb5442fc589283778",
+        "seq": 141,
+        "subjectKey": "probe:01a07287-04d2-78b7-9bac-a11e681512ba:HEAD:https://github.com/jamessuuu/clubscope-insight-engine",
+        "subjectType": "effect",
+        "ts": 1788627867248,
+        "type": "effect.succeeded"
+      }
+    ],
+    "fromSeq": 1,
+    "head": "87a82894d06e8bcfe18da00d2ba1548f77553e8d3d79c8175750c0a9acc4b2f0",
+    "namespace": "dogwatch",
+    "prevHead": null,
+    "store": "memory",
+    "toSeq": 141,
+    "verified": true
+  },
+  "chain": {
+    "anchored": false,
+    "prevRecordHash": "67bbdf3ffb881177f96a37424cb1c7c60398a5f6b70232d3c604755d2ac4ca2e",
+    "prevRunId": "01a06d93-d5e1-7eb4-9fd6-d0c4b2facab7",
+    "recordHash": "2aa64c1c6eb22a67b8f6d3f14c52aa4d6816fecb5f97bf3a97e34e19c8f78867"
+  },
+  "checkPackVersion": "1",
+  "checks": [
+    {
+      "evidence": {
+        "headers": {},
+        "redirects": []
+      },
+      "family": "reach",
+      "id": "reach:tiltmeter:reach.status_not_200",
+      "observedAt": "2026-09-05T17:04:06.355Z",
+      "reproduce": "curl -sS \"https://tiltmeter.vercel.app\"",
+      "request": {
+        "headersSent": [],
+        "method": "GET",
+        "timeoutMs": 10000,
+        "url": "https://tiltmeter.vercel.app"
+      },
+      "ruleId": "reach.status_not_200",
+      "skipReason": "not_published",
+      "targetId": "tiltmeter",
+      "title": "reach.status_not_200",
+      "verdict": "skipped"
+    },
+    {
+      "evidence": {
+        "headers": {},
+        "redirects": []
+      },
+      "family": "reach",
+      "id": "reach:tiltmeter:reach.redirect_chain_changed",
+      "observedAt": "2026-09-05T17:04:06.355Z",
+      "reproduce": "curl -sS \"https://tiltmeter.vercel.app\"",
+      "request": {
+        "headersSent": [],
+        "method": "GET",
+        "timeoutMs": 10000,
+        "url": "https://tiltmeter.vercel.app"
+      },
+      "ruleId": "reach.redirect_chain_changed",
+      "skipReason": "not_published",
+      "targetId": "tiltmeter",
+      "title": "reach.redirect_chain_changed",
+      "verdict": "skipped"
+    },
+    {
+      "evidence": {
+        "headers": {},
+        "redirects": []
+      },
+      "family": "brand",
+      "id": "brand:tiltmeter:brand.backlink_missing",
+      "observedAt": "2026-09-05T17:04:06.355Z",
+      "reproduce": "curl -sS \"https://tiltmeter.vercel.app\"",
+      "request": {
+        "headersSent": [],
+        "method": "GET",
+        "timeoutMs": 10000,
+        "url": "https://tiltmeter.vercel.app"
+      },
+      "ruleId": "brand.backlink_missing",
+      "skipReason": "not_published",
+      "targetId": "tiltmeter",
+      "title": "brand.backlink_missing",
+      "verdict": "skipped"
+    },
+    {
+      "evidence": {
+        "headers": {},
+        "redirects": []
+      },
+      "family": "brand",
+      "id": "brand:tiltmeter:brand.favicon_missing",
+      "observedAt": "2026-09-05T17:04:06.355Z",
+      "reproduce": "curl -sS \"https://tiltmeter.vercel.app\"",
+      "request": {
+        "headersSent": [],
+        "method": "GET",
+        "timeoutMs": 10000,
+        "url": "https://tiltmeter.vercel.app"
+      },
+      "ruleId": "brand.favicon_missing",
+      "skipReason": "not_published",
+      "targetId": "tiltmeter",
+      "title": "brand.favicon_missing",
+      "verdict": "skipped"
+    },
+    {
+      "evidence": {
+        "headers": {},
+        "redirects": []
+      },
+      "family": "link",
+      "id": "link:tiltmeter:link.broken",
+      "observedAt": "2026-09-05T17:04:06.355Z",
+      "reproduce": "curl -sS \"https://tiltmeter.vercel.app\"",
+      "request": {
+        "headersSent": [],
+        "method": "GET",
+        "timeoutMs": 10000,
+        "url": "https://tiltmeter.vercel.app"
+      },
+      "ruleId": "link.broken",
+      "skipReason": "not_published",
+      "targetId": "tiltmeter",
+      "title": "crawled links resolve",
+      "verdict": "skipped"
+    },
+    {
+      "evidence": {
+        "headers": {},
+        "redirects": []
+      },
+      "family": "weight",
+      "id": "weight:tiltmeter:weight.budget_exceeded",
+      "observedAt": "2026-09-05T17:04:06.355Z",
+      "reproduce": "curl -sS \"https://tiltmeter.vercel.app\"",
+      "request": {
+        "headersSent": [],
+        "method": "GET",
+        "timeoutMs": 10000,
+        "url": "https://tiltmeter.vercel.app"
+      },
+      "ruleId": "weight.budget_exceeded",
+      "skipReason": "not_published",
+      "targetId": "tiltmeter",
+      "title": "weight.budget_exceeded",
+      "verdict": "skipped"
+    },
+    {
+      "evidence": {
+        "headers": {},
+        "redirects": []
+      },
+      "family": "reach",
+      "id": "reach:chaff:reach.status_not_200",
+      "observedAt": "2026-09-05T17:04:06.355Z",
+      "reproduce": "curl -sS \"https://chaff.vercel.app\"",
+      "request": {
+        "headersSent": [],
+        "method": "GET",
+        "timeoutMs": 10000,
+        "url": "https://chaff.vercel.app"
+      },
+      "ruleId": "reach.status_not_200",
+      "skipReason": "not_published",
+      "targetId": "chaff",
+      "title": "reach.status_not_200",
+      "verdict": "skipped"
+    },
+    {
+      "evidence": {
+        "headers": {},
+        "redirects": []
+      },
+      "family": "reach",
+      "id": "reach:chaff:reach.redirect_chain_changed",
+      "observedAt": "2026-09-05T17:04:06.355Z",
+      "reproduce": "curl -sS \"https://chaff.vercel.app\"",
+      "request": {
+        "headersSent": [],
+        "method": "GET",
+        "timeoutMs": 10000,
+        "url": "https://chaff.vercel.app"
+      },
+      "ruleId": "reach.redirect_chain_changed",
+      "skipReason": "not_published",
+      "targetId": "chaff",
+      "title": "reach.redirect_chain_changed",
+      "verdict": "skipped"
+    },
+    {
+      "evidence": {
+        "headers": {},
+        "redirects": []
+      },
+      "family": "brand",
+      "id": "brand:chaff:brand.backlink_missing",
+      "observedAt": "2026-09-05T17:04:06.355Z",
+      "reproduce": "curl -sS \"https://chaff.vercel.app\"",
+      "request": {
+        "headersSent": [],
+        "method": "GET",
+        "timeoutMs": 10000,
+        "url": "https://chaff.vercel.app"
+      },
+      "ruleId": "brand.backlink_missing",
+      "skipReason": "not_published",
+      "targetId": "chaff",
+      "title": "brand.backlink_missing",
+      "verdict": "skipped"
+    },
+    {
+      "evidence": {
+        "headers": {},
+        "redirects": []
+      },
+      "family": "brand",
+      "id": "brand:chaff:brand.favicon_missing",
+      "observedAt": "2026-09-05T17:04:06.355Z",
+      "reproduce": "curl -sS \"https://chaff.vercel.app\"",
+      "request": {
+        "headersSent": [],
+        "method": "GET",
+        "timeoutMs": 10000,
+        "url": "https://chaff.vercel.app"
+      },
+      "ruleId": "brand.favicon_missing",
+      "skipReason": "not_published",
+      "targetId": "chaff",
+      "title": "brand.favicon_missing",
+      "verdict": "skipped"
+    },
+    {
+      "evidence": {
+        "headers": {},
+        "redirects": []
+      },
+      "family": "link",
+      "id": "link:chaff:link.broken",
+      "observedAt": "2026-09-05T17:04:06.355Z",
+      "reproduce": "curl -sS \"https://chaff.vercel.app\"",
+      "request": {
+        "headersSent": [],
+        "method": "GET",
+        "timeoutMs": 10000,
+        "url": "https://chaff.vercel.app"
+      },
+      "ruleId": "link.broken",
+      "skipReason": "not_published",
+      "targetId": "chaff",
+      "title": "crawled links resolve",
+      "verdict": "skipped"
+    },
+    {
+      "evidence": {
+        "headers": {},
+        "redirects": []
+      },
+      "family": "weight",
+      "id": "weight:chaff:weight.budget_exceeded",
+      "observedAt": "2026-09-05T17:04:06.355Z",
+      "reproduce": "curl -sS \"https://chaff.vercel.app\"",
+      "request": {
+        "headersSent": [],
+        "method": "GET",
+        "timeoutMs": 10000,
+        "url": "https://chaff.vercel.app"
+      },
+      "ruleId": "weight.budget_exceeded",
+      "skipReason": "not_published",
+      "targetId": "chaff",
+      "title": "weight.budget_exceeded",
+      "verdict": "skipped"
+    },
+    {
+      "evidence": {
+        "headers": {},
+        "redirects": []
+      },
+      "family": "reach",
+      "id": "reach:sluice:reach.status_not_200",
+      "observedAt": "2026-09-05T17:04:06.355Z",
+      "reproduce": "curl -sS \"https://sluice.vercel.app\"",
+      "request": {
+        "headersSent": [],
+        "method": "GET",
+        "timeoutMs": 10000,
+        "url": "https://sluice.vercel.app"
+      },
+      "ruleId": "reach.status_not_200",
+      "skipReason": "not_published",
+      "targetId": "sluice",
+      "title": "reach.status_not_200",
+      "verdict": "skipped"
+    },
+    {
+      "evidence": {
+        "headers": {},
+        "redirects": []
+      },
+      "family": "reach",
+      "id": "reach:sluice:reach.redirect_chain_changed",
+      "observedAt": "2026-09-05T17:04:06.355Z",
+      "reproduce": "curl -sS \"https://sluice.vercel.app\"",
+      "request": {
+        "headersSent": [],
+        "method": "GET",
+        "timeoutMs": 10000,
+        "url": "https://sluice.vercel.app"
+      },
+      "ruleId": "reach.redirect_chain_changed",
+      "skipReason": "not_published",
+      "targetId": "sluice",
+      "title": "reach.redirect_chain_changed",
+      "verdict": "skipped"
+    },
+    {
+      "evidence": {
+        "headers": {},
+        "redirects": []
+      },
+      "family": "brand",
+      "id": "brand:sluice:brand.backlink_missing",
+      "observedAt": "2026-09-05T17:04:06.355Z",
+      "reproduce": "curl -sS \"https://sluice.vercel.app\"",
+      "request": {
+        "headersSent": [],
+        "method": "GET",
+        "timeoutMs": 10000,
+        "url": "https://sluice.vercel.app"
+      },
+      "ruleId": "brand.backlink_missing",
+      "skipReason": "not_published",
+      "targetId": "sluice",
+      "title": "brand.backlink_missing",
+      "verdict": "skipped"
+    },
+    {
+      "evidence": {
+        "headers": {},
+        "redirects": []
+      },
+      "family": "brand",
+      "id": "brand:sluice:brand.favicon_missing",
+      "observedAt": "2026-09-05T17:04:06.355Z",
+      "reproduce": "curl -sS \"https://sluice.vercel.app\"",
+      "request": {
+        "headersSent": [],
+        "method": "GET",
+        "timeoutMs": 10000,
+        "url": "https://sluice.vercel.app"
+      },
+      "ruleId": "brand.favicon_missing",
+      "skipReason": "not_published",
+      "targetId": "sluice",
+      "title": "brand.favicon_missing",
+      "verdict": "skipped"
+    },
+    {
+      "evidence": {
+        "headers": {},
+        "redirects": []
+      },
+      "family": "link",
+      "id": "link:sluice:link.broken",
+      "observedAt": "2026-09-05T17:04:06.355Z",
+      "reproduce": "curl -sS \"https://sluice.vercel.app\"",
+      "request": {
+        "headersSent": [],
+        "method": "GET",
+        "timeoutMs": 10000,
+        "url": "https://sluice.vercel.app"
+      },
+      "ruleId": "link.broken",
+      "skipReason": "not_published",
+      "targetId": "sluice",
+      "title": "crawled links resolve",
+      "verdict": "skipped"
+    },
+    {
+      "evidence": {
+        "headers": {},
+        "redirects": []
+      },
+      "family": "weight",
+      "id": "weight:sluice:weight.budget_exceeded",
+      "observedAt": "2026-09-05T17:04:06.355Z",
+      "reproduce": "curl -sS \"https://sluice.vercel.app\"",
+      "request": {
+        "headersSent": [],
+        "method": "GET",
+        "timeoutMs": 10000,
+        "url": "https://sluice.vercel.app"
+      },
+      "ruleId": "weight.budget_exceeded",
+      "skipReason": "not_published",
+      "targetId": "sluice",
+      "title": "weight.budget_exceeded",
+      "verdict": "skipped"
+    },
+    {
+      "evidence": {
+        "headers": {},
+        "redirects": []
+      },
+      "family": "reach",
+      "id": "reach:snapgauge:reach.status_not_200",
+      "observedAt": "2026-09-05T17:04:06.355Z",
+      "reproduce": "curl -sS \"https://snapgauge.vercel.app\"",
+      "request": {
+        "headersSent": [],
+        "method": "GET",
+        "timeoutMs": 10000,
+        "url": "https://snapgauge.vercel.app"
+      },
+      "ruleId": "reach.status_not_200",
+      "skipReason": "not_published",
+      "targetId": "snapgauge",
+      "title": "reach.status_not_200",
+      "verdict": "skipped"
+    },
+    {
+      "evidence": {
+        "headers": {},
+        "redirects": []
+      },
+      "family": "reach",
+      "id": "reach:snapgauge:reach.redirect_chain_changed",
+      "observedAt": "2026-09-05T17:04:06.355Z",
+      "reproduce": "curl -sS \"https://snapgauge.vercel.app\"",
+      "request": {
+        "headersSent": [],
+        "method": "GET",
+        "timeoutMs": 10000,
+        "url": "https://snapgauge.vercel.app"
+      },
+      "ruleId": "reach.redirect_chain_changed",
+      "skipReason": "not_published",
+      "targetId": "snapgauge",
+      "title": "reach.redirect_chain_changed",
+      "verdict": "skipped"
+    },
+    {
+      "evidence": {
+        "headers": {},
+        "redirects": []
+      },
+      "family": "brand",
+      "id": "brand:snapgauge:brand.backlink_missing",
+      "observedAt": "2026-09-05T17:04:06.355Z",
+      "reproduce": "curl -sS \"https://snapgauge.vercel.app\"",
+      "request": {
+        "headersSent": [],
+        "method": "GET",
+        "timeoutMs": 10000,
+        "url": "https://snapgauge.vercel.app"
+      },
+      "ruleId": "brand.backlink_missing",
+      "skipReason": "not_published",
+      "targetId": "snapgauge",
+      "title": "brand.backlink_missing",
+      "verdict": "skipped"
+    },
+    {
+      "evidence": {
+        "headers": {},
+        "redirects": []
+      },
+      "family": "brand",
+      "id": "brand:snapgauge:brand.favicon_missing",
+      "observedAt": "2026-09-05T17:04:06.355Z",
+      "reproduce": "curl -sS \"https://snapgauge.vercel.app\"",
+      "request": {
+        "headersSent": [],
+        "method": "GET",
+        "timeoutMs": 10000,
+        "url": "https://snapgauge.vercel.app"
+      },
+      "ruleId": "brand.favicon_missing",
+      "skipReason": "not_published",
+      "targetId": "snapgauge",
+      "title": "brand.favicon_missing",
+      "verdict": "skipped"
+    },
+    {
+      "evidence": {
+        "headers": {},
+        "redirects": []
+      },
+      "family": "link",
+      "id": "link:snapgauge:link.broken",
+      "observedAt": "2026-09-05T17:04:06.355Z",
+      "reproduce": "curl -sS \"https://snapgauge.vercel.app\"",
+      "request": {
+        "headersSent": [],
+        "method": "GET",
+        "timeoutMs": 10000,
+        "url": "https://snapgauge.vercel.app"
+      },
+      "ruleId": "link.broken",
+      "skipReason": "not_published",
+      "targetId": "snapgauge",
+      "title": "crawled links resolve",
+      "verdict": "skipped"
+    },
+    {
+      "evidence": {
+        "headers": {},
+        "redirects": []
+      },
+      "family": "weight",
+      "id": "weight:snapgauge:weight.budget_exceeded",
+      "observedAt": "2026-09-05T17:04:06.355Z",
+      "reproduce": "curl -sS \"https://snapgauge.vercel.app\"",
+      "request": {
+        "headersSent": [],
+        "method": "GET",
+        "timeoutMs": 10000,
+        "url": "https://snapgauge.vercel.app"
+      },
+      "ruleId": "weight.budget_exceeded",
+      "skipReason": "not_published",
+      "targetId": "snapgauge",
+      "title": "weight.budget_exceeded",
+      "verdict": "skipped"
+    },
+    {
+      "evidence": {
+        "headers": {},
+        "redirects": []
+      },
+      "family": "reach",
+      "id": "reach:dogwatch:reach.status_not_200",
+      "observedAt": "2026-09-05T17:04:06.355Z",
+      "reproduce": "curl -sS \"https://dogwatch.vercel.app\"",
+      "request": {
+        "headersSent": [],
+        "method": "GET",
+        "timeoutMs": 10000,
+        "url": "https://dogwatch.vercel.app"
+      },
+      "ruleId": "reach.status_not_200",
+      "skipReason": "not_published",
+      "targetId": "dogwatch",
+      "title": "reach.status_not_200",
+      "verdict": "skipped"
+    },
+    {
+      "evidence": {
+        "headers": {},
+        "redirects": []
+      },
+      "family": "reach",
+      "id": "reach:dogwatch:reach.redirect_chain_changed",
+      "observedAt": "2026-09-05T17:04:06.355Z",
+      "reproduce": "curl -sS \"https://dogwatch.vercel.app\"",
+      "request": {
+        "headersSent": [],
+        "method": "GET",
+        "timeoutMs": 10000,
+        "url": "https://dogwatch.vercel.app"
+      },
+      "ruleId": "reach.redirect_chain_changed",
+      "skipReason": "not_published",
+      "targetId": "dogwatch",
+      "title": "reach.redirect_chain_changed",
+      "verdict": "skipped"
+    },
+    {
+      "evidence": {
+        "headers": {},
+        "redirects": []
+      },
+      "family": "brand",
+      "id": "brand:dogwatch:brand.backlink_missing",
+      "observedAt": "2026-09-05T17:04:06.355Z",
+      "reproduce": "curl -sS \"https://dogwatch.vercel.app\"",
+      "request": {
+        "headersSent": [],
+        "method": "GET",
+        "timeoutMs": 10000,
+        "url": "https://dogwatch.vercel.app"
+      },
+      "ruleId": "brand.backlink_missing",
+      "skipReason": "not_published",
+      "targetId": "dogwatch",
+      "title": "brand.backlink_missing",
+      "verdict": "skipped"
+    },
+    {
+      "evidence": {
+        "headers": {},
+        "redirects": []
+      },
+      "family": "brand",
+      "id": "brand:dogwatch:brand.favicon_missing",
+      "observedAt": "2026-09-05T17:04:06.355Z",
+      "reproduce": "curl -sS \"https://dogwatch.vercel.app\"",
+      "request": {
+        "headersSent": [],
+        "method": "GET",
+        "timeoutMs": 10000,
+        "url": "https://dogwatch.vercel.app"
+      },
+      "ruleId": "brand.favicon_missing",
+      "skipReason": "not_published",
+      "targetId": "dogwatch",
+      "title": "brand.favicon_missing",
+      "verdict": "skipped"
+    },
+    {
+      "evidence": {
+        "headers": {},
+        "redirects": []
+      },
+      "family": "link",
+      "id": "link:dogwatch:link.broken",
+      "observedAt": "2026-09-05T17:04:06.355Z",
+      "reproduce": "curl -sS \"https://dogwatch.vercel.app\"",
+      "request": {
+        "headersSent": [],
+        "method": "GET",
+        "timeoutMs": 10000,
+        "url": "https://dogwatch.vercel.app"
+      },
+      "ruleId": "link.broken",
+      "skipReason": "not_published",
+      "targetId": "dogwatch",
+      "title": "crawled links resolve",
+      "verdict": "skipped"
+    },
+    {
+      "evidence": {
+        "headers": {},
+        "redirects": []
+      },
+      "family": "weight",
+      "id": "weight:dogwatch:weight.budget_exceeded",
+      "observedAt": "2026-09-05T17:04:06.355Z",
+      "reproduce": "curl -sS \"https://dogwatch.vercel.app\"",
+      "request": {
+        "headersSent": [],
+        "method": "GET",
+        "timeoutMs": 10000,
+        "url": "https://dogwatch.vercel.app"
+      },
+      "ruleId": "weight.budget_exceeded",
+      "skipReason": "not_published",
+      "targetId": "dogwatch",
+      "title": "weight.budget_exceeded",
+      "verdict": "skipped"
+    },
+    {
+      "evidence": {
+        "bodySha256": "6e05fc582ae60d01f4c7e9f3597b8831f07f47e49ce72f533a2ec5d497beca03",
+        "bytes": 115633,
+        "finalUrl": "https://agentjames.vercel.app",
+        "headers": {
+          "cache-control": "public, max-age=0, must-revalidate",
+          "content-length": "115633",
+          "content-type": "text/html; charset=utf-8",
+          "etag": "\"bd232d73465762e2f0ac103ce699c72a\"",
+          "server": "Vercel",
+          "strict-transport-security": "max-age=63072000; includeSubDomains; preload",
+          "x-vercel-cache": "HIT",
+          "x-vercel-id": "cle1::tlrvv-1788627846534-6e3705ba60f4"
+        },
+        "ms": 420,
+        "redirects": [],
+        "status": 200
+      },
+      "family": "reach",
+      "id": "reach:agentjames:reach.status_not_200",
+      "observedAt": "2026-09-05T17:04:06.355Z",
+      "reproduce": "curl -sS \"https://agentjames.vercel.app\"",
+      "request": {
+        "headersSent": [],
+        "method": "GET",
+        "timeoutMs": 10000,
+        "url": "https://agentjames.vercel.app"
+      },
+      "ruleId": "reach.status_not_200",
+      "targetId": "agentjames",
+      "title": "/ reachable",
+      "verdict": "pass"
+    },
+    {
+      "evidence": {
+        "bodySha256": "6e05fc582ae60d01f4c7e9f3597b8831f07f47e49ce72f533a2ec5d497beca03",
+        "bytes": 115633,
+        "finalUrl": "https://agentjames.vercel.app",
+        "headers": {
+          "cache-control": "public, max-age=0, must-revalidate",
+          "content-length": "115633",
+          "content-type": "text/html; charset=utf-8",
+          "etag": "\"bd232d73465762e2f0ac103ce699c72a\"",
+          "server": "Vercel",
+          "strict-transport-security": "max-age=63072000; includeSubDomains; preload",
+          "x-vercel-cache": "HIT",
+          "x-vercel-id": "cle1::tlrvv-1788627846534-6e3705ba60f4"
+        },
+        "json": {
+          "baseline": {
+            "finalUrl": "https://agentjames.vercel.app",
+            "redirects": []
+          }
+        },
+        "ms": 420,
+        "redirects": [],
+        "status": 200
+      },
+      "family": "reach",
+      "id": "reach:agentjames:reach.redirect_chain_changed",
+      "observedAt": "2026-09-05T17:04:06.355Z",
+      "reproduce": "curl -sS \"https://agentjames.vercel.app\"",
+      "request": {
+        "headersSent": [],
+        "method": "GET",
+        "timeoutMs": 10000,
+        "url": "https://agentjames.vercel.app"
+      },
+      "ruleId": "reach.redirect_chain_changed",
+      "targetId": "agentjames",
+      "title": "final URL + redirect chain unchanged",
+      "verdict": "pass"
+    },
+    {
+      "evidence": {
+        "headers": {
+          "cache-control": "public, max-age=0, must-revalidate",
+          "content-length": "115633",
+          "content-type": "text/html; charset=utf-8",
+          "etag": "\"bd232d73465762e2f0ac103ce699c72a\"",
+          "server": "Vercel",
+          "strict-transport-security": "max-age=63072000; includeSubDomains; preload",
+          "x-vercel-cache": "HIT",
+          "x-vercel-id": "cle1::tlrvv-1788627846534-6e3705ba60f4"
+        },
+        "json": {
+          "headerName": "strict-transport-security"
+        },
+        "redirects": []
+      },
+      "family": "header",
+      "id": "header:agentjames:header.missing:strict-transport-security",
+      "observedAt": "2026-09-05T17:04:06.355Z",
+      "reproduce": "curl -sS \"https://agentjames.vercel.app\"",
+      "request": {
+        "headersSent": [],
+        "method": "GET",
+        "timeoutMs": 10000,
+        "url": "https://agentjames.vercel.app"
+      },
+      "ruleId": "header.missing",
+      "targetId": "agentjames",
+      "title": "header \"strict-transport-security\" present",
+      "verdict": "pass"
+    },
+    {
+      "evidence": {
+        "headers": {
+          "cache-control": "public, max-age=0, must-revalidate",
+          "content-length": "115633",
+          "content-type": "text/html; charset=utf-8",
+          "etag": "\"bd232d73465762e2f0ac103ce699c72a\"",
+          "server": "Vercel",
+          "strict-transport-security": "max-age=63072000; includeSubDomains; preload",
+          "x-vercel-cache": "HIT",
+          "x-vercel-id": "cle1::tlrvv-1788627846534-6e3705ba60f4"
+        },
+        "json": {
+          "baselineValue": "max-age=63072000; includeSubDomains; preload",
+          "headerName": "strict-transport-security"
+        },
+        "redirects": []
+      },
+      "family": "header",
+      "id": "header:agentjames:header.value_changed:strict-transport-security",
+      "observedAt": "2026-09-05T17:04:06.355Z",
+      "reproduce": "curl -sS \"https://agentjames.vercel.app\"",
+      "request": {
+        "headersSent": [],
+        "method": "GET",
+        "timeoutMs": 10000,
+        "url": "https://agentjames.vercel.app"
+      },
+      "ruleId": "header.value_changed",
+      "targetId": "agentjames",
+      "title": "header \"strict-transport-security\" unchanged since previous run",
+      "verdict": "pass"
+    },
+    {
+      "evidence": {
+        "bytes": 115633,
+        "headers": {},
+        "json": {
+          "budgetBytes": 300000
+        },
+        "redirects": []
+      },
+      "family": "weight",
+      "id": "weight:agentjames:weight.budget_exceeded",
+      "observedAt": "2026-09-05T17:04:06.355Z",
+      "reproduce": "curl -sS \"https://agentjames.vercel.app\"",
+      "request": {
+        "headersSent": [],
+        "method": "GET",
+        "timeoutMs": 10000,
+        "url": "https://agentjames.vercel.app"
+      },
+      "ruleId": "weight.budget_exceeded",
+      "targetId": "agentjames",
+      "title": "/ transfer size within the 300000-byte budget",
+      "verdict": "pass"
+    },
+    {
+      "evidence": {
+        "finalUrl": "https://agentjames.vercel.app",
+        "headers": {},
+        "json": {
+          "linkUrl": "https://agentjames.vercel.app",
+          "sourceOrigin": "https://agentjames.vercel.app",
+          "sourcePage": "https://agentjames.vercel.app"
+        },
+        "redirects": []
+      },
+      "family": "link",
+      "id": "link:agentjames:link.offsite_redirect:https://agentjames.vercel.app",
+      "observedAt": "2026-09-05T17:04:06.355Z",
+      "reproduce": "curl -sS \"https://agentjames.vercel.app\"",
+      "request": {
+        "headersSent": [],
+        "method": "GET",
+        "timeoutMs": 10000,
+        "url": "https://agentjames.vercel.app"
+      },
+      "ruleId": "link.offsite_redirect",
+      "targetId": "agentjames",
+      "title": "link https://agentjames.vercel.app stays on its declared origin",
+      "verdict": "pass"
+    },
+    {
+      "evidence": {
+        "finalUrl": "https://agentjames.vercel.app/",
+        "headers": {},
+        "json": {
+          "linkUrl": "https://agentjames.vercel.app/",
+          "sourceOrigin": "https://agentjames.vercel.app",
+          "sourcePage": "https://agentjames.vercel.app"
+        },
+        "redirects": []
+      },
+      "family": "link",
+      "id": "link:agentjames:link.offsite_redirect:https://agentjames.vercel.app/",
+      "observedAt": "2026-09-05T17:04:06.355Z",
+      "reproduce": "curl -sS \"https://agentjames.vercel.app/\"",
+      "request": {
+        "headersSent": [],
+        "method": "GET",
+        "timeoutMs": 10000,
+        "url": "https://agentjames.vercel.app/"
+      },
+      "ruleId": "link.offsite_redirect",
+      "targetId": "agentjames",
+      "title": "link https://agentjames.vercel.app/ stays on its declared origin",
+      "verdict": "pass"
+    },
+    {
+      "evidence": {
+        "finalUrl": "https://agentjames.vercel.app/cv/James-Lorenz-Santos-CV.pdf",
+        "headers": {},
+        "json": {
+          "linkUrl": "https://agentjames.vercel.app/cv/James-Lorenz-Santos-CV.pdf",
+          "sourceOrigin": "https://agentjames.vercel.app",
+          "sourcePage": "https://agentjames.vercel.app"
+        },
+        "redirects": []
+      },
+      "family": "link",
+      "id": "link:agentjames:link.offsite_redirect:https://agentjames.vercel.app/cv/James-Lorenz-Santos-CV.pdf",
+      "observedAt": "2026-09-05T17:04:06.355Z",
+      "reproduce": "curl -sS \"https://agentjames.vercel.app/cv/James-Lorenz-Santos-CV.pdf\"",
+      "request": {
+        "headersSent": [],
+        "method": "GET",
+        "timeoutMs": 10000,
+        "url": "https://agentjames.vercel.app/cv/James-Lorenz-Santos-CV.pdf"
+      },
+      "ruleId": "link.offsite_redirect",
+      "targetId": "agentjames",
+      "title": "link https://agentjames.vercel.app/cv/James-Lorenz-Santos-CV.pdf stays on its declared origin",
+      "verdict": "pass"
+    },
+    {
+      "evidence": {
+        "finalUrl": "https://agentjames.vercel.app/hire",
+        "headers": {},
+        "json": {
+          "linkUrl": "https://agentjames.vercel.app/hire",
+          "sourceOrigin": "https://agentjames.vercel.app",
+          "sourcePage": "https://agentjames.vercel.app"
+        },
+        "redirects": []
+      },
+      "family": "link",
+      "id": "link:agentjames:link.offsite_redirect:https://agentjames.vercel.app/hire",
+      "observedAt": "2026-09-05T17:04:06.355Z",
+      "reproduce": "curl -sS \"https://agentjames.vercel.app/hire\"",
+      "request": {
+        "headersSent": [],
+        "method": "GET",
+        "timeoutMs": 10000,
+        "url": "https://agentjames.vercel.app/hire"
+      },
+      "ruleId": "link.offsite_redirect",
+      "targetId": "agentjames",
+      "title": "link https://agentjames.vercel.app/hire stays on its declared origin",
+      "verdict": "pass"
+    },
+    {
+      "evidence": {
+        "finalUrl": "https://agentjames.vercel.app/resume",
+        "headers": {},
+        "json": {
+          "linkUrl": "https://agentjames.vercel.app/resume",
+          "sourceOrigin": "https://agentjames.vercel.app",
+          "sourcePage": "https://agentjames.vercel.app"
+        },
+        "redirects": []
+      },
+      "family": "link",
+      "id": "link:agentjames:link.offsite_redirect:https://agentjames.vercel.app/resume",
+      "observedAt": "2026-09-05T17:04:06.355Z",
+      "reproduce": "curl -sS \"https://agentjames.vercel.app/resume\"",
+      "request": {
+        "headersSent": [],
+        "method": "GET",
+        "timeoutMs": 10000,
+        "url": "https://agentjames.vercel.app/resume"
+      },
+      "ruleId": "link.offsite_redirect",
+      "targetId": "agentjames",
+      "title": "link https://agentjames.vercel.app/resume stays on its declared origin",
+      "verdict": "pass"
+    },
+    {
+      "evidence": {
+        "finalUrl": "https://agentjames.vercel.app/projects",
+        "headers": {},
+        "json": {
+          "linkUrl": "https://agentjames.vercel.app/projects",
+          "sourceOrigin": "https://agentjames.vercel.app",
+          "sourcePage": "https://agentjames.vercel.app"
+        },
+        "redirects": []
+      },
+      "family": "link",
+      "id": "link:agentjames:link.offsite_redirect:https://agentjames.vercel.app/projects",
+      "observedAt": "2026-09-05T17:04:06.355Z",
+      "reproduce": "curl -sS \"https://agentjames.vercel.app/projects\"",
+      "request": {
+        "headersSent": [],
+        "method": "GET",
+        "timeoutMs": 10000,
+        "url": "https://agentjames.vercel.app/projects"
+      },
+      "ruleId": "link.offsite_redirect",
+      "targetId": "agentjames",
+      "title": "link https://agentjames.vercel.app/projects stays on its declared origin",
+      "verdict": "pass"
+    },
+    {
+      "evidence": {
+        "finalUrl": "https://agentjames.vercel.app/about",
+        "headers": {},
+        "json": {
+          "linkUrl": "https://agentjames.vercel.app/about",
+          "sourceOrigin": "https://agentjames.vercel.app",
+          "sourcePage": "https://agentjames.vercel.app"
+        },
+        "redirects": []
+      },
+      "family": "link",
+      "id": "link:agentjames:link.offsite_redirect:https://agentjames.vercel.app/about",
+      "observedAt": "2026-09-05T17:04:06.355Z",
+      "reproduce": "curl -sS \"https://agentjames.vercel.app/about\"",
+      "request": {
+        "headersSent": [],
+        "method": "GET",
+        "timeoutMs": 10000,
+        "url": "https://agentjames.vercel.app/about"
+      },
+      "ruleId": "link.offsite_redirect",
+      "targetId": "agentjames",
+      "title": "link https://agentjames.vercel.app/about stays on its declared origin",
+      "verdict": "pass"
+    },
+    {
+      "evidence": {
+        "finalUrl": "https://agentjames.vercel.app/services",
+        "headers": {},
+        "json": {
+          "linkUrl": "https://agentjames.vercel.app/services",
+          "sourceOrigin": "https://agentjames.vercel.app",
+          "sourcePage": "https://agentjames.vercel.app"
+        },
+        "redirects": []
+      },
+      "family": "link",
+      "id": "link:agentjames:link.offsite_redirect:https://agentjames.vercel.app/services",
+      "observedAt": "2026-09-05T17:04:06.355Z",
+      "reproduce": "curl -sS \"https://agentjames.vercel.app/services\"",
+      "request": {
+        "headersSent": [],
+        "method": "GET",
+        "timeoutMs": 10000,
+        "url": "https://agentjames.vercel.app/services"
+      },
+      "ruleId": "link.offsite_redirect",
+      "targetId": "agentjames",
+      "title": "link https://agentjames.vercel.app/services stays on its declared origin",
+      "verdict": "pass"
+    },
+    {
+      "evidence": {
+        "finalUrl": "https://agentjames.vercel.app/blog",
+        "headers": {},
+        "json": {
+          "linkUrl": "https://agentjames.vercel.app/blog",
+          "sourceOrigin": "https://agentjames.vercel.app",
+          "sourcePage": "https://agentjames.vercel.app"
+        },
+        "redirects": []
+      },
+      "family": "link",
+      "id": "link:agentjames:link.offsite_redirect:https://agentjames.vercel.app/blog",
+      "observedAt": "2026-09-05T17:04:06.355Z",
+      "reproduce": "curl -sS \"https://agentjames.vercel.app/blog\"",
+      "request": {
+        "headersSent": [],
+        "method": "GET",
+        "timeoutMs": 10000,
+        "url": "https://agentjames.vercel.app/blog"
+      },
+      "ruleId": "link.offsite_redirect",
+      "targetId": "agentjames",
+      "title": "link https://agentjames.vercel.app/blog stays on its declared origin",
+      "verdict": "pass"
+    },
+    {
+      "evidence": {
+        "finalUrl": "https://agentjames.vercel.app/mcp",
+        "headers": {},
+        "json": {
+          "linkUrl": "https://agentjames.vercel.app/mcp",
+          "sourceOrigin": "https://agentjames.vercel.app",
+          "sourcePage": "https://agentjames.vercel.app"
+        },
+        "redirects": []
+      },
+      "family": "link",
+      "id": "link:agentjames:link.offsite_redirect:https://agentjames.vercel.app/mcp",
+      "observedAt": "2026-09-05T17:04:06.355Z",
+      "reproduce": "curl -sS \"https://agentjames.vercel.app/mcp\"",
+      "request": {
+        "headersSent": [],
+        "method": "GET",
+        "timeoutMs": 10000,
+        "url": "https://agentjames.vercel.app/mcp"
+      },
+      "ruleId": "link.offsite_redirect",
+      "targetId": "agentjames",
+      "title": "link https://agentjames.vercel.app/mcp stays on its declared origin",
+      "verdict": "pass"
+    },
+    {
+      "evidence": {
+        "finalUrl": "https://agentjames.vercel.app/console",
+        "headers": {},
+        "json": {
+          "linkUrl": "https://agentjames.vercel.app/console",
+          "sourceOrigin": "https://agentjames.vercel.app",
+          "sourcePage": "https://agentjames.vercel.app"
+        },
+        "redirects": []
+      },
+      "family": "link",
+      "id": "link:agentjames:link.offsite_redirect:https://agentjames.vercel.app/console",
+      "observedAt": "2026-09-05T17:04:06.355Z",
+      "reproduce": "curl -sS \"https://agentjames.vercel.app/console\"",
+      "request": {
+        "headersSent": [],
+        "method": "GET",
+        "timeoutMs": 10000,
+        "url": "https://agentjames.vercel.app/console"
+      },
+      "ruleId": "link.offsite_redirect",
+      "targetId": "agentjames",
+      "title": "link https://agentjames.vercel.app/console stays on its declared origin",
+      "verdict": "pass"
+    },
+    {
+      "evidence": {
+        "finalUrl": "https://agentjames.vercel.app/resume.md",
+        "headers": {},
+        "json": {
+          "linkUrl": "https://agentjames.vercel.app/resume.md",
+          "sourceOrigin": "https://agentjames.vercel.app",
+          "sourcePage": "https://agentjames.vercel.app"
+        },
+        "redirects": []
+      },
+      "family": "link",
+      "id": "link:agentjames:link.offsite_redirect:https://agentjames.vercel.app/resume.md",
+      "observedAt": "2026-09-05T17:04:06.355Z",
+      "reproduce": "curl -sS \"https://agentjames.vercel.app/resume.md\"",
+      "request": {
+        "headersSent": [],
+        "method": "GET",
+        "timeoutMs": 10000,
+        "url": "https://agentjames.vercel.app/resume.md"
+      },
+      "ruleId": "link.offsite_redirect",
+      "targetId": "agentjames",
+      "title": "link https://agentjames.vercel.app/resume.md stays on its declared origin",
+      "verdict": "pass"
+    },
+    {
+      "evidence": {
+        "finalUrl": "https://agentjames.vercel.app/proof",
+        "headers": {},
+        "json": {
+          "linkUrl": "https://agentjames.vercel.app/proof",
+          "sourceOrigin": "https://agentjames.vercel.app",
+          "sourcePage": "https://agentjames.vercel.app"
+        },
+        "redirects": []
+      },
+      "family": "link",
+      "id": "link:agentjames:link.offsite_redirect:https://agentjames.vercel.app/proof",
+      "observedAt": "2026-09-05T17:04:06.355Z",
+      "reproduce": "curl -sS \"https://agentjames.vercel.app/proof\"",
+      "request": {
+        "headersSent": [],
+        "method": "GET",
+        "timeoutMs": 10000,
+        "url": "https://agentjames.vercel.app/proof"
+      },
+      "ruleId": "link.offsite_redirect",
+      "targetId": "agentjames",
+      "title": "link https://agentjames.vercel.app/proof stays on its declared origin",
+      "verdict": "pass"
+    },
+    {
+      "evidence": {
+        "finalUrl": "https://agentjames.vercel.app/services/agentic-web-development",
+        "headers": {},
+        "json": {
+          "linkUrl": "https://agentjames.vercel.app/services/agentic-web-development",
+          "sourceOrigin": "https://agentjames.vercel.app",
+          "sourcePage": "https://agentjames.vercel.app"
+        },
+        "redirects": []
+      },
+      "family": "link",
+      "id": "link:agentjames:link.offsite_redirect:https://agentjames.vercel.app/services/agentic-web-development",
+      "observedAt": "2026-09-05T17:04:06.355Z",
+      "reproduce": "curl -sS \"https://agentjames.vercel.app/services/agentic-web-development\"",
+      "request": {
+        "headersSent": [],
+        "method": "GET",
+        "timeoutMs": 10000,
+        "url": "https://agentjames.vercel.app/services/agentic-web-development"
+      },
+      "ruleId": "link.offsite_redirect",
+      "targetId": "agentjames",
+      "title": "link https://agentjames.vercel.app/services/agentic-web-development stays on its declared origin",
+      "verdict": "pass"
+    },
+    {
+      "evidence": {
+        "finalUrl": "https://agentjames.vercel.app/services/ai-automation",
+        "headers": {},
+        "json": {
+          "linkUrl": "https://agentjames.vercel.app/services/ai-automation",
+          "sourceOrigin": "https://agentjames.vercel.app",
+          "sourcePage": "https://agentjames.vercel.app"
+        },
+        "redirects": []
+      },
+      "family": "link",
+      "id": "link:agentjames:link.offsite_redirect:https://agentjames.vercel.app/services/ai-automation",
+      "observedAt": "2026-09-05T17:04:06.355Z",
+      "reproduce": "curl -sS \"https://agentjames.vercel.app/services/ai-automation\"",
+      "request": {
+        "headersSent": [],
+        "method": "GET",
+        "timeoutMs": 10000,
+        "url": "https://agentjames.vercel.app/services/ai-automation"
+      },
+      "ruleId": "link.offsite_redirect",
+      "targetId": "agentjames",
+      "title": "link https://agentjames.vercel.app/services/ai-automation stays on its declared origin",
+      "verdict": "pass"
+    },
+    {
+      "evidence": {
+        "finalUrl": "https://agentjames.vercel.app/services/full-stack-development",
+        "headers": {},
+        "json": {
+          "linkUrl": "https://agentjames.vercel.app/services/full-stack-development",
+          "sourceOrigin": "https://agentjames.vercel.app",
+          "sourcePage": "https://agentjames.vercel.app"
+        },
+        "redirects": []
+      },
+      "family": "link",
+      "id": "link:agentjames:link.offsite_redirect:https://agentjames.vercel.app/services/full-stack-development",
+      "observedAt": "2026-09-05T17:04:06.355Z",
+      "reproduce": "curl -sS \"https://agentjames.vercel.app/services/full-stack-development\"",
+      "request": {
+        "headersSent": [],
+        "method": "GET",
+        "timeoutMs": 10000,
+        "url": "https://agentjames.vercel.app/services/full-stack-development"
+      },
+      "ruleId": "link.offsite_redirect",
+      "targetId": "agentjames",
+      "title": "link https://agentjames.vercel.app/services/full-stack-development stays on its declared origin",
+      "verdict": "pass"
+    },
+    {
+      "evidence": {
+        "finalUrl": "https://agentjames.vercel.app/services/legacy-modernization",
+        "headers": {},
+        "json": {
+          "linkUrl": "https://agentjames.vercel.app/services/legacy-modernization",
+          "sourceOrigin": "https://agentjames.vercel.app",
+          "sourcePage": "https://agentjames.vercel.app"
+        },
+        "redirects": []
+      },
+      "family": "link",
+      "id": "link:agentjames:link.offsite_redirect:https://agentjames.vercel.app/services/legacy-modernization",
+      "observedAt": "2026-09-05T17:04:06.355Z",
+      "reproduce": "curl -sS \"https://agentjames.vercel.app/services/legacy-modernization\"",
+      "request": {
+        "headersSent": [],
+        "method": "GET",
+        "timeoutMs": 10000,
+        "url": "https://agentjames.vercel.app/services/legacy-modernization"
+      },
+      "ruleId": "link.offsite_redirect",
+      "targetId": "agentjames",
+      "title": "link https://agentjames.vercel.app/services/legacy-modernization stays on its declared origin",
+      "verdict": "pass"
+    },
+    {
+      "evidence": {
+        "finalUrl": "https://agentjames.vercel.app/services/qa-testing",
+        "headers": {},
+        "json": {
+          "linkUrl": "https://agentjames.vercel.app/services/qa-testing",
+          "sourceOrigin": "https://agentjames.vercel.app",
+          "sourcePage": "https://agentjames.vercel.app"
+        },
+        "redirects": []
+      },
+      "family": "link",
+      "id": "link:agentjames:link.offsite_redirect:https://agentjames.vercel.app/services/qa-testing",
+      "observedAt": "2026-09-05T17:04:06.355Z",
+      "reproduce": "curl -sS \"https://agentjames.vercel.app/services/qa-testing\"",
+      "request": {
+        "headersSent": [],
+        "method": "GET",
+        "timeoutMs": 10000,
+        "url": "https://agentjames.vercel.app/services/qa-testing"
+      },
+      "ruleId": "link.offsite_redirect",
+      "targetId": "agentjames",
+      "title": "link https://agentjames.vercel.app/services/qa-testing stays on its declared origin",
+      "verdict": "pass"
+    },
+    {
+      "evidence": {
+        "finalUrl": "https://agentjames.vercel.app/services/project-management",
+        "headers": {},
+        "json": {
+          "linkUrl": "https://agentjames.vercel.app/services/project-management",
+          "sourceOrigin": "https://agentjames.vercel.app",
+          "sourcePage": "https://agentjames.vercel.app"
+        },
+        "redirects": []
+      },
+      "family": "link",
+      "id": "link:agentjames:link.offsite_redirect:https://agentjames.vercel.app/services/project-management",
+      "observedAt": "2026-09-05T17:04:06.355Z",
+      "reproduce": "curl -sS \"https://agentjames.vercel.app/services/project-management\"",
+      "request": {
+        "headersSent": [],
+        "method": "GET",
+        "timeoutMs": 10000,
+        "url": "https://agentjames.vercel.app/services/project-management"
+      },
+      "ruleId": "link.offsite_redirect",
+      "targetId": "agentjames",
+      "title": "link https://agentjames.vercel.app/services/project-management stays on its declared origin",
+      "verdict": "pass"
+    },
+    {
+      "evidence": {
+        "finalUrl": "https://agentjames.vercel.app/blog/how-i-built-this-website",
+        "headers": {},
+        "json": {
+          "linkUrl": "https://agentjames.vercel.app/blog/how-i-built-this-website",
+          "sourceOrigin": "https://agentjames.vercel.app",
+          "sourcePage": "https://agentjames.vercel.app"
+        },
+        "redirects": []
+      },
+      "family": "link",
+      "id": "link:agentjames:link.offsite_redirect:https://agentjames.vercel.app/blog/how-i-built-this-website",
+      "observedAt": "2026-09-05T17:04:06.355Z",
+      "reproduce": "curl -sS \"https://agentjames.vercel.app/blog/how-i-built-this-website\"",
+      "request": {
+        "headersSent": [],
+        "method": "GET",
+        "timeoutMs": 10000,
+        "url": "https://agentjames.vercel.app/blog/how-i-built-this-website"
+      },
+      "ruleId": "link.offsite_redirect",
+      "targetId": "agentjames",
+      "title": "link https://agentjames.vercel.app/blog/how-i-built-this-website stays on its declared origin",
+      "verdict": "pass"
+    },
+    {
+      "evidence": {
+        "finalUrl": "https://agentjames.vercel.app/blog/agentic-development",
+        "headers": {},
+        "json": {
+          "linkUrl": "https://agentjames.vercel.app/blog/agentic-development",
+          "sourceOrigin": "https://agentjames.vercel.app",
+          "sourcePage": "https://agentjames.vercel.app"
+        },
+        "redirects": []
+      },
+      "family": "link",
+      "id": "link:agentjames:link.offsite_redirect:https://agentjames.vercel.app/blog/agentic-development",
+      "observedAt": "2026-09-05T17:04:06.355Z",
+      "reproduce": "curl -sS \"https://agentjames.vercel.app/blog/agentic-development\"",
+      "request": {
+        "headersSent": [],
+        "method": "GET",
+        "timeoutMs": 10000,
+        "url": "https://agentjames.vercel.app/blog/agentic-development"
+      },
+      "ruleId": "link.offsite_redirect",
+      "targetId": "agentjames",
+      "title": "link https://agentjames.vercel.app/blog/agentic-development stays on its declared origin",
+      "verdict": "pass"
+    },
+    {
+      "evidence": {
+        "finalUrl": "https://agentjames.vercel.app/blog/the-future-of-ai-automation",
+        "headers": {},
+        "json": {
+          "linkUrl": "https://agentjames.vercel.app/blog/the-future-of-ai-automation",
+          "sourceOrigin": "https://agentjames.vercel.app",
+          "sourcePage": "https://agentjames.vercel.app"
+        },
+        "redirects": []
+      },
+      "family": "link",
+      "id": "link:agentjames:link.offsite_redirect:https://agentjames.vercel.app/blog/the-future-of-ai-automation",
+      "observedAt": "2026-09-05T17:04:06.355Z",
+      "reproduce": "curl -sS \"https://agentjames.vercel.app/blog/the-future-of-ai-automation\"",
+      "request": {
+        "headersSent": [],
+        "method": "GET",
+        "timeoutMs": 10000,
+        "url": "https://agentjames.vercel.app/blog/the-future-of-ai-automation"
+      },
+      "ruleId": "link.offsite_redirect",
+      "targetId": "agentjames",
+      "title": "link https://agentjames.vercel.app/blog/the-future-of-ai-automation stays on its declared origin",
+      "verdict": "pass"
+    },
+    {
+      "evidence": {
+        "finalUrl": "https://agentjames.vercel.app/blog/wordpress-to-nextjs-migration",
+        "headers": {},
+        "json": {
+          "linkUrl": "https://agentjames.vercel.app/blog/wordpress-to-nextjs-migration",
+          "sourceOrigin": "https://agentjames.vercel.app",
+          "sourcePage": "https://agentjames.vercel.app"
+        },
+        "redirects": []
+      },
+      "family": "link",
+      "id": "link:agentjames:link.offsite_redirect:https://agentjames.vercel.app/blog/wordpress-to-nextjs-migration",
+      "observedAt": "2026-09-05T17:04:06.355Z",
+      "reproduce": "curl -sS \"https://agentjames.vercel.app/blog/wordpress-to-nextjs-migration\"",
+      "request": {
+        "headersSent": [],
+        "method": "GET",
+        "timeoutMs": 10000,
+        "url": "https://agentjames.vercel.app/blog/wordpress-to-nextjs-migration"
+      },
+      "ruleId": "link.offsite_redirect",
+      "targetId": "agentjames",
+      "title": "link https://agentjames.vercel.app/blog/wordpress-to-nextjs-migration stays on its declared origin",
+      "verdict": "pass"
+    },
+    {
+      "evidence": {
+        "finalUrl": "https://agentjames.vercel.app/llms.txt",
+        "headers": {},
+        "json": {
+          "linkUrl": "https://agentjames.vercel.app/llms.txt",
+          "sourceOrigin": "https://agentjames.vercel.app",
+          "sourcePage": "https://agentjames.vercel.app"
+        },
+        "redirects": []
+      },
+      "family": "link",
+      "id": "link:agentjames:link.offsite_redirect:https://agentjames.vercel.app/llms.txt",
+      "observedAt": "2026-09-05T17:04:06.355Z",
+      "reproduce": "curl -sS \"https://agentjames.vercel.app/llms.txt\"",
+      "request": {
+        "headersSent": [],
+        "method": "GET",
+        "timeoutMs": 10000,
+        "url": "https://agentjames.vercel.app/llms.txt"
+      },
+      "ruleId": "link.offsite_redirect",
+      "targetId": "agentjames",
+      "title": "link https://agentjames.vercel.app/llms.txt stays on its declared origin",
+      "verdict": "pass"
+    },
+    {
+      "evidence": {
+        "finalUrl": "https://agentjames.vercel.app/llms-full.txt",
+        "headers": {},
+        "json": {
+          "linkUrl": "https://agentjames.vercel.app/llms-full.txt",
+          "sourceOrigin": "https://agentjames.vercel.app",
+          "sourcePage": "https://agentjames.vercel.app"
+        },
+        "redirects": []
+      },
+      "family": "link",
+      "id": "link:agentjames:link.offsite_redirect:https://agentjames.vercel.app/llms-full.txt",
+      "observedAt": "2026-09-05T17:04:06.355Z",
+      "reproduce": "curl -sS \"https://agentjames.vercel.app/llms-full.txt\"",
+      "request": {
+        "headersSent": [],
+        "method": "GET",
+        "timeoutMs": 10000,
+        "url": "https://agentjames.vercel.app/llms-full.txt"
+      },
+      "ruleId": "link.offsite_redirect",
+      "targetId": "agentjames",
+      "title": "link https://agentjames.vercel.app/llms-full.txt stays on its declared origin",
+      "verdict": "pass"
+    },
+    {
+      "evidence": {
+        "finalUrl": "https://agentjames.vercel.app/agent.json",
+        "headers": {},
+        "json": {
+          "linkUrl": "https://agentjames.vercel.app/agent.json",
+          "sourceOrigin": "https://agentjames.vercel.app",
+          "sourcePage": "https://agentjames.vercel.app"
+        },
+        "redirects": []
+      },
+      "family": "link",
+      "id": "link:agentjames:link.offsite_redirect:https://agentjames.vercel.app/agent.json",
+      "observedAt": "2026-09-05T17:04:06.355Z",
+      "reproduce": "curl -sS \"https://agentjames.vercel.app/agent.json\"",
+      "request": {
+        "headersSent": [],
+        "method": "GET",
+        "timeoutMs": 10000,
+        "url": "https://agentjames.vercel.app/agent.json"
+      },
+      "ruleId": "link.offsite_redirect",
+      "targetId": "agentjames",
+      "title": "link https://agentjames.vercel.app/agent.json stays on its declared origin",
+      "verdict": "pass"
+    },
+    {
+      "evidence": {
+        "finalUrl": "https://agentjames.vercel.app/console?c=workflow",
+        "headers": {},
+        "json": {
+          "linkUrl": "https://agentjames.vercel.app/console?c=workflow",
+          "sourceOrigin": "https://agentjames.vercel.app",
+          "sourcePage": "https://agentjames.vercel.app"
+        },
+        "redirects": []
+      },
+      "family": "link",
+      "id": "link:agentjames:link.offsite_redirect:https://agentjames.vercel.app/console?c=workflow",
+      "observedAt": "2026-09-05T17:04:06.355Z",
+      "reproduce": "curl -sS \"https://agentjames.vercel.app/console?c=workflow\"",
+      "request": {
+        "headersSent": [],
+        "method": "GET",
+        "timeoutMs": 10000,
+        "url": "https://agentjames.vercel.app/console?c=workflow"
+      },
+      "ruleId": "link.offsite_redirect",
+      "targetId": "agentjames",
+      "title": "link https://agentjames.vercel.app/console?c=workflow stays on its declared origin",
+      "verdict": "pass"
+    },
+    {
+      "evidence": {
+        "finalUrl": "https://agentjames.vercel.app/console?c=workflow%20speed-to-lead",
+        "headers": {},
+        "json": {
+          "linkUrl": "https://agentjames.vercel.app/console?c=workflow%20speed-to-lead",
+          "sourceOrigin": "https://agentjames.vercel.app",
+          "sourcePage": "https://agentjames.vercel.app"
+        },
+        "redirects": []
+      },
+      "family": "link",
+      "id": "link:agentjames:link.offsite_redirect:https://agentjames.vercel.app/console?c=workflow%20speed-to-lead",
+      "observedAt": "2026-09-05T17:04:06.355Z",
+      "reproduce": "curl -sS \"https://agentjames.vercel.app/console?c=workflow%20speed-to-lead\"",
+      "request": {
+        "headersSent": [],
+        "method": "GET",
+        "timeoutMs": 10000,
+        "url": "https://agentjames.vercel.app/console?c=workflow%20speed-to-lead"
+      },
+      "ruleId": "link.offsite_redirect",
+      "targetId": "agentjames",
+      "title": "link https://agentjames.vercel.app/console?c=workflow%20speed-to-lead stays on its declared origin",
+      "verdict": "pass"
+    },
+    {
+      "evidence": {
+        "finalUrl": "https://agentjames.vercel.app/console?c=help",
+        "headers": {},
+        "json": {
+          "linkUrl": "https://agentjames.vercel.app/console?c=help",
+          "sourceOrigin": "https://agentjames.vercel.app",
+          "sourcePage": "https://agentjames.vercel.app"
+        },
+        "redirects": []
+      },
+      "family": "link",
+      "id": "link:agentjames:link.offsite_redirect:https://agentjames.vercel.app/console?c=help",
+      "observedAt": "2026-09-05T17:04:06.355Z",
+      "reproduce": "curl -sS \"https://agentjames.vercel.app/console?c=help\"",
+      "request": {
+        "headersSent": [],
+        "method": "GET",
+        "timeoutMs": 10000,
+        "url": "https://agentjames.vercel.app/console?c=help"
+      },
+      "ruleId": "link.offsite_redirect",
+      "targetId": "agentjames",
+      "title": "link https://agentjames.vercel.app/console?c=help stays on its declared origin",
+      "verdict": "pass"
+    },
+    {
+      "evidence": {
+        "finalUrl": "https://agentjames.vercel.app/console?c=tour",
+        "headers": {},
+        "json": {
+          "linkUrl": "https://agentjames.vercel.app/console?c=tour",
+          "sourceOrigin": "https://agentjames.vercel.app",
+          "sourcePage": "https://agentjames.vercel.app"
+        },
+        "redirects": []
+      },
+      "family": "link",
+      "id": "link:agentjames:link.offsite_redirect:https://agentjames.vercel.app/console?c=tour",
+      "observedAt": "2026-09-05T17:04:06.355Z",
+      "reproduce": "curl -sS \"https://agentjames.vercel.app/console?c=tour\"",
+      "request": {
+        "headersSent": [],
+        "method": "GET",
+        "timeoutMs": 10000,
+        "url": "https://agentjames.vercel.app/console?c=tour"
+      },
+      "ruleId": "link.offsite_redirect",
+      "targetId": "agentjames",
+      "title": "link https://agentjames.vercel.app/console?c=tour stays on its declared origin",
+      "verdict": "pass"
+    },
+    {
+      "evidence": {
+        "finalUrl": "https://joinklik.app/",
+        "headers": {},
+        "json": {
+          "linkUrl": "https://joinklik.app/",
+          "sourcePage": "https://agentjames.vercel.app/hire"
+        },
+        "redirects": [],
+        "status": 200
+      },
+      "family": "link",
+      "id": "link:agentjames:link.broken:https://joinklik.app/",
+      "observedAt": "2026-09-05T17:04:06.355Z",
+      "reproduce": "curl -sS -I \"https://joinklik.app/\"",
+      "request": {
+        "headersSent": [],
+        "method": "HEAD",
+        "timeoutMs": 10000,
+        "url": "https://joinklik.app/"
+      },
+      "ruleId": "link.broken",
+      "targetId": "agentjames",
+      "title": "link https://joinklik.app/ resolves",
+      "verdict": "pass"
+    },
+    {
+      "evidence": {
+        "finalUrl": "https://sluice-iota.vercel.app/",
+        "headers": {},
+        "json": {
+          "linkUrl": "https://sluice-iota.vercel.app/",
+          "sourcePage": "https://agentjames.vercel.app/hire"
+        },
+        "redirects": [],
+        "status": 200
+      },
+      "family": "link",
+      "id": "link:agentjames:link.broken:https://sluice-iota.vercel.app/",
+      "observedAt": "2026-09-05T17:04:06.355Z",
+      "reproduce": "curl -sS -I \"https://sluice-iota.vercel.app/\"",
+      "request": {
+        "headersSent": [],
+        "method": "HEAD",
+        "timeoutMs": 10000,
+        "url": "https://sluice-iota.vercel.app/"
+      },
+      "ruleId": "link.broken",
+      "targetId": "agentjames",
+      "title": "link https://sluice-iota.vercel.app/ resolves",
+      "verdict": "pass"
+    },
+    {
+      "evidence": {
+        "finalUrl": "https://snapgauge.vercel.app/",
+        "headers": {},
+        "json": {
+          "linkUrl": "https://snapgauge.vercel.app/",
+          "sourcePage": "https://agentjames.vercel.app/hire"
+        },
+        "redirects": [],
+        "status": 200
+      },
+      "family": "link",
+      "id": "link:agentjames:link.broken:https://snapgauge.vercel.app/",
+      "observedAt": "2026-09-05T17:04:06.355Z",
+      "reproduce": "curl -sS -I \"https://snapgauge.vercel.app/\"",
+      "request": {
+        "headersSent": [],
+        "method": "HEAD",
+        "timeoutMs": 10000,
+        "url": "https://snapgauge.vercel.app/"
+      },
+      "ruleId": "link.broken",
+      "targetId": "agentjames",
+      "title": "link https://snapgauge.vercel.app/ resolves",
+      "verdict": "pass"
+    },
+    {
+      "evidence": {
+        "finalUrl": "https://chaff-xi.vercel.app/",
+        "headers": {},
+        "json": {
+          "linkUrl": "https://chaff-xi.vercel.app/",
+          "sourcePage": "https://agentjames.vercel.app/hire"
+        },
+        "redirects": [],
+        "status": 200
+      },
+      "family": "link",
+      "id": "link:agentjames:link.broken:https://chaff-xi.vercel.app/",
+      "observedAt": "2026-09-05T17:04:06.355Z",
+      "reproduce": "curl -sS -I \"https://chaff-xi.vercel.app/\"",
+      "request": {
+        "headersSent": [],
+        "method": "HEAD",
+        "timeoutMs": 10000,
+        "url": "https://chaff-xi.vercel.app/"
+      },
+      "ruleId": "link.broken",
+      "targetId": "agentjames",
+      "title": "link https://chaff-xi.vercel.app/ resolves",
+      "verdict": "pass"
+    },
+    {
+      "evidence": {
+        "finalUrl": "https://tiltmeter.vercel.app/",
+        "headers": {},
+        "json": {
+          "linkUrl": "https://tiltmeter.vercel.app/",
+          "sourcePage": "https://agentjames.vercel.app/hire"
+        },
+        "redirects": [],
+        "status": 200
+      },
+      "family": "link",
+      "id": "link:agentjames:link.broken:https://tiltmeter.vercel.app/",
+      "observedAt": "2026-09-05T17:04:06.355Z",
+      "reproduce": "curl -sS -I \"https://tiltmeter.vercel.app/\"",
+      "request": {
+        "headersSent": [],
+        "method": "HEAD",
+        "timeoutMs": 10000,
+        "url": "https://tiltmeter.vercel.app/"
+      },
+      "ruleId": "link.broken",
+      "targetId": "agentjames",
+      "title": "link https://tiltmeter.vercel.app/ resolves",
+      "verdict": "pass"
+    },
+    {
+      "evidence": {
+        "finalUrl": "https://dogwatch-two.vercel.app/",
+        "headers": {},
+        "json": {
+          "linkUrl": "https://dogwatch-two.vercel.app/",
+          "sourcePage": "https://agentjames.vercel.app/hire"
+        },
+        "redirects": [],
+        "status": 200
+      },
+      "family": "link",
+      "id": "link:agentjames:link.broken:https://dogwatch-two.vercel.app/",
+      "observedAt": "2026-09-05T17:04:06.355Z",
+      "reproduce": "curl -sS -I \"https://dogwatch-two.vercel.app/\"",
+      "request": {
+        "headersSent": [],
+        "method": "HEAD",
+        "timeoutMs": 10000,
+        "url": "https://dogwatch-two.vercel.app/"
+      },
+      "ruleId": "link.broken",
+      "targetId": "agentjames",
+      "title": "link https://dogwatch-two.vercel.app/ resolves",
+      "verdict": "pass"
+    },
+    {
+      "evidence": {
+        "finalUrl": "https://swage-swart.vercel.app/",
+        "headers": {},
+        "json": {
+          "linkUrl": "https://swage-swart.vercel.app/",
+          "sourcePage": "https://agentjames.vercel.app/hire"
+        },
+        "redirects": [],
+        "status": 200
+      },
+      "family": "link",
+      "id": "link:agentjames:link.broken:https://swage-swart.vercel.app/",
+      "observedAt": "2026-09-05T17:04:06.355Z",
+      "reproduce": "curl -sS -I \"https://swage-swart.vercel.app/\"",
+      "request": {
+        "headersSent": [],
+        "method": "HEAD",
+        "timeoutMs": 10000,
+        "url": "https://swage-swart.vercel.app/"
+      },
+      "ruleId": "link.broken",
+      "targetId": "agentjames",
+      "title": "link https://swage-swart.vercel.app/ resolves",
+      "verdict": "pass"
+    },
+    {
+      "evidence": {
+        "finalUrl": "https://graticule-seven.vercel.app/",
+        "headers": {},
+        "json": {
+          "linkUrl": "https://graticule-seven.vercel.app/",
+          "sourcePage": "https://agentjames.vercel.app/hire"
+        },
+        "redirects": [],
+        "status": 200
+      },
+      "family": "link",
+      "id": "link:agentjames:link.broken:https://graticule-seven.vercel.app/",
+      "observedAt": "2026-09-05T17:04:06.355Z",
+      "reproduce": "curl -sS -I \"https://graticule-seven.vercel.app/\"",
+      "request": {
+        "headersSent": [],
+        "method": "HEAD",
+        "timeoutMs": 10000,
+        "url": "https://graticule-seven.vercel.app/"
+      },
+      "ruleId": "link.broken",
+      "targetId": "agentjames",
+      "title": "link https://graticule-seven.vercel.app/ resolves",
+      "verdict": "pass"
+    },
+    {
+      "evidence": {
+        "finalUrl": "https://clarifier.vercel.app/",
+        "headers": {},
+        "json": {
+          "linkUrl": "https://clarifier.vercel.app/",
+          "sourcePage": "https://agentjames.vercel.app/hire"
+        },
+        "redirects": [],
+        "status": 200
+      },
+      "family": "link",
+      "id": "link:agentjames:link.broken:https://clarifier.vercel.app/",
+      "observedAt": "2026-09-05T17:04:06.355Z",
+      "reproduce": "curl -sS -I \"https://clarifier.vercel.app/\"",
+      "request": {
+        "headersSent": [],
+        "method": "HEAD",
+        "timeoutMs": 10000,
+        "url": "https://clarifier.vercel.app/"
+      },
+      "ruleId": "link.broken",
+      "targetId": "agentjames",
+      "title": "link https://clarifier.vercel.app/ resolves",
+      "verdict": "pass"
+    },
+    {
+      "evidence": {
+        "finalUrl": "https://shipgauge.vercel.app/",
+        "headers": {},
+        "json": {
+          "linkUrl": "https://shipgauge.vercel.app/",
+          "sourcePage": "https://agentjames.vercel.app/hire"
+        },
+        "redirects": [],
+        "status": 200
+      },
+      "family": "link",
+      "id": "link:agentjames:link.broken:https://shipgauge.vercel.app/",
+      "observedAt": "2026-09-05T17:04:06.355Z",
+      "reproduce": "curl -sS -I \"https://shipgauge.vercel.app/\"",
+      "request": {
+        "headersSent": [],
+        "method": "HEAD",
+        "timeoutMs": 10000,
+        "url": "https://shipgauge.vercel.app/"
+      },
+      "ruleId": "link.broken",
+      "targetId": "agentjames",
+      "title": "link https://shipgauge.vercel.app/ resolves",
+      "verdict": "pass"
+    },
+    {
+      "evidence": {
+        "finalUrl": "https://galley-khaki.vercel.app/",
+        "headers": {},
+        "json": {
+          "linkUrl": "https://galley-khaki.vercel.app/",
+          "sourcePage": "https://agentjames.vercel.app/hire"
+        },
+        "redirects": [],
+        "status": 200
+      },
+      "family": "link",
+      "id": "link:agentjames:link.broken:https://galley-khaki.vercel.app/",
+      "observedAt": "2026-09-05T17:04:06.355Z",
+      "reproduce": "curl -sS -I \"https://galley-khaki.vercel.app/\"",
+      "request": {
+        "headersSent": [],
+        "method": "HEAD",
+        "timeoutMs": 10000,
+        "url": "https://galley-khaki.vercel.app/"
+      },
+      "ruleId": "link.broken",
+      "targetId": "agentjames",
+      "title": "link https://galley-khaki.vercel.app/ resolves",
+      "verdict": "pass"
+    },
+    {
+      "evidence": {
+        "finalUrl": "https://provenote.vercel.app/",
+        "headers": {},
+        "json": {
+          "linkUrl": "https://provenote.vercel.app/",
+          "sourcePage": "https://agentjames.vercel.app/hire"
+        },
+        "redirects": [],
+        "status": 200
+      },
+      "family": "link",
+      "id": "link:agentjames:link.broken:https://provenote.vercel.app/",
+      "observedAt": "2026-09-05T17:04:06.355Z",
+      "reproduce": "curl -sS -I \"https://provenote.vercel.app/\"",
+      "request": {
+        "headersSent": [],
+        "method": "HEAD",
+        "timeoutMs": 10000,
+        "url": "https://provenote.vercel.app/"
+      },
+      "ruleId": "link.broken",
+      "targetId": "agentjames",
+      "title": "link https://provenote.vercel.app/ resolves",
+      "verdict": "pass"
+    },
+    {
+      "evidence": {
+        "finalUrl": "https://assay-flax.vercel.app/",
+        "headers": {},
+        "json": {
+          "linkUrl": "https://assay-flax.vercel.app/",
+          "sourcePage": "https://agentjames.vercel.app/hire"
+        },
+        "redirects": [],
+        "status": 200
+      },
+      "family": "link",
+      "id": "link:agentjames:link.broken:https://assay-flax.vercel.app/",
+      "observedAt": "2026-09-05T17:04:06.355Z",
+      "reproduce": "curl -sS -I \"https://assay-flax.vercel.app/\"",
+      "request": {
+        "headersSent": [],
+        "method": "HEAD",
+        "timeoutMs": 10000,
+        "url": "https://assay-flax.vercel.app/"
+      },
+      "ruleId": "link.broken",
+      "targetId": "agentjames",
+      "title": "link https://assay-flax.vercel.app/ resolves",
+      "verdict": "pass"
+    },
+    {
+      "evidence": {
+        "finalUrl": "https://halo-halo-coral.vercel.app/",
+        "headers": {},
+        "json": {
+          "linkUrl": "https://halo-halo-coral.vercel.app/",
+          "sourcePage": "https://agentjames.vercel.app/hire"
+        },
+        "redirects": [],
+        "status": 200
+      },
+      "family": "link",
+      "id": "link:agentjames:link.broken:https://halo-halo-coral.vercel.app/",
+      "observedAt": "2026-09-05T17:04:06.355Z",
+      "reproduce": "curl -sS -I \"https://halo-halo-coral.vercel.app/\"",
+      "request": {
+        "headersSent": [],
+        "method": "HEAD",
+        "timeoutMs": 10000,
+        "url": "https://halo-halo-coral.vercel.app/"
+      },
+      "ruleId": "link.broken",
+      "targetId": "agentjames",
+      "title": "link https://halo-halo-coral.vercel.app/ resolves",
+      "verdict": "pass"
+    },
+    {
+      "evidence": {
+        "finalUrl": "https://pitman-eight.vercel.app/",
+        "headers": {},
+        "json": {
+          "linkUrl": "https://pitman-eight.vercel.app/",
+          "sourcePage": "https://agentjames.vercel.app/hire"
+        },
+        "redirects": [],
+        "status": 200
+      },
+      "family": "link",
+      "id": "link:agentjames:link.broken:https://pitman-eight.vercel.app/",
+      "observedAt": "2026-09-05T17:04:06.355Z",
+      "reproduce": "curl -sS -I \"https://pitman-eight.vercel.app/\"",
+      "request": {
+        "headersSent": [],
+        "method": "HEAD",
+        "timeoutMs": 10000,
+        "url": "https://pitman-eight.vercel.app/"
+      },
+      "ruleId": "link.broken",
+      "targetId": "agentjames",
+      "title": "link https://pitman-eight.vercel.app/ resolves",
+      "verdict": "pass"
+    },
+    {
+      "evidence": {
+        "finalUrl": "https://clubscope-insight-engine.vercel.app/",
+        "headers": {},
+        "json": {
+          "linkUrl": "https://clubscope-insight-engine.vercel.app/",
+          "sourcePage": "https://agentjames.vercel.app/hire"
+        },
+        "redirects": [],
+        "status": 200
+      },
+      "family": "link",
+      "id": "link:agentjames:link.broken:https://clubscope-insight-engine.vercel.app/",
+      "observedAt": "2026-09-05T17:04:06.355Z",
+      "reproduce": "curl -sS -I \"https://clubscope-insight-engine.vercel.app/\"",
+      "request": {
+        "headersSent": [],
+        "method": "HEAD",
+        "timeoutMs": 10000,
+        "url": "https://clubscope-insight-engine.vercel.app/"
+      },
+      "ruleId": "link.broken",
+      "targetId": "agentjames",
+      "title": "link https://clubscope-insight-engine.vercel.app/ resolves",
+      "verdict": "pass"
+    },
+    {
+      "evidence": {
+        "finalUrl": "https://tayoquote.vercel.app/",
+        "headers": {},
+        "json": {
+          "linkUrl": "https://tayoquote.vercel.app/",
+          "sourcePage": "https://agentjames.vercel.app/hire"
+        },
+        "redirects": [],
+        "status": 200
+      },
+      "family": "link",
+      "id": "link:agentjames:link.broken:https://tayoquote.vercel.app/",
+      "observedAt": "2026-09-05T17:04:06.355Z",
+      "reproduce": "curl -sS -I \"https://tayoquote.vercel.app/\"",
+      "request": {
+        "headersSent": [],
+        "method": "HEAD",
+        "timeoutMs": 10000,
+        "url": "https://tayoquote.vercel.app/"
+      },
+      "ruleId": "link.broken",
+      "targetId": "agentjames",
+      "title": "link https://tayoquote.vercel.app/ resolves",
+      "verdict": "pass"
+    },
+    {
+      "evidence": {
+        "finalUrl": "https://cainesworld.vercel.app/",
+        "headers": {},
+        "json": {
+          "linkUrl": "https://cainesworld.vercel.app/",
+          "sourcePage": "https://agentjames.vercel.app/hire"
+        },
+        "redirects": [],
+        "status": 200
+      },
+      "family": "link",
+      "id": "link:agentjames:link.broken:https://cainesworld.vercel.app/",
+      "observedAt": "2026-09-05T17:04:06.355Z",
+      "reproduce": "curl -sS -I \"https://cainesworld.vercel.app/\"",
+      "request": {
+        "headersSent": [],
+        "method": "HEAD",
+        "timeoutMs": 10000,
+        "url": "https://cainesworld.vercel.app/"
+      },
+      "ruleId": "link.broken",
+      "targetId": "agentjames",
+      "title": "link https://cainesworld.vercel.app/ resolves",
+      "verdict": "pass"
+    },
+    {
+      "evidence": {
+        "finalUrl": "https://www.ebizolution.com/",
+        "headers": {},
+        "json": {
+          "linkUrl": "https://www.ebizolution.com/",
+          "retry": {
+            "finalUrl": "https://www.ebizolution.com/",
+            "method": "GET",
+            "status": 403
+          },
+          "sourcePage": "https://agentjames.vercel.app/hire"
+        },
+        "redirects": [],
+        "status": 403
+      },
+      "family": "link",
+      "id": "link:agentjames:link.broken:https://www.ebizolution.com/",
+      "observedAt": "2026-09-05T17:04:06.355Z",
+      "reproduce": "curl -sS -I \"https://www.ebizolution.com/\"",
+      "request": {
+        "headersSent": [],
+        "method": "HEAD",
+        "timeoutMs": 10000,
+        "url": "https://www.ebizolution.com/"
+      },
+      "ruleId": "link.unverifiable",
+      "targetId": "agentjames",
+      "title": "link https://www.ebizolution.com/ could not be verified (bot-block shape)",
+      "verdict": "finding"
+    },
+    {
+      "evidence": {
+        "finalUrl": "https://www.linkedin.com/in/james-lorenz-santos-720776251/",
+        "headers": {},
+        "json": {
+          "linkUrl": "https://www.linkedin.com/in/james-lorenz-santos-720776251/",
+          "retry": {
+            "finalUrl": "https://www.linkedin.com/in/james-lorenz-santos-720776251/",
+            "method": "GET",
+            "status": 999
+          },
+          "sourcePage": "https://agentjames.vercel.app/resume"
+        },
+        "redirects": [],
+        "status": 999
+      },
+      "family": "link",
+      "id": "link:agentjames:link.broken:https://www.linkedin.com/in/james-lorenz-santos-720776251/",
+      "observedAt": "2026-09-05T17:04:06.355Z",
+      "reproduce": "curl -sS -I \"https://www.linkedin.com/in/james-lorenz-santos-720776251/\"",
+      "request": {
+        "headersSent": [],
+        "method": "HEAD",
+        "timeoutMs": 10000,
+        "url": "https://www.linkedin.com/in/james-lorenz-santos-720776251/"
+      },
+      "ruleId": "link.unverifiable",
+      "targetId": "agentjames",
+      "title": "link https://www.linkedin.com/in/james-lorenz-santos-720776251/ could not be verified (bot-block shape)",
+      "verdict": "finding"
+    },
+    {
+      "evidence": {
+        "finalUrl": "https://github.com/jamessuuu",
+        "headers": {},
+        "json": {
+          "linkUrl": "https://github.com/jamessuuu",
+          "sourcePage": "https://agentjames.vercel.app/resume"
+        },
+        "redirects": [],
+        "status": 200
+      },
+      "family": "link",
+      "id": "link:agentjames:link.broken:https://github.com/jamessuuu",
+      "observedAt": "2026-09-05T17:04:06.355Z",
+      "reproduce": "curl -sS -I \"https://github.com/jamessuuu\"",
+      "request": {
+        "headersSent": [],
+        "method": "HEAD",
+        "timeoutMs": 10000,
+        "url": "https://github.com/jamessuuu"
+      },
+      "ruleId": "link.broken",
+      "targetId": "agentjames",
+      "title": "link https://github.com/jamessuuu resolves",
+      "verdict": "pass"
+    },
+    {
+      "evidence": {
+        "finalUrl": "https://ph.jobstreet.com/profiles/jameslorenz-santos-SXdpKyGqdK",
+        "headers": {},
+        "json": {
+          "linkUrl": "https://ph.jobstreet.com/profiles/jameslorenz-santos-SXdpKyGqdK",
+          "sourcePage": "https://agentjames.vercel.app/resume"
+        },
+        "redirects": [],
+        "status": 200
+      },
+      "family": "link",
+      "id": "link:agentjames:link.broken:https://ph.jobstreet.com/profiles/jameslorenz-santos-SXdpKyGqdK",
+      "observedAt": "2026-09-05T17:04:06.355Z",
+      "reproduce": "curl -sS -I \"https://ph.jobstreet.com/profiles/jameslorenz-santos-SXdpKyGqdK\"",
+      "request": {
+        "headersSent": [],
+        "method": "HEAD",
+        "timeoutMs": 10000,
+        "url": "https://ph.jobstreet.com/profiles/jameslorenz-santos-SXdpKyGqdK"
+      },
+      "ruleId": "link.broken",
+      "targetId": "agentjames",
+      "title": "link https://ph.jobstreet.com/profiles/jameslorenz-santos-SXdpKyGqdK resolves",
+      "verdict": "pass"
+    },
+    {
+      "evidence": {
+        "headers": {},
+        "redirects": []
+      },
+      "family": "link",
+      "id": "link:agentjames:link.broken:mailto:jameslorenzsantos@gmail.com",
+      "observedAt": "2026-09-05T17:04:06.355Z",
+      "reproduce": "curl -sS -I \"mailto:jameslorenzsantos@gmail.com\"",
+      "request": {
+        "headersSent": [],
+        "method": "HEAD",
+        "timeoutMs": 10000,
+        "url": "mailto:jameslorenzsantos@gmail.com"
+      },
+      "ruleId": "link.broken",
+      "skipReason": "not_applicable",
+      "targetId": "agentjames",
+      "title": "link mailto:jameslorenzsantos@gmail.com resolves",
+      "verdict": "skipped"
+    },
+    {
+      "evidence": {
+        "finalUrl": "https://github.com/jamessuuu/snapgauge",
+        "headers": {},
+        "json": {
+          "linkUrl": "https://github.com/jamessuuu/snapgauge",
+          "sourcePage": "https://agentjames.vercel.app/proof"
+        },
+        "redirects": [],
+        "status": 200
+      },
+      "family": "link",
+      "id": "link:agentjames:link.broken:https://github.com/jamessuuu/snapgauge",
+      "observedAt": "2026-09-05T17:04:06.355Z",
+      "reproduce": "curl -sS -I \"https://github.com/jamessuuu/snapgauge\"",
+      "request": {
+        "headersSent": [],
+        "method": "HEAD",
+        "timeoutMs": 10000,
+        "url": "https://github.com/jamessuuu/snapgauge"
+      },
+      "ruleId": "link.broken",
+      "targetId": "agentjames",
+      "title": "link https://github.com/jamessuuu/snapgauge resolves",
+      "verdict": "pass"
+    },
+    {
+      "evidence": {
+        "finalUrl": "https://github.com/jamessuuu/chaff",
+        "headers": {},
+        "json": {
+          "linkUrl": "https://github.com/jamessuuu/chaff",
+          "sourcePage": "https://agentjames.vercel.app/proof"
+        },
+        "redirects": [],
+        "status": 200
+      },
+      "family": "link",
+      "id": "link:agentjames:link.broken:https://github.com/jamessuuu/chaff",
+      "observedAt": "2026-09-05T17:04:06.355Z",
+      "reproduce": "curl -sS -I \"https://github.com/jamessuuu/chaff\"",
+      "request": {
+        "headersSent": [],
+        "method": "HEAD",
+        "timeoutMs": 10000,
+        "url": "https://github.com/jamessuuu/chaff"
+      },
+      "ruleId": "link.broken",
+      "targetId": "agentjames",
+      "title": "link https://github.com/jamessuuu/chaff resolves",
+      "verdict": "pass"
+    },
+    {
+      "evidence": {
+        "finalUrl": "https://github.com/jamessuuu/provenote",
+        "headers": {},
+        "json": {
+          "linkUrl": "https://github.com/jamessuuu/provenote",
+          "sourcePage": "https://agentjames.vercel.app/proof"
+        },
+        "redirects": [],
+        "status": 200
+      },
+      "family": "link",
+      "id": "link:agentjames:link.broken:https://github.com/jamessuuu/provenote",
+      "observedAt": "2026-09-05T17:04:06.355Z",
+      "reproduce": "curl -sS -I \"https://github.com/jamessuuu/provenote\"",
+      "request": {
+        "headersSent": [],
+        "method": "HEAD",
+        "timeoutMs": 10000,
+        "url": "https://github.com/jamessuuu/provenote"
+      },
+      "ruleId": "link.broken",
+      "targetId": "agentjames",
+      "title": "link https://github.com/jamessuuu/provenote resolves",
+      "verdict": "pass"
+    },
+    {
+      "evidence": {
+        "finalUrl": "https://github.com/jamessuuu/claude-code-boundary-guard",
+        "headers": {},
+        "json": {
+          "linkUrl": "https://github.com/jamessuuu/claude-code-boundary-guard",
+          "sourcePage": "https://agentjames.vercel.app/proof"
+        },
+        "redirects": [],
+        "status": 200
+      },
+      "family": "link",
+      "id": "link:agentjames:link.broken:https://github.com/jamessuuu/claude-code-boundary-guard",
+      "observedAt": "2026-09-05T17:04:06.355Z",
+      "reproduce": "curl -sS -I \"https://github.com/jamessuuu/claude-code-boundary-guard\"",
+      "request": {
+        "headersSent": [],
+        "method": "HEAD",
+        "timeoutMs": 10000,
+        "url": "https://github.com/jamessuuu/claude-code-boundary-guard"
+      },
+      "ruleId": "link.broken",
+      "targetId": "agentjames",
+      "title": "link https://github.com/jamessuuu/claude-code-boundary-guard resolves",
+      "verdict": "pass"
+    },
+    {
+      "evidence": {
+        "finalUrl": "https://github.com/jamessuuu/sluice",
+        "headers": {},
+        "json": {
+          "linkUrl": "https://github.com/jamessuuu/sluice",
+          "sourcePage": "https://agentjames.vercel.app/proof"
+        },
+        "redirects": [],
+        "status": 200
+      },
+      "family": "link",
+      "id": "link:agentjames:link.broken:https://github.com/jamessuuu/sluice",
+      "observedAt": "2026-09-05T17:04:06.355Z",
+      "reproduce": "curl -sS -I \"https://github.com/jamessuuu/sluice\"",
+      "request": {
+        "headersSent": [],
+        "method": "HEAD",
+        "timeoutMs": 10000,
+        "url": "https://github.com/jamessuuu/sluice"
+      },
+      "ruleId": "link.broken",
+      "targetId": "agentjames",
+      "title": "link https://github.com/jamessuuu/sluice resolves",
+      "verdict": "pass"
+    },
+    {
+      "evidence": {
+        "finalUrl": "https://github.com/jamessuuu/shipgauge",
+        "headers": {},
+        "json": {
+          "linkUrl": "https://github.com/jamessuuu/shipgauge",
+          "sourcePage": "https://agentjames.vercel.app/proof"
+        },
+        "redirects": [],
+        "status": 200
+      },
+      "family": "link",
+      "id": "link:agentjames:link.broken:https://github.com/jamessuuu/shipgauge",
+      "observedAt": "2026-09-05T17:04:06.355Z",
+      "reproduce": "curl -sS -I \"https://github.com/jamessuuu/shipgauge\"",
+      "request": {
+        "headersSent": [],
+        "method": "HEAD",
+        "timeoutMs": 10000,
+        "url": "https://github.com/jamessuuu/shipgauge"
+      },
+      "ruleId": "link.broken",
+      "targetId": "agentjames",
+      "title": "link https://github.com/jamessuuu/shipgauge resolves",
+      "verdict": "pass"
+    },
+    {
+      "evidence": {
+        "finalUrl": "https://github.com/jamessuuu/graticule",
+        "headers": {},
+        "json": {
+          "linkUrl": "https://github.com/jamessuuu/graticule",
+          "sourcePage": "https://agentjames.vercel.app/proof"
+        },
+        "redirects": [],
+        "status": 200
+      },
+      "family": "link",
+      "id": "link:agentjames:link.broken:https://github.com/jamessuuu/graticule",
+      "observedAt": "2026-09-05T17:04:06.355Z",
+      "reproduce": "curl -sS -I \"https://github.com/jamessuuu/graticule\"",
+      "request": {
+        "headersSent": [],
+        "method": "HEAD",
+        "timeoutMs": 10000,
+        "url": "https://github.com/jamessuuu/graticule"
+      },
+      "ruleId": "link.broken",
+      "targetId": "agentjames",
+      "title": "link https://github.com/jamessuuu/graticule resolves",
+      "verdict": "pass"
+    },
+    {
+      "evidence": {
+        "finalUrl": "https://github.com/jamessuuu/clarifier",
+        "headers": {},
+        "json": {
+          "linkUrl": "https://github.com/jamessuuu/clarifier",
+          "sourcePage": "https://agentjames.vercel.app/proof"
+        },
+        "redirects": [],
+        "status": 200
+      },
+      "family": "link",
+      "id": "link:agentjames:link.broken:https://github.com/jamessuuu/clarifier",
+      "observedAt": "2026-09-05T17:04:06.355Z",
+      "reproduce": "curl -sS -I \"https://github.com/jamessuuu/clarifier\"",
+      "request": {
+        "headersSent": [],
+        "method": "HEAD",
+        "timeoutMs": 10000,
+        "url": "https://github.com/jamessuuu/clarifier"
+      },
+      "ruleId": "link.broken",
+      "targetId": "agentjames",
+      "title": "link https://github.com/jamessuuu/clarifier resolves",
+      "verdict": "pass"
+    },
+    {
+      "evidence": {
+        "finalUrl": "https://github.com/jamessuuu/pitman",
+        "headers": {},
+        "json": {
+          "linkUrl": "https://github.com/jamessuuu/pitman",
+          "sourcePage": "https://agentjames.vercel.app/proof"
+        },
+        "redirects": [],
+        "status": 200
+      },
+      "family": "link",
+      "id": "link:agentjames:link.broken:https://github.com/jamessuuu/pitman",
+      "observedAt": "2026-09-05T17:04:06.355Z",
+      "reproduce": "curl -sS -I \"https://github.com/jamessuuu/pitman\"",
+      "request": {
+        "headersSent": [],
+        "method": "HEAD",
+        "timeoutMs": 10000,
+        "url": "https://github.com/jamessuuu/pitman"
+      },
+      "ruleId": "link.broken",
+      "targetId": "agentjames",
+      "title": "link https://github.com/jamessuuu/pitman resolves",
+      "verdict": "pass"
+    },
+    {
+      "evidence": {
+        "finalUrl": "https://github.com/jamessuuu/tiltmeter",
+        "headers": {},
+        "json": {
+          "linkUrl": "https://github.com/jamessuuu/tiltmeter",
+          "sourcePage": "https://agentjames.vercel.app/proof"
+        },
+        "redirects": [],
+        "status": 200
+      },
+      "family": "link",
+      "id": "link:agentjames:link.broken:https://github.com/jamessuuu/tiltmeter",
+      "observedAt": "2026-09-05T17:04:06.355Z",
+      "reproduce": "curl -sS -I \"https://github.com/jamessuuu/tiltmeter\"",
+      "request": {
+        "headersSent": [],
+        "method": "HEAD",
+        "timeoutMs": 10000,
+        "url": "https://github.com/jamessuuu/tiltmeter"
+      },
+      "ruleId": "link.broken",
+      "targetId": "agentjames",
+      "title": "link https://github.com/jamessuuu/tiltmeter resolves",
+      "verdict": "pass"
+    },
+    {
+      "evidence": {
+        "finalUrl": "https://github.com/jamessuuu/dogwatch",
+        "headers": {},
+        "json": {
+          "linkUrl": "https://github.com/jamessuuu/dogwatch",
+          "sourcePage": "https://agentjames.vercel.app/proof"
+        },
+        "redirects": [],
+        "status": 200
+      },
+      "family": "link",
+      "id": "link:agentjames:link.broken:https://github.com/jamessuuu/dogwatch",
+      "observedAt": "2026-09-05T17:04:06.355Z",
+      "reproduce": "curl -sS -I \"https://github.com/jamessuuu/dogwatch\"",
+      "request": {
+        "headersSent": [],
+        "method": "HEAD",
+        "timeoutMs": 10000,
+        "url": "https://github.com/jamessuuu/dogwatch"
+      },
+      "ruleId": "link.broken",
+      "targetId": "agentjames",
+      "title": "link https://github.com/jamessuuu/dogwatch resolves",
+      "verdict": "pass"
+    },
+    {
+      "evidence": {
+        "finalUrl": "https://github.com/jamessuuu/swage",
+        "headers": {},
+        "json": {
+          "linkUrl": "https://github.com/jamessuuu/swage",
+          "sourcePage": "https://agentjames.vercel.app/proof"
+        },
+        "redirects": [],
+        "status": 200
+      },
+      "family": "link",
+      "id": "link:agentjames:link.broken:https://github.com/jamessuuu/swage",
+      "observedAt": "2026-09-05T17:04:06.355Z",
+      "reproduce": "curl -sS -I \"https://github.com/jamessuuu/swage\"",
+      "request": {
+        "headersSent": [],
+        "method": "HEAD",
+        "timeoutMs": 10000,
+        "url": "https://github.com/jamessuuu/swage"
+      },
+      "ruleId": "link.broken",
+      "targetId": "agentjames",
+      "title": "link https://github.com/jamessuuu/swage resolves",
+      "verdict": "pass"
+    },
+    {
+      "evidence": {
+        "finalUrl": "https://github.com/jamessuuu/galley",
+        "headers": {},
+        "json": {
+          "linkUrl": "https://github.com/jamessuuu/galley",
+          "sourcePage": "https://agentjames.vercel.app/proof"
+        },
+        "redirects": [],
+        "status": 200
+      },
+      "family": "link",
+      "id": "link:agentjames:link.broken:https://github.com/jamessuuu/galley",
+      "observedAt": "2026-09-05T17:04:06.355Z",
+      "reproduce": "curl -sS -I \"https://github.com/jamessuuu/galley\"",
+      "request": {
+        "headersSent": [],
+        "method": "HEAD",
+        "timeoutMs": 10000,
+        "url": "https://github.com/jamessuuu/galley"
+      },
+      "ruleId": "link.broken",
+      "targetId": "agentjames",
+      "title": "link https://github.com/jamessuuu/galley resolves",
+      "verdict": "pass"
+    },
+    {
+      "evidence": {
+        "finalUrl": "https://github.com/jamessuuu/assay",
+        "headers": {},
+        "json": {
+          "linkUrl": "https://github.com/jamessuuu/assay",
+          "sourcePage": "https://agentjames.vercel.app/proof"
+        },
+        "redirects": [],
+        "status": 200
+      },
+      "family": "link",
+      "id": "link:agentjames:link.broken:https://github.com/jamessuuu/assay",
+      "observedAt": "2026-09-05T17:04:06.355Z",
+      "reproduce": "curl -sS -I \"https://github.com/jamessuuu/assay\"",
+      "request": {
+        "headersSent": [],
+        "method": "HEAD",
+        "timeoutMs": 10000,
+        "url": "https://github.com/jamessuuu/assay"
+      },
+      "ruleId": "link.broken",
+      "targetId": "agentjames",
+      "title": "link https://github.com/jamessuuu/assay resolves",
+      "verdict": "pass"
+    },
+    {
+      "evidence": {
+        "finalUrl": "https://github.com/jamessuuu/halo-halo",
+        "headers": {},
+        "json": {
+          "linkUrl": "https://github.com/jamessuuu/halo-halo",
+          "sourcePage": "https://agentjames.vercel.app/proof"
+        },
+        "redirects": [],
+        "status": 200
+      },
+      "family": "link",
+      "id": "link:agentjames:link.broken:https://github.com/jamessuuu/halo-halo",
+      "observedAt": "2026-09-05T17:04:06.355Z",
+      "reproduce": "curl -sS -I \"https://github.com/jamessuuu/halo-halo\"",
+      "request": {
+        "headersSent": [],
+        "method": "HEAD",
+        "timeoutMs": 10000,
+        "url": "https://github.com/jamessuuu/halo-halo"
+      },
+      "ruleId": "link.broken",
+      "targetId": "agentjames",
+      "title": "link https://github.com/jamessuuu/halo-halo resolves",
+      "verdict": "pass"
+    },
+    {
+      "evidence": {
+        "finalUrl": "https://github.com/jamessuuu/clubscope-insight-engine",
+        "headers": {},
+        "json": {
+          "linkUrl": "https://github.com/jamessuuu/clubscope-insight-engine",
+          "sourcePage": "https://agentjames.vercel.app/proof"
+        },
+        "redirects": [],
+        "status": 200
+      },
+      "family": "link",
+      "id": "link:agentjames:link.broken:https://github.com/jamessuuu/clubscope-insight-engine",
+      "observedAt": "2026-09-05T17:04:06.355Z",
+      "reproduce": "curl -sS -I \"https://github.com/jamessuuu/clubscope-insight-engine\"",
+      "request": {
+        "headersSent": [],
+        "method": "HEAD",
+        "timeoutMs": 10000,
+        "url": "https://github.com/jamessuuu/clubscope-insight-engine"
+      },
+      "ruleId": "link.broken",
+      "targetId": "agentjames",
+      "title": "link https://github.com/jamessuuu/clubscope-insight-engine resolves",
+      "verdict": "pass"
+    }
+  ],
+  "commit": "f9063baa87e5d822cd300e131ac7ab3ef17c06cb",
+  "cost": {
+    "breakdown": {},
+    "certainty": "reported",
+    "currency": "USD",
+    "method": "pricing.2026-08-08.json",
+    "microUsd": 0
+  },
+  "degraded": [
+    {
+      "component": "llm",
+      "reason": "api_error"
+    }
+  ],
+  "endedAt": "2026-09-05T17:04:27.249Z",
+  "findings": [
+    {
+      "checkId": "link:agentjames:link.broken:https://www.ebizolution.com/",
+      "fingerprint": "acdac985eadc33fb8b747afc5ad3c6a5c78c339b3bba0e9df2f14e36f9347f37",
+      "firstSeenRunId": "019fe28f-81a4-710f-9320-8d080ad9b80b",
+      "id": "F-460547b9405d",
+      "ruleId": "link.unverifiable",
+      "severity": "low",
+      "sources": [
+        {
+          "evidencePath": "checks[?(@.id==\"link:agentjames:link.broken:https://www.ebizolution.com/\")].evidence",
+          "method": "HEAD",
+          "retrievedAt": "2026-09-05T17:04:06.355Z",
+          "status": 403,
+          "url": "https://www.ebizolution.com/"
+        }
+      ],
+      "statement": "HEAD https://www.ebizolution.com/ (linked from https://agentjames.vercel.app/hire) → 403; retried GET → 403 at 2026-09-05T17:04:06.355Z",
+      "status": "confirmed"
+    },
+    {
+      "checkId": "link:agentjames:link.broken:https://www.linkedin.com/in/james-lorenz-santos-720776251/",
+      "fingerprint": "8666a7918891135e662b4e71c9dbd29730aab346d8b747629cb02c0f6aea1442",
+      "firstSeenRunId": "019fe28f-81a4-710f-9320-8d080ad9b80b",
+      "id": "F-b377c97efc8d",
+      "ruleId": "link.unverifiable",
+      "severity": "low",
+      "sources": [
+        {
+          "evidencePath": "checks[?(@.id==\"link:agentjames:link.broken:https://www.linkedin.com/in/james-lorenz-santos-720776251/\")].evidence",
+          "method": "HEAD",
+          "retrievedAt": "2026-09-05T17:04:06.355Z",
+          "status": 999,
+          "url": "https://www.linkedin.com/in/james-lorenz-santos-720776251/"
+        }
+      ],
+      "statement": "HEAD https://www.linkedin.com/in/james-lorenz-santos-720776251/ (linked from https://agentjames.vercel.app/resume) → 999; retried GET → 999 at 2026-09-05T17:04:06.355Z",
+      "status": "confirmed"
+    }
+  ],
+  "formatVersion": 1,
+  "gates": [],
+  "kind": "scheduled",
+  "llm": {
+    "calls": 0,
+    "inputTokens": 0,
+    "microUsd": 0,
+    "outputTokens": 0,
+    "reason": "api_error"
+  },
+  "metrics": [
+    {
+      "id": "metric:agentjames:reach.ms",
+      "name": "response_time_ms",
+      "note": "recorded, not judged",
+      "targetId": "agentjames",
+      "unit": "ms",
+      "value": 420
+    }
+  ],
+  "pricingManifest": "pricing.2026-08-08.json",
+  "refusals": [],
+  "runId": "01a07287-04d2-78b7-9bac-a11e681512ba",
+  "scheduledFor": null,
+  "startedAt": "2026-09-05T17:04:06.354Z",
+  "targetsHash": "480adc10639f03737b59cc3d1c8edeea6eaca7a108362496237028ab45e389b7",
+  "trigger": {
+    "actor": "jamessuuu",
+    "runUrl": "https://github.com/jamessuuu/dogwatch/actions/runs/33979770076",
+    "workflow": "watch"
+  },
+  "watchVersion": "0.1.0-alpha.0"
+}
