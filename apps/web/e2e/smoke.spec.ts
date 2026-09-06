@@ -58,9 +58,10 @@ test.describe("footer + favicon on every page", () => {
       // The footer's mark stays the maker's chip, never the project glyph —
       // this is the bug this same change fixed (Footer.tsx used to point at
       // /brand/favicon.svg, which under the old generator WAS the chip but
-      // under the new one is the project glyph).
-      const chipImg = page.locator('footer img[src="/brand/mark-16.svg"]');
-      await expect(chipImg).toHaveCount(1);
+      // under the new one is the project glyph). Since attribution-kit v1 the chip is
+      // an inline SVG with its own accessible name, not an <img>.
+      const chipMark = page.locator('footer svg[aria-label="Agent James"]');
+      await expect(chipMark).toHaveCount(1);
     });
   }
 
