@@ -243,13 +243,41 @@ test.describe("/gate — the only page that POSTs (SPEC S5 step 3, M5)", () => {
 });
 
 test.describe("/methodology", () => {
-  test("prints the rubric, the anti-manufacture rule, the autonomy ladder, and limitations", async ({ page }) => {
+  test("prints the rubric, links each rule to its planted fixture, and keeps the prose behind disclosure", async ({
+    page,
+  }) => {
     await page.goto("/methodology");
+
+    // The claim is the rubric's scale, stated at display size. 15 rules
+    // across 13 rows (R2/R3 and R7/R8 share one), so this also guards the
+    // row-count-vs-rule-count bug that shipped 13 here for one build.
+    await expect(page.getByRole("heading", { level: 1 })).toContainText("15 rules");
     await expect(page.getByRole("heading", { name: "The honesty rubric" })).toBeVisible();
-    await expect(page.getByText("R13", { exact: true }).first()).toBeVisible();
-    await expect(page.getByRole("heading", { name: "The autonomy ladder" })).toBeVisible();
-    await expect(page.getByRole("heading", { name: "Limitations" })).toBeVisible();
-    await expect(page.getByText("not a product you install")).toBeVisible();
+
+    // Every rule reaches the planted record that proves it fires. The page
+    // itself fails the BUILD if a link is dead, so this asserts the link is
+    // actually rendered and navigable, not merely that the array is right.
+    const fixtureLink = page.locator('a[href="/fixtures/r13-manufactured-finding"]');
+    await expect(fixtureLink).toBeVisible();
+    await fixtureLink.click();
+    await expect(page.getByText(/planted rubric-violation fixture/i)).toBeVisible();
+
+    // ...and the checker really does catch it there, in the browser.
+    await page.getByRole("button", { name: /Verify this record/i }).click();
+    await expect(page.locator("[data-verify-state]")).toHaveAttribute("data-verify-state", "fail");
+
+    // Prose moved into <details>: present in the DOM for a crawler and a
+    // screen reader, collapsed for a reader who wants the table.
+    await page.goto("/methodology");
+    const disclosure = page.getByText("R13: a finding is never written, only derived");
+    await expect(disclosure).toBeVisible();
+    await expect(page.getByText("not published to npm")).toBeHidden();
+    await disclosure.click();
+    await expect(page.getByText(/never written by a human or a model/i)).toBeVisible();
+
+    // The limitations survived the restructure into a grid.
+    await expect(page.getByRole("heading", { name: "What this is not" })).toBeVisible();
+    await expect(page.getByText(/Nothing here is published to npm/i)).toBeVisible();
   });
 });
 
