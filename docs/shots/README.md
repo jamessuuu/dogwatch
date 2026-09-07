@@ -49,9 +49,20 @@ ambient wash is a plain radial gradient at 7%, which costs nothing.
 | `scripts/font-check.mjs` | the vendored faces actually load and compute on a live URL |
 | `scripts/live-check.mjs` | the deployed page WORKS — clicks Verify, listens for `pageerror` |
 | `scripts/falsify.mjs` | every `*:check` can go red when a defect is planted |
+| `scripts/motion-check.mjs` | all motion actually stops under `prefers-reduced-motion` |
 
 `falsify.mjs` is the important one. A checker that silently matches nothing
 reports "no drift", which is indistinguishable from a clean pass — the exact
 failure dogwatch's own rubric exists to catch in published records. All five
 proved they can fail, including the chain check behind the landing page's
 "24/24 hash links verified".
+
+Reduced motion is verified the same way — by rendering, not by reading
+the stylesheet. Tailwind's `transition-*` utilities are not wrapped in the
+media query, so a correct-looking reduced-motion block still left 7
+transitions running at 150ms on the deployed page. Measured now:
+
+| context | transitions | animating |
+|---|---|---|
+| normal | 39 | 6 |
+| `prefers-reduced-motion: reduce` | 0 | 0 |
