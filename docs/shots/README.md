@@ -50,6 +50,7 @@ ambient wash is a plain radial gradient at 7%, which costs nothing.
 | `scripts/live-check.mjs` | the deployed page WORKS — clicks Verify, listens for `pageerror` |
 | `scripts/falsify.mjs` | every `*:check` can go red when a defect is planted |
 | `scripts/motion-check.mjs` | all motion actually stops under `prefers-reduced-motion` |
+| `scripts/glyph-check.mjs` | no DECORATIVE glyph depends on the visitor's font coverage |
 
 `falsify.mjs` is the important one. A checker that silently matches nothing
 reports "no drift", which is indistinguishable from a clean pass — the exact
@@ -85,3 +86,22 @@ The rubric -> fixture -> Verify chain is asserted end to end by the e2e
 suite and re-checked on the deployed build: clicking R13's planted record
 and pressing Verify yields `data-verify-state="fail"` with
 `E_MANUFACTURED_FINDING`.
+
+## Glyph coverage
+
+The three vendored faces are subset to the Google Fonts "latin" range and
+declare it in their `@font-face` blocks, so any character outside it never
+reaches Archivo at all — it falls through to a system font. That is fine for
+punctuation and tofu for a rare dingbat, and it is invisible from a machine
+that happens to have the glyph.
+
+| | before | after |
+|---|---|---|
+| U+2691 BLACK FLAG (rubric fixture links) | 16, system font | 0 — inline SVG |
+| U+25B8 / U+25BE (disclosure markers) | 7, system font | 0 — inline SVG |
+| U+2192 / U+21D2 / U+2265 (prose) | 16 | 16, allowlisted with reasons |
+
+Text punctuation stays as text: rendering it as SVG would break selection,
+copy-paste and screen-reader output. A decorative mark is not allowlistable —
+it belongs in `components/Marks.tsx`. Proved the gate fails by planting a raw
+U+2691 on `/checks`.
