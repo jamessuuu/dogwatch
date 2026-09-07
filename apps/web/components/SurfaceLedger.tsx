@@ -40,18 +40,19 @@ function Row({ surface, checks }: { surface: Surface; checks: number }) {
       </div>
       <div className="flex-1">
         <p className="font-mono text-xs break-all text-ink-muted">{surface.url}</p>
-        <p className="mt-1 text-sm leading-relaxed text-ink-muted">
-          {live ? (
-            <>
-              {checks} checks ran against it last night across {surface.families.length} families.
-            </>
-          ) : (
-            <>
-              Skipped by config before any request. This bare subdomain resolves to an unrelated third party&rsquo;s
-              project, so probing it could publish a claim about someone else&rsquo;s software.
-            </>
-          )}
-        </p>
+        {/* The target's OWN committed note, never a sentence invented here.
+            A hardcoded "this subdomain belongs to a stranger" was rendered
+            against all five skipped rows, and went false the moment the
+            dogwatch row's URL was corrected to its real alias — which is
+            not a squat. A page that narrates the data instead of showing
+            it will drift from it; this is the same rule /checks already
+            follows. */}
+        <p className="mt-1 text-sm leading-relaxed text-ink-muted">{surface.note}</p>
+        {live && (
+          <p className="mt-1 font-mono text-xs text-ink">
+            {checks} checks ran last night across {surface.families.length} families.
+          </p>
+        )}
       </div>
     </div>
   );

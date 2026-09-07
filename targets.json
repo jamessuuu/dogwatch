@@ -54,7 +54,7 @@
       "families": ["reach", "header", "brand", "link", "weight"],
       "expectedHeaders": [],
       "weightBudgetBytes": 300000,
-      "note": "Not yet deployed (self-watch: dogwatch watches its own future site once apps/web ships at M6). See tiltmeter note — same verified-live third-party-squat situation on this subdomain."
+      "note": "Deployed at this URL since M6. Self-watch is nevertheless OFF (deployed:false), so every family here is skipped reasonCode:not_published by config before any request — turning it on changes what the nightly run does and is a deliberate, separate step. Unlike the other four, this subdomain is NOT a third-party squat: the bare dogwatch.vercel.app is, which is why the URL above is the real alias read from `vercel inspect` rather than the guessable one."
     },
     {
       "id": "agentjames",
