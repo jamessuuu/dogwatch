@@ -97,7 +97,7 @@ test.describe("/ — home", () => {
     // The h1 states the finding, not the product name (the name is the nav's
     // home link). Server-rendered, so it is present with JS off.
     await expect(page.getByRole("heading", { level: 1 })).toContainText("nights watched");
-    await expect(page.getByRole("heading", { level: 1 })).toContainText(`${String(totalChecks)} checks`);
+    await expect(page.getByRole("heading", { level: 1 })).toContainText(`${totalChecks} checks`);
     // The noscript fallback in the dead-man banner must render real content
     // (both timestamps), not an empty shell, when JS never runs at all.
     await expect(page.locator("noscript")).toHaveCount(1);
@@ -119,7 +119,7 @@ test.describe("/ — home", () => {
     // Scoped to the h1 so the record excerpt's own "N checks" prose below
     // cannot satisfy it by accident.
     const headline = page.getByRole("heading", { level: 1 });
-    await expect(headline).toContainText(`${String(totalChecks)} checks`);
+    await expect(headline).toContainText(`${totalChecks} checks`);
     await expect(headline).toContainText(`${String(nightCount)} nights watched`);
     // The per-night series: one column per calendar day, gaps included.
     await expect(page.getByRole("img", { name: /Checks run per night/i })).toBeVisible();

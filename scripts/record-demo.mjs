@@ -146,7 +146,21 @@ const SCENARIOS = {
 
   async dogwatch(page, base) {
     await page.goto(base, { waitUntil: "domcontentloaded" });
-    await pause(page, 1500);
+    await pause(page, 1800);
+    // The landing claim is now the published month itself, so the recording
+    // has to show it: the headline, then the per-night series under it.
+    // Scrolled by heading rather than a fixed distance — the page grows a
+    // column every night, and a pixel offset would drift off the chart.
+    const chart = page.getByRole("heading", { name: /Checks run per night/i });
+    if (await chart.count()) {
+      await chart.scrollIntoViewIfNeeded();
+      await pause(page, 2400);
+    }
+    const chain = page.getByRole("heading", { name: /records, .* links, checked not claimed/i });
+    if (await chain.count()) {
+      await chain.scrollIntoViewIfNeeded();
+      await pause(page, 2000);
+    }
     await page.goto(`${base}/runs`, { waitUntil: "domcontentloaded" });
     await pause(page, 1500);
     const firstRun = page.locator('a[href*="/runs/"]').first();
