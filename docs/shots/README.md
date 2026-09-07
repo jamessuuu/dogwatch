@@ -66,3 +66,22 @@ transitions running at 150ms on the deployed page. Measured now:
 |---|---|---|
 | normal | 39 | 6 |
 | `prefers-reduced-motion: reduce` | 0 | 0 |
+
+## Routes
+
+| route | before | after |
+|---|---|---|
+| `/` | one line about last night | 23 nights, the chart, the chain, the six surfaces, the cost |
+| `/runs/<id>` | id + metadata, then 121 rows | a six-cell summary first; 533px mobile overflow fixed |
+| `/methodology` | a rubric table and four prose blocks | 15 rules each linked to the planted record that proves it fires; prose behind disclosure |
+| `/checks` | hairline list of families | leads with what is registered and NOT built; families as panels |
+| `/docs` | long-form reference | unchanged — still prose-heavy, see the handover |
+
+`/methodology`'s fixture links are checked at build in both directions: a
+dead link fails the build, and so does a committed fixture the rubric has
+stopped covering. Proved by planting `r99-does-not-exist`.
+
+The rubric -> fixture -> Verify chain is asserted end to end by the e2e
+suite and re-checked on the deployed build: clicking R13's planted record
+and pressing Verify yields `data-verify-state="fail"` with
+`E_MANUFACTURED_FINDING`.
