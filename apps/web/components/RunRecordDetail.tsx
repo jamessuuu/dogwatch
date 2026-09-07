@@ -3,6 +3,7 @@ import { groupChecksByFamily } from "../lib/group-checks";
 import { formatDateTime, formatUsd } from "../lib/format";
 import { githubBlobUrl } from "../lib/data";
 import { VerifyButton } from "./VerifyButton";
+import { DisclosureMark } from "./Marks";
 
 function VerdictBadge({ verdict }: { verdict: Check["verdict"] }) {
   const styles: Record<Check["verdict"], string> = {
@@ -46,8 +47,7 @@ function FamilySection({ family, checks }: { family: string; checks: Check[] }) 
       {passes.length > 0 && (
         <details className="group">
           <summary className="cursor-pointer py-2 text-sm text-ink-muted marker:content-none">
-            <span className="inline-block w-4 text-ink-muted group-open:hidden">▸</span>
-            <span className="hidden w-4 text-ink-muted group-open:inline-block">▾</span>
+            <DisclosureMark className="mr-2 text-ink-muted transition-transform group-open:rotate-90" />
             {passes.length} passed (collapsed)
           </summary>
           <ul className="divide-y divide-rule">{passes.map((c) => <CheckRow key={c.id} check={c} />)}</ul>

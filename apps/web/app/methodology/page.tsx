@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { listViolationFixtureNames } from "../../lib/data";
+import { DisclosureMark, FlagMark } from "../../components/Marks";
 
 export const metadata: Metadata = { title: "Methodology" };
 
@@ -125,7 +126,7 @@ function Note({ title, children }: { title: string; children: React.ReactNode })
   return (
     <details className="panel group px-5 py-4 sm:px-6">
       <summary className="control -mx-2 flex min-h-11 cursor-pointer list-none items-center gap-3 px-2 text-base font-semibold text-ink marker:content-none">
-        <span className="font-mono text-xs text-skip transition-transform group-open:rotate-90">&#9656;</span>
+        <DisclosureMark className="text-skip transition-transform group-open:rotate-90" />
         {title}
       </summary>
       <div className="mt-3 max-w-prose text-sm leading-relaxed text-ink-muted">{children}</div>
@@ -183,7 +184,7 @@ export default function MethodologyPage() {
                       href={`/fixtures/${f}`}
                       className="control inline-flex min-h-11 items-center gap-1.5 rounded-[5px] px-2 py-1 font-mono text-[11px] text-amber hover:bg-well"
                     >
-                      <span aria-hidden="true">&#9873;</span>
+                      <FlagMark />
                       {f.replace(/^r\d+b?-/, "")}
                     </Link>
                   ))}
