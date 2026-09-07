@@ -223,6 +223,65 @@ function AuditSection({ record }: { record: RunRecord }) {
   );
 }
 
+/**
+ * A run's shape before its 121 rows of detail.
+ *
+ * The page previously opened with the run id and a metadata line, then went
+ * straight into the check list — so "what happened on this night" required
+ * scrolling the whole record. These six numbers are read off the record
+ * itself (never the index, which is a derived file) and answer it at a
+ * glance; the detail below is then evidence for them rather than the only
+ * way to find them.
+ */
+function RunSummary({ record }: { record: RunRecord }) {
+  const verdicts = { pass: 0, finding: 0, skipped: 0, error: 0 };
+  for (const c of record.checks) {
+    if (c.verdict === "pass") verdicts.pass += 1;
+    else if (c.verdict === "finding") verdicts.finding += 1;
+    else if (c.verdict === "skipped") verdicts.skipped += 1;
+    else if (c.verdict === "error") verdicts.error += 1;
+  }
+  const quiet = record.findings.length === 0;
+
+  return (
+    <header className="ambient flex flex-col gap-6">
+      <div className="flex flex-col gap-2">
+        <p className="font-mono text-xs tracking-[0.14em] text-ink-muted uppercase">
+          {record.kind} run &middot; commit {record.commit.slice(0, 12)}
+        </p>
+        <h1 className="font-mono text-2xl font-semibold tracking-tight break-all text-ink sm:text-3xl">
+          {record.runId}
+        </h1>
+        <p className="text-sm text-ink-muted">
+          {formatDateTime(record.startedAt)} &rarr; {formatDateTime(record.endedAt)}
+        </p>
+      </div>
+
+      <div className="panel grid grid-cols-2 gap-px overflow-hidden bg-rule sm:grid-cols-3 lg:grid-cols-6">
+        {[
+          { v: String(record.checks.length), l: "checks" },
+          { v: String(verdicts.pass), l: "passed" },
+          { v: String(verdicts.skipped), l: "skipped" },
+          {
+            v: String(record.findings.length),
+            l: record.findings.length === 1 ? "finding" : "findings",
+            tone: quiet ? "" : "text-amber",
+          },
+          { v: String(record.gates.length), l: record.gates.length === 1 ? "gate" : "gates" },
+          { v: formatUsd(record.cost.microUsd), l: "cost" },
+        ].map((s) => (
+          <div key={s.l + s.v} className="flex flex-col gap-1 bg-raised p-4">
+            <span className={`font-mono text-xl leading-none font-semibold tabular-nums sm:text-2xl ${s.tone ?? "text-ink"}`}>
+              {s.v}
+            </span>
+            <span className="text-xs text-ink-muted">{s.l}</span>
+          </div>
+        ))}
+      </div>
+    </header>
+  );
+}
+
 export interface RunRecordDetailProps {
   record: RunRecord;
   raw: string;
@@ -235,13 +294,7 @@ export interface RunRecordDetailProps {
 export function RunRecordDetail({ record, raw, relativePath }: RunRecordDetailProps) {
   return (
     <div className="flex flex-col gap-8">
-      <div className="flex flex-col gap-2">
-        <h1 className="font-mono text-lg font-semibold tracking-tight text-ink">{record.runId}</h1>
-        <p className="text-sm text-ink-muted">
-          {record.kind} · started {formatDateTime(record.startedAt)} · ended {formatDateTime(record.endedAt)} · commit{" "}
-          <span className="font-mono">{record.commit.slice(0, 12)}</span>
-        </p>
-      </div>
+      <RunSummary record={record} />
 
       <VerifyButton record={record} />
 
