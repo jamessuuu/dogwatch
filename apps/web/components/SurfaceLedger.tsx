@@ -31,7 +31,7 @@ function Row({ surface, checks }: { surface: Surface; checks: number }) {
         <span className="font-mono text-sm font-semibold text-ink">{surface.name}</span>
         <span
           className={`ml-auto px-1.5 py-0.5 font-mono text-[10px] tracking-wide uppercase sm:ml-0 ${
-            live ? "bg-pass-wash text-pass" : "bg-well text-skip"
+            live ? "bg-pass-wash text-pass" : "bg-well text-ink-muted"
           }`}
           style={{ borderRadius: "4px" }}
         >

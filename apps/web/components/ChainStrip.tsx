@@ -61,16 +61,16 @@ export function ChainStrip({ history }: { history: History }) {
                 className="control well flex min-h-11 w-full flex-col justify-center gap-0.5 px-2.5 py-2 hover:bg-sunk"
               >
                 <span className="font-mono text-[11px] text-ink">
-                  <span className="text-skip">{String(i + 1).padStart(2, "0")}</span> {short(n.recordHash)}
+                  <span className="text-ink-muted">{String(i + 1).padStart(2, "0")}</span> {short(n.recordHash)}
                 </span>
-                <span className="font-mono text-[10px] text-skip">{n.day}</span>
+                <span className="font-mono text-[10px] text-ink-muted">{n.day}</span>
               </Link>
             </li>
           ))}
         </ol>
 
         <p className="border-t border-rule pt-4 font-mono text-xs break-all text-ink-muted">
-          genesis <span className="text-skip">prevRecordHash: null</span> &rarr; head{" "}
+          genesis <span className="text-ink-muted">prevRecordHash: null</span> &rarr; head{" "}
           <span className="text-ink">{history.latest.recordHash}</span>
           <br />
           {history.totalAuditEvents.toLocaleString("en-US")} hash-linked audit events inside them

@@ -141,7 +141,14 @@
   --color-pass-wash: #eef2e3;
   --color-fail: #9f1239;
   --color-fail-wash: #fbeaee;
-  --color-skip: #8a8175;
+  /* NO third text tier below --color-ink-muted. #8a8175 used to live here as
+     a "skipped / not applicable" tone, and it failed WCAG 1.4.3 in 59 places
+     at 3.32:1 against paper — every chain-chip date, every "not probed" tag,
+     every "lands at M<n>" badge. Solving for 4.5:1 while keeping the hue
+     lands on #6c655c, which is 1.06:1 from --color-ink-muted: visually the
+     same colour. So the tier cannot exist in COLOUR at small sizes. It is
+     expressed through size and weight instead, which is the more robust axis
+     anyway. Do not reintroduce it. */
 
   --font-sans: "Archivo", "Archivo Fallback", Arial, sans-serif;
   --font-mono: "Commit Mono", "Commit Mono Fallback", "Courier New", monospace;

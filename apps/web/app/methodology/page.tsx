@@ -126,7 +126,7 @@ function Note({ title, children }: { title: string; children: React.ReactNode })
   return (
     <details className="panel group px-5 py-4 sm:px-6">
       <summary className="control -mx-2 flex min-h-11 cursor-pointer list-none items-center gap-3 px-2 text-base font-semibold text-ink marker:content-none">
-        <DisclosureMark className="text-skip transition-transform group-open:rotate-90" />
+        <DisclosureMark className="text-ink-muted transition-transform group-open:rotate-90" />
         {title}
       </summary>
       <div className="mt-3 max-w-prose text-sm leading-relaxed text-ink-muted">{children}</div>

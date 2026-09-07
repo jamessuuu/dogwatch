@@ -103,7 +103,7 @@ export function NightChart({ history }: { history: History }) {
                     x={x + barW / 2}
                     y={VIEW_H - 12}
                     textAnchor="middle"
-                    className="fill-skip font-mono"
+                    className="fill-ink-muted font-mono"
                     fontSize="13"
                   >
                     {label}

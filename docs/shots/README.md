@@ -51,6 +51,7 @@ ambient wash is a plain radial gradient at 7%, which costs nothing.
 | `scripts/falsify.mjs` | every `*:check` can go red when a defect is planted |
 | `scripts/motion-check.mjs` | all motion actually stops under `prefers-reduced-motion` |
 | `scripts/glyph-check.mjs` | no DECORATIVE glyph depends on the visitor's font coverage |
+| `scripts/contrast-check.mjs` | WCAG 1.4.3 on rendered text, including SVG chart labels |
 
 `falsify.mjs` is the important one. A checker that silently matches nothing
 reports "no drift", which is indistinguishable from a clean pass — the exact
@@ -105,3 +106,24 @@ Text punctuation stays as text: rendering it as SVG would break selection,
 copy-paste and screen-reader output. A decorative mark is not allowlistable —
 it belongs in `components/Marks.tsx`. Proved the gate fails by planting a raw
 U+2691 on `/checks`.
+
+## Contrast (WCAG 1.4.3)
+
+`project-gate` has no contrast check — its a11y coverage is img-alt, button
+names and target size — so this was unmeasured. Measured now: **59 failures
+to 0**, all one root cause.
+
+`--color-skip` (#8a8175) was a third text tier below `--color-ink-muted`,
+used for chain-chip dates, "not probed" tags and "lands at M<n>" badges. It
+sat at 3.32:1 on paper. Solving for 4.5:1 while keeping the hue lands on
+#6c655c — which is **1.06:1 from `--color-ink-muted`**, i.e. the same colour.
+
+So the tier cannot exist in COLOUR at small sizes, and a one-step bump would
+have produced a token indistinguishable from the one above it while still
+claiming to be a separate level — a design system lying about its own
+hierarchy. The token is removed, the tier is expressed through size and
+weight, and `globals.css` records why so it is not reintroduced.
+
+The checker measures SVG `<text>` on its `fill` as well as HTML `color`;
+without that it would have been blind to every chart label. Proved it fails
+by planting `fill-sunk` on a chart label (1.24:1).

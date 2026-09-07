@@ -49,7 +49,7 @@ export default function ChecksPage() {
                   implemented
                 </span>
               ) : (
-                <span className="rounded-[5px] bg-well px-2 py-0.5 font-mono text-[11px] tracking-wide text-skip uppercase">
+                <span className="rounded-[5px] bg-well px-2 py-0.5 font-mono text-[11px] tracking-wide text-ink-muted uppercase">
                   lands at {fam.landingMilestone}
                 </span>
               )}
