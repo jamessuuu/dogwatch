@@ -72,12 +72,24 @@ checks it ran.**
 Two `kind:"manual"` runs from 2026-08-08, then one `kind:"scheduled"` record per
 night since 2026-08-15 — the live count is in
 [`runs/index.json`](https://github.com/jamessuuu/dogwatch/blob/main/runs/index.json),
-not typed here, because a hand-typed count goes stale. Every scheduled night so far
-reads the same: 78 checks, 45 passes, 31 skips, 0 errors, 2 low-severity findings
-(two outbound links dogwatch couldn't verify — one returned 403, the other a
-nonsense 999 status), 0 gates opened, **$0.0000** spend. One gap: no record for
-2026-08-27 (GitHub delayed or dropped that cron; the next run started 32 hours
-after the previous). Boring is the correct output. [Every run, in full →](https://dogwatch-two.vercel.app/runs)
+not typed here, because a hand-typed count goes stale.
+
+That warning applied to this paragraph too, and it did go stale: it used to read
+"every scheduled night so far reads the same: 78 checks, 45 passes, 31 skips",
+which stopped being true the moment the check pack grew. It has grown twice —
+**12 → 73 → 78 → 104 → 121 checks** — as surfaces and families were added, and
+the newest night carries **1** finding rather than 2, because one of the two
+unverifiable outbound links stopped being unverifiable. Both findings were
+`link.unverifiable`, both low severity, both first seen on 2026-08-08: one
+outbound link returned 403, the other a nonsense 999. Across the whole published
+history: **0 errors after the first night, 0 gates opened, $0.0000 spend.**
+
+So the homepage now computes all of it from the committed records at build time —
+the per-night series, the totals, the gaps and the chain — rather than restating a
+snapshot here. One gap worth naming: no record for 2026-08-27 (GitHub delayed or
+dropped that cron; the next run started 32 hours after the previous), and none for
+2026-08-09 to 2026-08-14 (the checkout-guard failure described above). Boring is
+the correct output. [Every run, in full →](https://dogwatch-two.vercel.app/runs)
 
 ## Watch it work
 

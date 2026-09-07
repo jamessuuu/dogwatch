@@ -7,7 +7,11 @@ import { RealGithubTransport, type GithubTransport } from "../effects/github-tra
 import { reconcileIndeterminateAction } from "../effects/reconcile.js";
 import type { Action, RunRecord } from "../record/schema.js";
 
-const DEFAULT_GATE_PAGE_BASE_URL = "https://dogwatch.vercel.app/gate";
+// Real alias (`vercel inspect`), not the bare `dogwatch.vercel.app`
+// subdomain — that one resolves to an unrelated third party, so a real
+// gate notification would have sent James to a stranger's site to
+// approve an action. Fixed 2026-09-07.
+const DEFAULT_GATE_PAGE_BASE_URL = "https://dogwatch-two.vercel.app/gate";
 
 /** `undefined` ⇒ no `GITHUB_TOKEN` configured — every local/dev/CI
  * invocation without the secret wired degrades honestly (no gate can

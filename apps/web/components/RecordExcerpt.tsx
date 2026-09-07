@@ -15,8 +15,8 @@ function CheckLine({ check }: { check: Check }) {
     <li className="flex flex-col gap-1 py-3">
       <div className="flex flex-wrap items-center gap-2">
         <span className="shrink-0 border border-rule px-1.5 py-0.5 font-mono text-[11px] text-ink-muted">pass</span>
-        <span className="text-sm text-ink">{check.title}</span>
-        <span className="font-mono text-xs text-ink-muted">{check.ruleId}</span>
+        <span className="min-w-0 text-sm break-words text-ink">{check.title}</span>
+        <span className="min-w-0 font-mono text-xs break-all text-ink-muted">{check.ruleId}</span>
       </div>
       <code className="w-fit max-w-full overflow-x-auto whitespace-pre bg-ink/[0.04] px-2 py-1 font-mono text-xs text-ink">
         {check.reproduce}
@@ -31,11 +31,11 @@ function FindingBlock({ finding }: { finding: Finding }) {
       <div className="flex flex-wrap items-center gap-2">
         <span className="border border-amber px-1.5 py-0.5 font-mono text-[11px] text-amber">{finding.severity}</span>
         <span className="border border-rule px-1.5 py-0.5 font-mono text-[11px] text-ink-muted">{finding.status}</span>
-        <span className="font-mono text-xs text-ink-muted">{finding.id}</span>
-        <span className="font-mono text-xs text-ink-muted">{finding.ruleId}</span>
+        <span className="min-w-0 font-mono text-xs break-all text-ink-muted">{finding.id}</span>
+        <span className="min-w-0 font-mono text-xs break-all text-ink-muted">{finding.ruleId}</span>
       </div>
-      <p className="text-sm text-ink">{finding.statement}</p>
-      <ul className="flex flex-col gap-1 font-mono text-xs text-ink-muted">
+      <p className="font-serif text-[1.0625rem] leading-snug text-ink">{finding.statement}</p>
+      <ul className="flex flex-col gap-1 font-mono text-xs break-all text-ink-muted">
         {finding.sources.map((s, i) => (
           <li key={i}>
             {s.method} {s.url} → {s.status} at {s.retrievedAt}

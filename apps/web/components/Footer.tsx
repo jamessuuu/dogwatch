@@ -12,11 +12,11 @@ import { Attribution } from "./Attribution";
 export function Footer() {
   return (
     <footer className="mt-16 border-t border-rule">
-      <div className="mx-auto flex max-w-3xl flex-col gap-3 px-6 py-8 text-sm text-ink-muted sm:flex-row sm:items-center sm:justify-between">
+      <div className="mx-auto flex max-w-5xl flex-col gap-3 px-5 py-8 text-sm text-ink-muted sm:flex-row sm:items-center sm:justify-between sm:px-8">
         <Attribution linkClassName="text-ink underline decoration-rule underline-offset-2 hover:decoration-ink" />
         <a
           href="https://github.com/jamessuuu/dogwatch"
-          className="font-mono text-xs text-ink-muted underline decoration-rule underline-offset-2 hover:text-ink hover:decoration-ink"
+          className="inline-flex min-h-11 items-center font-mono text-xs text-ink-muted underline decoration-rule underline-offset-2 hover:text-ink hover:decoration-ink"
         >
           github.com/jamessuuu/dogwatch
         </a>

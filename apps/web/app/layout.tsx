@@ -4,7 +4,12 @@ import { Nav } from "../components/Nav";
 import { SITE_DESCRIPTION } from "../lib/site";
 import "./globals.css";
 
-const SITE_URL = "https://dogwatch.vercel.app";
+// The real alias, read from `vercel inspect`, not guessed. The bare
+// `dogwatch.vercel.app` subdomain resolves to an UNRELATED third party's
+// project — the same squat targets.json documents for the other five
+// surfaces — so pointing metadataBase/OG at it published this site's
+// canonical identity at someone else's domain. Fixed 2026-09-07.
+const SITE_URL = "https://dogwatch-two.vercel.app";
 const DESCRIPTION = SITE_DESCRIPTION;
 
 export const metadata: Metadata = {
@@ -41,9 +46,18 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
+      <head>
+        {/* The two faces above the fold. Preloaded so the headline and the
+         * measured numbers paint in their real faces rather than swapping;
+         * the metric-matched fallbacks in globals.css mean a swap costs no
+         * layout shift either way. Newsreader is NOT preloaded — it is used
+         * further down the page and can arrive late. */}
+        <link rel="preload" href="/fonts/archivo-variable.woff2" as="font" type="font/woff2" crossOrigin="anonymous" />
+        <link rel="preload" href="/fonts/commit-mono-variable.woff2" as="font" type="font/woff2" crossOrigin="anonymous" />
+      </head>
       <body className="flex min-h-screen flex-col font-sans antialiased">
         <Nav />
-        <main className="mx-auto w-full max-w-3xl flex-1 px-6 py-10">{children}</main>
+        <main className="mx-auto w-full max-w-5xl flex-1 px-5 py-10 sm:px-8 sm:py-14">{children}</main>
         <Footer />
       </body>
     </html>

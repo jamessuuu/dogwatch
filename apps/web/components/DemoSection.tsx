@@ -19,11 +19,11 @@ export function DemoSection() {
         </p>
       </div>
 
-      <div className="demo-motion border border-rule">
+      <div className="demo-motion panel min-w-0 overflow-hidden">
         {/* Silent, decorative loop — the paragraph below is the real text
          * alternative (DESIGN-DIRECTION: "adjacent, not hidden in a caption"). */}
         <video
-          className="block w-full"
+          className="block h-auto w-full max-w-full"
           autoPlay
           muted
           loop
@@ -35,9 +35,13 @@ export function DemoSection() {
         </video>
       </div>
 
-      <div className="demo-reduced flex flex-col gap-3 border border-rule p-4">
+      <div className="demo-reduced panel flex min-w-0 flex-col gap-3 overflow-hidden p-4">
         {/* static asset, no image optimizer (SPEC §10 D3) */}
-        <img src="/demo/dogwatch-poster.png" alt="" className="w-full border border-rule" />
+        <img
+          src="/demo/dogwatch-poster.png"
+          alt="Poster frame of the demo recording: the dogwatch homepage, showing the published-history headline, the per-night chart, and the dead-man line above it."
+          className="h-auto w-full max-w-full rounded-[6px] border border-rule"
+        />
         <p className="text-sm text-ink">
           Motion is turned off in your browser, so the recording isn&apos;t playing automatically.{" "}
           <a

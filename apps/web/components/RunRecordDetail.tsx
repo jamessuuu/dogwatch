@@ -20,13 +20,13 @@ function CheckRow({ check }: { check: Check }) {
     <li className="flex flex-col gap-1 py-3">
       <div className="flex flex-wrap items-center gap-2">
         <VerdictBadge verdict={check.verdict} />
-        <span className="text-sm text-ink">{check.title}</span>
-        <span className="font-mono text-xs text-ink-muted">{check.ruleId}</span>
+        <span className="min-w-0 text-sm break-words text-ink">{check.title}</span>
+        <span className="min-w-0 font-mono text-xs break-all text-ink-muted">{check.ruleId}</span>
         {check.skipReason !== undefined && (
-          <span className="font-mono text-xs text-ink-muted">skipReason:{check.skipReason}</span>
+          <span className="min-w-0 font-mono text-xs break-all text-ink-muted">skipReason:{check.skipReason}</span>
         )}
         {check.errorCode !== undefined && (
-          <span className="font-mono text-xs text-red-800">errorCode:{check.errorCode}</span>
+          <span className="min-w-0 font-mono text-xs break-all text-red-800">errorCode:{check.errorCode}</span>
         )}
       </div>
       <code className="w-fit max-w-full overflow-x-auto whitespace-pre bg-ink/[0.04] px-2 py-1 font-mono text-xs text-ink">
@@ -67,11 +67,11 @@ function FindingsSection({ record }: { record: RunRecord }) {
           <div className="flex flex-wrap items-center gap-2">
             <span className="border border-amber px-1.5 py-0.5 font-mono text-[11px] text-amber">{f.severity}</span>
             <span className="border border-rule px-1.5 py-0.5 font-mono text-[11px] text-ink-muted">{f.status}</span>
-            <span className="font-mono text-xs text-ink-muted">{f.id}</span>
-            <span className="font-mono text-xs text-ink-muted">{f.ruleId}</span>
+            <span className="min-w-0 font-mono text-xs break-all text-ink-muted">{f.id}</span>
+            <span className="min-w-0 font-mono text-xs break-all text-ink-muted">{f.ruleId}</span>
           </div>
           <p className="text-sm text-ink">{f.statement}</p>
-          <ul className="flex flex-col gap-1 font-mono text-xs text-ink-muted">
+          <ul className="flex flex-col gap-1 font-mono text-xs break-all text-ink-muted">
             {f.sources.map((s, i) => (
               <li key={i}>
                 {s.method} {s.url} → {s.status} at {s.retrievedAt} ({s.evidencePath})
@@ -104,7 +104,7 @@ function AbsenceSection({ record }: { record: RunRecord }) {
         {a.checksClean} clean · {Object.entries(a.byFamily).map(([fam, n]) => `${fam}:${String(n)}`).join(" ") || "no per-family breakdown"}
       </p>
       {a.notChecked.length > 0 && (
-        <ul className="font-mono text-xs text-ink-muted">
+        <ul className="font-mono text-xs break-all text-ink-muted">
           {a.notChecked.map((n) => (
             <li key={n.checkId}>
               {n.checkId} — {n.reasonCode}
@@ -194,7 +194,7 @@ function CostSection({ record }: { record: RunRecord }) {
 
 function AuditEventRow({ event }: { event: AuditEventRecord }) {
   return (
-    <li className="font-mono text-xs text-ink-muted">
+    <li className="font-mono text-xs break-all text-ink-muted">
       #{event.seq} {event.type} · {event.subjectType}:{event.subjectKey} · {event.actor} ·{" "}
       {new Date(event.ts).toISOString()}
     </li>

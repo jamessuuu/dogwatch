@@ -48,7 +48,7 @@
     {
       "id": "dogwatch",
       "name": "dogwatch",
-      "url": "https://dogwatch.vercel.app",
+      "url": "https://dogwatch-two.vercel.app",
       "repo": "jamessuuu/dogwatch",
       "deployed": false,
       "families": ["reach", "header", "brand", "link", "weight"],

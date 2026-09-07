@@ -14,6 +14,7 @@ interface RunIndexEntry {
   runId: string;
   findings: number;
   checksTotal: number;
+  startedAt: string;
 }
 interface RunIndexFile {
   runs: RunIndexEntry[];
@@ -29,6 +30,11 @@ if (latestRun === undefined) throw new Error("e2e smoke: runs/index.json has no 
 // A record with findings exercises the Findings section and the Verify
 // button against real evidence, not just a quiet run.
 const runWithFindings = runIndex.runs.find((r) => r.findings > 0) ?? latestRun;
+// The aggregates the landing page now leads with. Derived here from the same
+// committed index the page reads, so this asserts agreement between the page
+// and the artifact rather than against a number typed into a test.
+const totalChecks = runIndex.runs.reduce((sum, r) => sum + r.checksTotal, 0).toLocaleString("en-US");
+const nightCount = new Set(runIndex.runs.map((r) => r.startedAt.slice(0, 10))).size;
 
 test.describe("footer + favicon on every page", () => {
   const pages = ["/", "/runs", `/runs/${latestRun.runId}`, "/checks", "/methodology", "/docs"];
@@ -88,7 +94,10 @@ test.describe("/ — home", () => {
     const context = await browser.newContext({ javaScriptEnabled: false });
     const page = await context.newPage();
     await page.goto("/");
-    await expect(page.getByRole("heading", { name: "dogwatch", exact: true })).toBeVisible();
+    // The h1 states the finding, not the product name (the name is the nav's
+    // home link). Server-rendered, so it is present with JS off.
+    await expect(page.getByRole("heading", { level: 1 })).toContainText("nights watched");
+    await expect(page.getByRole("heading", { level: 1 })).toContainText(`${String(totalChecks)} checks`);
     // The noscript fallback in the dead-man banner must render real content
     // (both timestamps), not an empty shell, when JS never runs at all.
     await expect(page.locator("noscript")).toHaveCount(1);
@@ -105,11 +114,17 @@ test.describe("/ — home", () => {
 
   test("shows the last run's line at size, the diagram, the demo video, and a real record excerpt", async ({ page }) => {
     await page.goto("/");
-    // The proof: checks/findings/gates/cost, read straight off runs/index.json,
-    // rendered at size. Scoped to the stat-line paragraph specifically — the
-    // record excerpt below repeats "N checks" in its own absence-of-evidence
-    // prose, so a bare text match is ambiguous.
-    await expect(page.locator("p.font-mono.text-3xl")).toContainText(`${String(latestRun.checksTotal)} checks`);
+    // The proof: the whole published history, aggregated from runs/index.json
+    // at build time and rendered at display size — not just last night's line.
+    // Scoped to the h1 so the record excerpt's own "N checks" prose below
+    // cannot satisfy it by accident.
+    const headline = page.getByRole("heading", { level: 1 });
+    await expect(headline).toContainText(`${String(totalChecks)} checks`);
+    await expect(headline).toContainText(`${String(nightCount)} nights watched`);
+    // The per-night series: one column per calendar day, gaps included.
+    await expect(page.getByRole("img", { name: /Checks run per night/i })).toBeVisible();
+    // The cross-run hash chain, verified at build rather than asserted.
+    await expect(page.getByText(`${String(runIndex.runs.length - 1)}/${String(runIndex.runs.length - 1)} links verified at build`)).toBeVisible();
     // The mechanism diagram (scripts/diagram.mjs), with a real alt text, not "image".
     await expect(page.getByRole("img", { name: /gate/i })).toBeVisible();
     // The demo video — poster set, muted, looped, no controls.

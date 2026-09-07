@@ -33,7 +33,7 @@ export function GateFlowSection() {
        * and this wrapper scrolls horizontally; the page body itself never
        * scrolls sideways. Readable at 320px means "you can still read every
        * word", not "the whole image fits on a phone screen at once". */}
-      <div className="w-full overflow-x-auto border border-rule">
+      <div className="panel w-full min-w-0 overflow-x-auto">
         <img
           src="/diagram/gate-flow.svg"
           width={1140}

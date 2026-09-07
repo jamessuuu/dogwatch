@@ -1,16 +1,126 @@
 @import "tailwindcss";
 
+/* ============================================================ FONT FACES ==========
+ * Vendored from the portfolio substrate (~/.claude/harness-dist/substrate),
+ * self-hosted, subset to the Google Fonts "latin" range, all OFL 1.1 —
+ * licences and provenance ship alongside the files in public/fonts/.
+ *
+ * This REVERSES the M0 "no webfont" brand rule. That rule read "the
+ * distinguishing typographic move is structural, not a font choice", and
+ * structurally it was right — mono for data, sans for prose is still the
+ * organising idea. But executed in `ui-sans-serif` + `ui-monospace` it gave
+ * the site no typographic identity at all, which is a large part of why it
+ * rendered as a README. Three real faces, each with a job:
+ *
+ *   Archivo      structure — headings, UI, body
+ *   Commit Mono  data — every check count, hash, cost, timestamp, curl line
+ *   Newsreader   voice — the watch's own prose statements about a finding
+ *
+ * The @font-face blocks and the metric-matched local fallbacks below are
+ * copied verbatim from substrate.css §1 (fallback metrics via the
+ * unjs/fontaine method, so `font-display: swap` contributes zero CLS).
+ */
+
+@font-face {
+  font-family: "Archivo";
+  src: url("/fonts/archivo-variable.woff2") format("woff2-variations"), url("/fonts/archivo-variable.woff2") format("woff2");
+  font-weight: 400 600;
+  font-stretch: 85% 125%;
+  font-style: normal;
+  font-display: swap;
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: "Commit Mono";
+  src: url("/fonts/commit-mono-variable.woff2") format("woff2-variations"), url("/fonts/commit-mono-variable.woff2") format("woff2");
+  font-weight: 400 700;
+  font-style: normal;
+  font-display: swap;
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: "Newsreader";
+  src: url("/fonts/newsreader-regular.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: "Newsreader";
+  src: url("/fonts/newsreader-italic.woff2") format("woff2");
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+/* Metric-matched local fallbacks so font-display: swap contributes zero CLS. */
+@font-face {
+  font-family: "Archivo Fallback";
+  src: local("Arial");
+  size-adjust: 122.7%;
+  ascent-override: 71.56%;
+  descent-override: 17.11%;
+  line-gap-override: 0%;
+}
+@font-face {
+  font-family: "Commit Mono Fallback";
+  src: local("Courier New");
+  size-adjust: 99.98%;
+  ascent-override: 90.01%;
+  descent-override: 20%;
+  line-gap-override: 0%;
+}
+@font-face {
+  font-family: "Newsreader Fallback";
+  src: local("Georgia");
+  size-adjust: 122.25%;
+  ascent-override: 60.12%;
+  descent-override: 21.68%;
+  line-gap-override: 0%;
+}
+@font-face {
+  font-family: "Newsreader Fallback";
+  src: local("Georgia");
+  font-style: italic;
+  size-adjust: 117.09%;
+  ascent-override: 62.77%;
+  descent-override: 22.63%;
+  line-gap-override: 0%;
+}
+
 /*
  * Tailwind 4 config lives here, not in a tailwind.config.js (SPEC §10).
  * Palette is the BRAND-KIT lockup, unchanged from scripts/brand.mjs:
  * PAPER / INK / AMBER, plus RULE for hairlines. Amber stays a sparse
  * accent — the bell's clapper, never a UI primary (BRAND-KIT rule) — so it
  * is reserved for the one thing worth a reader's attention: a finding, a
- * cost figure, an active link state. No webfont (M0 brand rule): the
- * distinguishing typographic move is structural, not a font choice — every
- * piece of DATA (hashes, curl lines, run ids, timestamps, JSON) renders in
- * the monospace stack; every piece of PROSE renders in the sans stack.
- * That single rule is what makes this read as a ledger, not a dashboard.
+ * cost figure, an active link state. The structural typographic rule is
+ * unchanged and still does the most work — every piece of DATA (hashes,
+ * curl lines, run ids, timestamps, JSON) renders in the mono face, every
+ * piece of interface prose in the sans face — but it is now executed in
+ * real faces rather than system stacks (see FONT FACES above, which
+ * supersedes the M0 "no webfont" rule).
+ *
+ * PRODUCT SURFACE (2026-09-07). This file previously ended with the rule
+ * "a single hairline is the only decoration this site uses — no shadows,
+ * no rounded cards, no gradients". Applied faithfully, that produces a
+ * rendered README: a 480px column of hairline-separated prose adrift in a
+ * 1440px viewport. The substrate spine's own §12 reversed that judgment
+ * portfolio-wide, and this file now follows it: a real elevation ladder,
+ * 10px structure corners, one easing curve and two durations, and a single
+ * ambient wash tinted by the project's own amber.
+ *
+ * What did NOT change: the palette, the mono-for-data / sans-for-prose
+ * rule, and amber's sparseness. Depth is added in the DAYLIGHT register —
+ * this is paper, lit from above, not a dark dashboard. Every shadow below
+ * is chroma-bearing (warm brown, derived from ink), never black, and every
+ * colour literal in this app lives in the @theme block below so nothing
+ * downstream ever hand-writes a hex.
  */
 @theme {
   --color-paper: #faf7f2;
@@ -19,21 +129,75 @@
   --color-rule: #e4ddd3;
   --color-ink-muted: #6b6154;
 
-  --font-sans:
-    ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Helvetica,
-    Arial, sans-serif;
-  --font-mono:
-    ui-monospace, "Cascadia Code", "SF Mono", "Roboto Mono", Consolas,
-    "Liberation Mono", monospace;
+  /* Surface ladder. Paper is the ground; raised panels catch more light
+     than the ground, wells catch less. Three values, not one hairline. */
+  --color-raised: #fffdf9;
+  --color-well: #f3eee5;
+  --color-sunk: #ebe4d8;
+
+  /* Verdict colours, tokenised so no component writes a literal. Muted
+     enough to sit on paper without shouting over amber. */
+  --color-pass: #3f6212;
+  --color-pass-wash: #eef2e3;
+  --color-fail: #9f1239;
+  --color-fail-wash: #fbeaee;
+  --color-skip: #8a8175;
+
+  --font-sans: "Archivo", "Archivo Fallback", Arial, sans-serif;
+  --font-mono: "Commit Mono", "Commit Mono Fallback", "Courier New", monospace;
+  --font-serif: "Newsreader", "Newsreader Fallback", Georgia, serif;
+}
+
+/* Motion + depth tokens. Plain custom properties rather than @theme
+   entries: these are composed by hand in the component layer below, not
+   turned into utility classes. */
+:root {
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --dur-fast: 140ms;
+  --dur-slow: 420ms;
+
+  --radius-structure: 10px;
+  --radius-control: 8px;
+  --radius-flush: 0px;
+
+  /* Chroma-bearing, never black — the shadow of warm paper is warm. */
+  --elev-1:
+    0 1px 2px -1px rgb(60 44 24 / 10%),
+    0 4px 12px -4px rgb(60 44 24 / 10%);
+  --elev-2:
+    0 2px 4px -2px rgb(60 44 24 / 12%),
+    0 12px 32px -8px rgb(60 44 24 / 16%);
+  --elev-3:
+    0 4px 8px -4px rgb(60 44 24 / 14%),
+    0 24px 64px -12px rgb(60 44 24 / 20%);
+
+  /* The edge highlight: a real bevel catches light along its top edge. On
+     paper that is a white inset hairline, plus the rule colour around. */
+  --depth-edge:
+    inset 0 1px 0 0 rgb(255 255 255 / 90%),
+    0 0 0 1px var(--color-rule);
 }
 
 html {
   color-scheme: light;
+  /* Belt and braces with body's own clip below: a decorative layer must
+     never be able to make the page scroll sideways. `clip`, not `hidden`,
+     so no scroll container is created and `position: sticky` still works. */
+  overflow-x: clip;
 }
 
 body {
   background-color: var(--color-paper);
   color: var(--color-ink);
+  /* The ambient wash below deliberately bleeds past its section (inset
+     -14% left and right) so the bloom has no visible edge. A bleeding
+     pseudo-element still counts toward scroll width: measured, it pushed
+     the page to 419px at a 390px viewport — the exact failure mode where
+     `scrollWidth` on the wrapper reads a clean 390 while the rendered page
+     is wider. `clip` rather than `hidden`: it prevents the horizontal
+     scroll without creating a scroll container, so `position: sticky`
+     keeps working. */
+  overflow-x: clip;
 }
 
 ::selection {
@@ -41,11 +205,172 @@ body {
   color: var(--color-paper);
 }
 
-/* A single hairline is the only decoration this site uses — no shadows,
- * no rounded cards, no gradients (BRAND-KIT / taste: a ledger, not a SaaS
- * dashboard). */
 .rule-line {
   border-color: var(--color-rule);
+}
+
+@layer components {
+  /* ---- depth ------------------------------------------------------- */
+
+  /* A panel: value step + edge highlight + contact shadow. */
+  .panel {
+    position: relative;
+    border-radius: var(--radius-structure);
+    background-color: var(--color-raised);
+    box-shadow: var(--depth-edge), var(--elev-1);
+  }
+
+  .panel-lift {
+    transition:
+      box-shadow var(--dur-slow) var(--ease-out),
+      transform var(--dur-slow) var(--ease-out);
+  }
+  .panel-lift:hover {
+    box-shadow: var(--depth-edge), var(--elev-2);
+    transform: translateY(-2px);
+  }
+
+  /* The float: the hero's own card, one rung higher than everything. */
+  .panel-float {
+    position: relative;
+    border-radius: var(--radius-structure);
+    background-color: var(--color-raised);
+    box-shadow: var(--depth-edge), var(--elev-3);
+  }
+
+  /* A well: recessed, for data that sits INSIDE a panel (curl lines,
+     JSON, hashes). The inverse of a panel — darker than its parent, with
+     the highlight along the BOTTOM edge where a real recess catches it. */
+  .well {
+    border-radius: var(--radius-control);
+    background-color: var(--color-well);
+    box-shadow:
+      inset 0 1px 2px 0 rgb(60 44 24 / 8%),
+      inset 0 -1px 0 0 rgb(255 255 255 / 70%);
+  }
+
+  /* Tables and full-bleed bands keep square edges (substrate: the
+     instrument look is still correct where a flat plate genuinely is). */
+  [data-surface="flat"] .panel,
+  [data-surface="flat"] .panel-float {
+    border-radius: var(--radius-flush);
+    box-shadow: var(--depth-edge);
+  }
+
+  /* ---- the ambient wash -------------------------------------------- */
+
+  /* One radial bloom behind the hero, tinted by the project's own amber.
+     Thresholded and subtle: 7% peak on paper, no blend mode. Linear's
+     "expensive" glow is a radial-gradient div at a few percent; a blend
+     mode here would cost more frames than it is worth (measured: overlay
+     60 -> 47.8fps) and buys nothing on a light ground. */
+  .ambient {
+    position: relative;
+    isolation: isolate;
+  }
+  .ambient::before {
+    content: "";
+    position: absolute;
+    z-index: -1;
+    /* No horizontal bleed. An earlier version used `-14%` left and right
+       so the bloom had no visible edge; measured at a 390px viewport that
+       made this pseudo-element 448px wide and pushed the whole page to
+       419px of horizontal scroll — while `scrollWidth` on every real
+       element read a clean 390, because a pseudo-element is invisible to
+       `querySelectorAll`. The gradient already fades to `transparent`, so
+       it has no edge to hide: the bleed bought nothing and cost a
+       sideways-scrolling phone page. */
+    inset: -30% 0 auto 0;
+    height: 150%;
+    pointer-events: none;
+    background:
+      radial-gradient(56% 52% at 16% 0%, rgb(180 83 9 / 7%), transparent 68%),
+      radial-gradient(44% 44% at 86% 10%, rgb(120 85 40 / 5%), transparent 70%);
+  }
+
+  /* ---- controls ----------------------------------------------------- */
+
+  .control {
+    border-radius: var(--radius-control);
+    transition:
+      background-color var(--dur-fast) var(--ease-out),
+      border-color var(--dur-fast) var(--ease-out),
+      box-shadow var(--dur-fast) var(--ease-out),
+      transform var(--dur-fast) var(--ease-out),
+      color var(--dur-fast) var(--ease-out);
+  }
+  .control:hover {
+    box-shadow: var(--elev-1);
+    transform: translateY(-1px);
+  }
+  .control:active {
+    transform: translateY(0);
+    box-shadow: none;
+  }
+
+  /* ---- entrance ----------------------------------------------------- */
+
+  @keyframes rise {
+    from {
+      opacity: 0;
+      transform: translateY(12px);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+  .rise {
+    animation: rise var(--dur-slow) var(--ease-out) both;
+  }
+  .rise-2 {
+    animation-delay: 70ms;
+  }
+  .rise-3 {
+    animation-delay: 140ms;
+  }
+  .rise-4 {
+    animation-delay: 210ms;
+  }
+
+  /* The chart's own entrance: the 23-night trace draws itself once. */
+  @keyframes trace {
+    from {
+      stroke-dashoffset: var(--trace-len);
+    }
+    to {
+      stroke-dashoffset: 0;
+    }
+  }
+  .trace {
+    stroke-dasharray: var(--trace-len);
+    animation: trace 1100ms var(--ease-out) both;
+  }
+
+  @keyframes verify-sweep {
+    from {
+      transform: scaleX(0);
+    }
+    to {
+      transform: scaleX(1);
+    }
+  }
+  .verify-sweep {
+    transform-origin: left center;
+    animation: verify-sweep 520ms var(--ease-out) both;
+  }
+
+  /* ---- attribution -------------------------------------------------- */
+
+  /* attribution-kit v1 — the maker's mark. In the components layer so the links' Tailwind utilities still win. */
+  .aj-attribution { margin: 0; font: inherit; line-height: 1.5; color: inherit; }
+  .aj-attribution__mark { display: inline-block; width: 20px; height: 20px; vertical-align: -0.3em; margin-right: 0.45em; }
+  .aj-attribution__mark--full { width: 48px; height: 48px; vertical-align: middle; }
+  .aj-attribution a { color: inherit; text-decoration: underline; text-underline-offset: 0.15em; }
+  .aj-attribution a:hover { text-decoration-thickness: 2px; }
+  .aj-attribution a:focus-visible { outline: 2px solid currentColor; outline-offset: 2px; }
+  .aj-attribution__sep { margin: 0 0.35em; }
+  .aj-attribution { --aj-attribution-signal: var(--color-amber); }
 }
 
 /* Demo video (DESIGN-DIRECTION.md §3): a pure-CSS toggle, no JS, no
@@ -66,14 +391,22 @@ body {
   }
 }
 
-/* attribution-kit v1 — the maker's mark. In the components layer so the links' Tailwind utilities still win. */
-@layer components {
-  .aj-attribution { margin: 0; font: inherit; line-height: 1.5; color: inherit; }
-  .aj-attribution__mark { display: inline-block; width: 20px; height: 20px; vertical-align: -0.3em; margin-right: 0.45em; }
-  .aj-attribution__mark--full { width: 48px; height: 48px; vertical-align: middle; }
-  .aj-attribution a { color: inherit; text-decoration: underline; text-underline-offset: 0.15em; }
-  .aj-attribution a:hover { text-decoration-thickness: 2px; }
-  .aj-attribution a:focus-visible { outline: 2px solid currentColor; outline-offset: 2px; }
-  .aj-attribution__sep { margin: 0 0.35em; }
-  .aj-attribution { --aj-attribution-signal: var(--color-amber); }
+/* Motion is decoration here, so it goes away entirely when asked. */
+@media (prefers-reduced-motion: reduce) {
+  .rise,
+  .trace,
+  .verify-sweep {
+    animation: none;
+  }
+  .trace {
+    stroke-dasharray: none;
+  }
+  .panel-lift,
+  .control {
+    transition: none;
+  }
+  .panel-lift:hover,
+  .control:hover {
+    transform: none;
+  }
 }
