@@ -391,22 +391,39 @@ body {
   }
 }
 
-/* Motion is decoration here, so it goes away entirely when asked. */
+/* Motion is decoration here, so it goes away entirely when asked.
+ *
+ * The universal rule below is load-bearing and is NOT redundant with the
+ * targeted ones that follow it. Tailwind's `transition-*` utilities emit a
+ * transition-property/duration pair unconditionally — they are not wrapped
+ * in this media query — so naming only this file's own classes left every
+ * `transition-colors` link animating. Measured on the deployed page: 7
+ * transitions still running at 150ms under `prefers-reduced-motion:
+ * reduce`, which is plainly perceptible. Reading the stylesheet would not
+ * have shown it; `scripts/motion-check.mjs` renders the page in a reduced
+ * -motion context and counts what actually computes.
+ *
+ * `0.001s !important` rather than `none`: any JS awaiting `transitionend`
+ * or `animationend` still receives its event instead of hanging forever,
+ * and `!important` is what beats a utility class's own specificity. */
 @media (prefers-reduced-motion: reduce) {
-  .rise,
-  .trace,
-  .verify-sweep {
-    animation: none;
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001s !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001s !important;
+    scroll-behavior: auto !important;
   }
+
+  /* Kept for intent: these say what the motion WAS, and kill the hover
+     transform outright rather than merely making it instant. */
   .trace {
     stroke-dasharray: none;
-  }
-  .panel-lift,
-  .control {
-    transition: none;
   }
   .panel-lift:hover,
   .control:hover {
     transform: none;
+    box-shadow: var(--depth-edge), var(--elev-1);
   }
 }
